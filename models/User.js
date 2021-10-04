@@ -12,7 +12,7 @@ const UserSchema = new Schema({
 });
 
 //Hash password on save
-UserSchema.pre('save', async (next) => {
+UserSchema.pre('save', async function (next) {
 	const currentUser = this;
 
 	// Only hash the password if it has been modified
@@ -27,7 +27,7 @@ UserSchema.pre('save', async (next) => {
 });
 
 //Method to compare entered password with users password
-UserSchema.methods.checkPassword = async (password) => {
+UserSchema.methods.checkPassword = async function (password) {
 	return bcrypt.compareSync(password, this.password);
 };
 
