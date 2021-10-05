@@ -55,4 +55,19 @@ router.post('/login', async (req, res) => {
 	}
 });
 
+//logout of user account
+router.post('/logout', (req, res) => {
+	try {
+		if (req.session.logged_in) {
+			req.session.destroy(() => {
+				res.status(200);
+			});
+		} else {
+			res.status(404).send('No user logged in');
+		}
+	} catch (err) {
+		res.status(400);
+	}
+});
+
 module.exports = router;
