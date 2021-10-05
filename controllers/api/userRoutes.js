@@ -28,27 +28,33 @@ router.post('/', async (req, res) => {
 //login to user account
 router.post('/login', async (req, res) => {
 	try {
+		//get username & password from req.body
 		const { username, password } = req.body;
 		const errorMessage = 'Incorrect email or password';
 
+		//find the username within our db - Usernames are unqiue
 		const user = await User.findOne({ username });
 
+		//no username found, return error
 		if (!user) {
 			return res.status(400).json({ message: errorMessage });
 		}
 
+		//check plain text password with hashed db password
 		const validPassword = await user.checkPassword(password);
 
+		//passwords do not match, return error
 		if (!validPassword) {
-			res.status(400).json({ message: errorMessage });
-			return;
+			return res.status(400).json({ message: errorMessage });
 		}
 
+		//usernam & password match - save session
 		req.session.save(() => {
 			req.session.user_id = user.id;
 			req.session.logged_in = true;
 		});
 
+		//return sucessfull response
 		res.status(200).json(user);
 	} catch (err) {
 		res.status(400).json(err);
@@ -58,6 +64,7 @@ router.post('/login', async (req, res) => {
 //logout of user account
 router.post('/logout', (req, res) => {
 	try {
+		//if a user is currently logged in, destroy their current session
 		if (req.session.logged_in) {
 			req.session.destroy(() => {
 				res.status(200);
