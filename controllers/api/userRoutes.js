@@ -25,4 +25,34 @@ router.post('/', async (req, res) => {
 	}
 });
 
+//login to user account
+router.post('/login', async (req, res) => {
+	try {
+		const { username, password } = req.body;
+		const errorMessage = 'Incorrect email or password';
+
+		const user = await User.findOne({ username });
+
+		if (!user) {
+			return res.status(400).json({ message: errorMessage });
+		}
+
+		const validPassword = await user.checkPassword(password);
+
+		if (!validPassword) {
+			res.status(400).json({ message: errorMessage });
+			return;
+		}
+
+		req.session.save(() => {
+			req.session.user_id = user.id;
+			req.session.logged_in = true;
+		});
+
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(400).json(err);
+	}
+});
+
 module.exports = router;
