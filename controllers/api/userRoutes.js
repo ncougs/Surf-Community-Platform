@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
 			return res.status(400).json({ message: errorMessage });
 		}
 
-		//usernam & password match - save session
+		//username & password match - save session
 		req.session.save(() => {
 			req.session.user_id = user.id;
 			req.session.logged_in = true;
