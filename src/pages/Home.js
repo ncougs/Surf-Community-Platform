@@ -1,7 +1,11 @@
 import Navbar from '../features/Navbar';
 
 const Home = () => {
-	return <Navbar />;
+	return (
+		<>
+			<Navbar />
+		</>
+	);
 };
 
 export default Home;

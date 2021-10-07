@@ -1,4 +1,2 @@
-import ContainerFluid from './Container-fluid';
-import NavListItem from './Nav.List-item';
-
-export { ContainerFluid, NavListItem };
+export { default as ContainerFluid } from './Container-fluid';
+export { default as NavListItem } from './Nav.List-item';
