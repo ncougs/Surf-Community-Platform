@@ -1,9 +1,9 @@
-import Navbar from '../features/Navbar';
+import NavigationBar from '../features/Navbar';
 
 const Home = () => {
 	return (
 		<>
-			<Navbar />
+			<NavigationBar />
 		</>
 	);
 };
