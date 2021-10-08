@@ -1,11 +1,17 @@
-import { useState } from 'react';
-import { Modal, Button, Form, Navbar, Nav, Container } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Button, Form, Navbar, Nav, Container } from 'react-bootstrap';
+import LoginModal from '../components/LoginModal';
 
 const NavigationBar = () => {
-	const [loginModal, LoginModalOpened] = useState(false);
+	const [loginModal, LoginModalOpened] = useState(true);
 
 	const closeLoginModal = () => LoginModalOpened(false);
 	const OpenLoginModal = () => LoginModalOpened(true);
+
+	useEffect(() => {
+		console.log(loginModal);
+	});
+
 	return (
 		<>
 			<Navbar bg='light' expand='lg'>
@@ -26,25 +32,7 @@ const NavigationBar = () => {
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>
-			<Modal show={loginModal} onHide={closeLoginModal}>
-				<Modal.Header className='justify-content-center'>
-					<Modal.Title>Login</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group className='mb-3' controlId='formBasicEmail'>
-							<Form.Label>Username</Form.Label>
-							<Form.Control required type='text' placeholder='Username' />
-						</Form.Group>
-
-						<Form.Group className='mb-3' controlId='formBasicPassword'>
-							<Form.Label>Password</Form.Label>
-							<Form.Control required type='password' placeholder='Password' />
-						</Form.Group>
-						<Button type='submit'>Login</Button>
-					</Form>
-				</Modal.Body>
-			</Modal>
+			<LoginModal openModal={loginModal} closeLoginModal={closeLoginModal} />
 		</>
 	);
 };
