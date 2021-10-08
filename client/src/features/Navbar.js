@@ -3,14 +3,10 @@ import { Button, Form, Navbar, Nav, Container } from 'react-bootstrap';
 import LoginModal from '../components/LoginModal';
 
 const NavigationBar = () => {
-	const [loginModal, LoginModalOpened] = useState(true);
+	const [loginModal, LoginModalOpened] = useState(false);
 
 	const closeLoginModal = () => LoginModalOpened(false);
 	const OpenLoginModal = () => LoginModalOpened(true);
-
-	useEffect(() => {
-		console.log(loginModal);
-	});
 
 	return (
 		<>
