@@ -1,43 +1,35 @@
-const { Profile } = require('../models');
+const { User } = require('../models');
 
 const resolvers = {
-  Query: {
-    profiles: async () => {
-      return Profile.find();
-    },
+	Query: {
+		users: async () => {
+			return User.find({});
+		},
 
-    profile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId });
-    },
-  },
+		user: async (parent, { id }) => {
+			return User.findById(id);
+		},
+	},
 
-  Mutation: {
-    addProfile: async (parent, { name }) => {
-      return Profile.create({ name });
-    },
-    addSkill: async (parent, { profileId, skill }) => {
-      return Profile.findOneAndUpdate(
-        { _id: profileId },
-        {
-          $addToSet: { skills: skill },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-    },
-    removeProfile: async (parent, { profileId }) => {
-      return Profile.findOneAndDelete({ _id: profileId });
-    },
-    removeSkill: async (parent, { profileId, skill }) => {
-      return Profile.findOneAndUpdate(
-        { _id: profileId },
-        { $pull: { skills: skill } },
-        { new: true }
-      );
-    },
-  },
+	Mutation: {
+		addUser: async (
+			parent,
+			{ username, first_name, last_name, email, password }
+		) => {
+			//get new user details
+			const newUser = new User({
+				username,
+				first_name,
+				last_name,
+				email,
+				password,
+			});
+
+			//save newUser to the database
+			const result = await newUser.save();
+			return result;
+		},
+	},
 };
 
 module.exports = resolvers;
