@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { signToken } = require('../utlis/auth');
 
 const resolvers = {
 	Query: {
@@ -26,8 +27,11 @@ const resolvers = {
 			});
 
 			//save newUser to the database
-			const result = await newUser.save();
-			return result;
+			const user = await newUser.save();
+
+			const token = signToken(user);
+
+			return { token, user };
 		},
 	},
 };
