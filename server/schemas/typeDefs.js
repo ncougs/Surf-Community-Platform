@@ -15,9 +15,16 @@ const typeDefs = gql`
 		user: User
 	}
 
+	type Photo {
+		url: String!
+		date: String!
+		user_id: User!
+	}
+
 	type Query {
 		users: [User]!
 		user(id: ID!): User!
+		photos: [Photo]
 	}
 
 	type Mutation {
@@ -29,6 +36,7 @@ const typeDefs = gql`
 			password: String!
 		): Auth
 		login(username: String!, password: String!): Auth
+		postPhoto(photo: String): Photo
 	}
 `;
 

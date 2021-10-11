@@ -1,6 +1,7 @@
-const { User } = require('../models');
+const { User, Photo } = require('../models');
 const { signToken } = require('../utlis/auth');
 const { AuthenticationError } = require('apollo-server-express');
+const cloudinary = require('../utlis/cloudinary');
 
 const resolvers = {
 	Query: {
@@ -12,6 +13,11 @@ const resolvers = {
 		//find user by _id
 		user: async (parent, { id }) => {
 			return User.findById(id);
+		},
+
+		//find all photos
+		photos: async () => {
+			return Photo.find({});
 		},
 	},
 
@@ -39,6 +45,8 @@ const resolvers = {
 			//return token and user
 			return { token, user };
 		},
+
+		//login to user account
 		login: async (parent, { username, password }) => {
 			//default error message
 			const errorMessage = 'Incorrect email or password';
@@ -64,6 +72,24 @@ const resolvers = {
 
 			//return token and user
 			return { token, user };
+		},
+
+		//post photo to cloudinary cdn
+		postPhoto: async (parent, { image }) => {
+			//upload media to cloudinary cdn - returns a promise
+			const upload = await cloudinary.uploader.upload(image);
+
+			//get url from upload object
+			const { url } = upload;
+
+			//create new model for our db
+			const newPhoto = new Photo({ url });
+
+			//save model to database
+			const photo = await newPhoto.save();
+
+			//return new photo
+			return photo;
 		},
 	},
 };
