@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
 import { POST_PHOTO } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-const CreatePost = () => {
+const CreatePostModal = ({ openModal, closeModal }) => {
 	const [image, setImage] = useState('');
 
 	const [postPhoto, { data, loading, error }] = useMutation(POST_PHOTO);
@@ -45,21 +46,17 @@ const CreatePost = () => {
 	};
 
 	return (
-		<>
-			{Auth.loggedIn() ? (
-				<div>
-					<div>
-						<input
-							type='file'
-							onChange={(e) => setImage(e.target.files[0])}
-						></input>
-						<button onClick={uploadImage}>Upload</button>
-					</div>
-				</div>
-			) : (
-				<p>You need to be logged in to endorse skills. Please </p>
-			)}
-		</>
+		<Modal
+			show={openModal}
+			onHide={() => {
+				closeModal();
+			}}
+		>
+			<Modal.Header className='justify-content-center'>
+				<Modal.Title>Create Post</Modal.Title>
+			</Modal.Header>
+			<Modal.Body></Modal.Body>
+		</Modal>
 	);
 };
-export default CreatePost;
+export default CreatePostModal;
