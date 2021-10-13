@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Button, Form, Navbar, Nav, Container } from 'react-bootstrap';
 import LoginModal from '../components/LoginModal';
+import Auth from '../utils/auth';
 
 const NavigationBar = () => {
 	const [loginModal, LoginModalOpened] = useState(false);
+	const [isLoggedIn, setLoggedIn] = useState(false);
+
+	useEffect(() => {
+		Auth.loggedIn() ? setLoggedIn(true) : setLoggedIn(false);
+	});
 
 	const closeLoginModal = () => LoginModalOpened(false);
 	const OpenLoginModal = () => LoginModalOpened(true);
@@ -23,7 +29,11 @@ const NavigationBar = () => {
 						<Nav>
 							<Nav.Link href='#home'>About</Nav.Link>
 							<Nav.Link href='#link'>Locations</Nav.Link>
-							<Button onClick={OpenLoginModal}>Login</Button>
+							{isLoggedIn ? (
+								<Button onClick={Auth.logout}>Log out</Button>
+							) : (
+								<Button onClick={OpenLoginModal}>Login</Button>
+							)}
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
