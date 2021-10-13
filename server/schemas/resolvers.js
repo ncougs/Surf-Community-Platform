@@ -17,7 +17,7 @@ const resolvers = {
 
 		//find all photos
 		photos: async () => {
-			return Photo.find({});
+			return Photo.find({}).populate('user_id');
 		},
 	},
 
@@ -74,16 +74,16 @@ const resolvers = {
 			return { token, user };
 		},
 
-		//post photo to cloudinary cdn
-		postPhoto: async (parent, { url }) => {
+		//Add photo URL to database
+		postPhoto: async (parent, { url, user_id }) => {
 			//create new model for our db
-			const newPhoto = new Photo({ url });
+			const newPhoto = new Photo({ url, user_id });
 
 			//save model to database
-			const photo = await newPhoto.save();
+			const savedPhoto = await newPhoto.save();
 
-			//return new photo
-			return photo;
+			//return photo with populated user_id
+			return Photo.findById(savedPhoto._id).populate('user_id');
 		},
 	},
 };

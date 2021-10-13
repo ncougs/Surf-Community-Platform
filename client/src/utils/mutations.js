@@ -13,8 +13,8 @@ export const LOGIN = gql`
 `;
 
 export const POST_PHOTO = gql`
-	mutation POST_PHOTO($url: String!) {
-		postPhoto(url: $url) {
+	mutation POST_PHOTO($url: String!, $user_id: ID!) {
+		postPhoto(url: $url, user_id: $user_id) {
 			date
 			url
 			user_id {

@@ -36,7 +36,7 @@ const typeDefs = gql`
 			password: String!
 		): Auth
 		login(username: String!, password: String!): Auth
-		postPhoto(url: String): Photo
+		postPhoto(url: String, user_id: ID): Photo
 	}
 `;
 
