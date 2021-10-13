@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const LOGIN = gql`
+export const LOGIN = gql`
 	mutation userLogin($username: String!, $password: String!) {
 		login(username: $username, password: $password) {
 			user {
@@ -12,4 +12,14 @@ const LOGIN = gql`
 	}
 `;
 
-export default LOGIN;
+export const POST_PHOTO = gql`
+	mutation POST_PHOTO($url: String!) {
+		postPhoto(url: $url) {
+			date
+			url
+			user_id {
+				username
+			}
+		}
+	}
+`;

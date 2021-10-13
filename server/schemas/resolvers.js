@@ -75,13 +75,7 @@ const resolvers = {
 		},
 
 		//post photo to cloudinary cdn
-		postPhoto: async (parent, { image }) => {
-			//upload media to cloudinary cdn - returns a promise
-			const upload = await cloudinary.uploader.upload(image);
-
-			//get url from upload object
-			const { url } = upload;
-
+		postPhoto: async (parent, { url }) => {
 			//create new model for our db
 			const newPhoto = new Photo({ url });
 

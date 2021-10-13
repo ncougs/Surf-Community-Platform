@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
-import LOGIN from '../utils/mutations';
+import { LOGIN } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
