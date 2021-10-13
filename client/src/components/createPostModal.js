@@ -8,10 +8,18 @@ import Auth from '../utils/auth';
 
 const CreatePostModal = ({ openModal, closeModal }) => {
 	const [image, setImage] = useState('');
+	const [location, setLocation] = useState('');
 
 	const [postPhoto, { data, loading, error }] = useMutation(POST_PHOTO);
 
-	const uploadImage = async () => {
+	const clearPostData = () => {
+		setImage('');
+		setLocation('');
+	};
+
+	const uploadImage = async (e) => {
+		e.preventDefault();
+		clearPostData();
 		try {
 			const {
 				data: { _id },
@@ -40,6 +48,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 			});
 
 			console.log(data);
+			closeModal();
 		} catch (e) {
 			console.log(e.message);
 		}
@@ -55,7 +64,32 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 			<Modal.Header className='justify-content-center'>
 				<Modal.Title>Create Post</Modal.Title>
 			</Modal.Header>
-			<Modal.Body></Modal.Body>
+			<Modal.Body>
+				<Form onSubmit={uploadImage}>
+					<Form.Group className='mb-3' controlId='username'>
+						<Form.Label>Location</Form.Label>
+						<Form.Control
+							required
+							type='text'
+							placeholder='Anglesea'
+							value={location}
+							onChange={(e) => {
+								setLocation(e.target.value);
+							}}
+						/>
+					</Form.Group>
+
+					<Form.Group controlId='formFileSm' className='mb-3'>
+						<Form.Control
+							required
+							type='file'
+							size='sm'
+							onChange={(e) => setImage(e.target.files[0])}
+						/>
+					</Form.Group>
+					<Button type='submit'>Upload Photo</Button>
+				</Form>
+			</Modal.Body>
 		</Modal>
 	);
 };
