@@ -11,6 +11,10 @@ const VideoSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 	},
+	locationID: {
+		type: Schema.Types.ObjectId,
+		ref: 'Location',
+	},
 });
 
 const Video = mongoose.model('Video', VideoSchema);

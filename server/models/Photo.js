@@ -11,6 +11,10 @@ const PhotoSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 	},
+	locationID: {
+		type: Schema.Types.ObjectId,
+		ref: 'Location',
+	},
 });
 
 const Photo = mongoose.model('Photo', PhotoSchema);
