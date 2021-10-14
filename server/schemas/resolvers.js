@@ -1,4 +1,4 @@
-const { User, Photo } = require('../models');
+const { User, Photo, Location } = require('../models');
 const { signToken } = require('../utlis/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const cloudinary = require('../utlis/cloudinary');
@@ -18,6 +18,16 @@ const resolvers = {
 		//find all photos
 		photos: async () => {
 			return Photo.find({}).populate('user_id');
+		},
+
+		//get all locations
+		locations: async () => {
+			return Location.find({});
+		},
+
+		//get all locations
+		location: async (parent, { id }) => {
+			return Location.findById(id);
 		},
 	},
 
@@ -84,6 +94,18 @@ const resolvers = {
 
 			//return photo with populated user_id
 			return Photo.findById(savedPhoto._id).populate('user_id');
+		},
+
+		//Add a new location
+		addLocation: async (parent, { name, surflineID }) => {
+			//create new model for our db
+			const newLocation = new Location({ name, surflineID });
+
+			//save model to database
+			const savedLocation = await newLocation.save();
+
+			//return photo with populated user_id
+			return savedLocation;
 		},
 	},
 };
