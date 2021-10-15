@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import { Modal, Button, Form, Spinner } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
 import { POST_PHOTO } from '../utils/mutations';
@@ -73,7 +73,21 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 							onChange={(e) => setImage(e.target.files[0])}
 						/>
 					</Form.Group>
-					<Button type='submit'>Upload Photo</Button>
+					{loading ? (
+						<Button variant='primary' disabled>
+							<Spinner
+								as='span'
+								animation='border'
+								size='sm'
+								role='status'
+								aria-hidden='true'
+								className='mx-1'
+							/>
+							Loading...
+						</Button>
+					) : (
+						<Button type='submit'>Upload Photo</Button>
+					)}
 				</Form>
 			</Modal.Body>
 		</Modal>
