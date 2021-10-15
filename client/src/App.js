@@ -6,6 +6,8 @@ import {
 	createHttpLink,
 } from '@apollo/client';
 
+import { createUploadLink } from 'apollo-upload-client';
+
 import { setContext } from '@apollo/client/link/context';
 
 import Home from './pages/Home';
@@ -26,8 +28,12 @@ const authLink = setContext((_, { headers }) => {
 	};
 });
 
+// link: authLink.concat(httpLink),
+
 const client = new ApolloClient({
-	link: authLink.concat(httpLink),
+	link: createUploadLink({
+		uri: '/graphql',
+	}),
 	cache: new InMemoryCache(),
 });
 

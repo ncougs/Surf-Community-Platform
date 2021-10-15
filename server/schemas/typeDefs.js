@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+	scalar Upload
+
 	type User {
 		_id: ID
 		username: String
@@ -45,8 +47,8 @@ const typeDefs = gql`
 			password: String!
 		): Auth
 		login(username: String!, password: String!): Auth
-		postPhoto(url: String, user_id: ID): Photo
 		addLocation(name: String!, surflineID: String!): Location
+		postPhoto(file: Upload!, user_id: ID!, locationID: ID!): Photo!
 	}
 `;
 

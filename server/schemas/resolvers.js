@@ -2,8 +2,10 @@ const { User, Photo, Location } = require('../models');
 const { signToken } = require('../utlis/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const cloudinary = require('../utlis/cloudinary');
+const { GraphQLUpload } = require('graphql-upload');
 
 const resolvers = {
+	Upload: GraphQLUpload,
 	Query: {
 		//find all users
 		users: async () => {
@@ -84,18 +86,6 @@ const resolvers = {
 			return { token, user };
 		},
 
-		//Add photo URL to database
-		postPhoto: async (parent, { url, user_id }) => {
-			//create new model for our db
-			const newPhoto = new Photo({ url, user_id });
-
-			//save model to database
-			const savedPhoto = await newPhoto.save();
-
-			//return photo with populated user_id
-			return Photo.findById(savedPhoto._id).populate('user_id');
-		},
-
 		//Add a new location
 		addLocation: async (parent, { name, surflineID }) => {
 			//create new model for our db
@@ -106,6 +96,35 @@ const resolvers = {
 
 			//return photo with populated user_id
 			return savedLocation;
+		},
+
+		//add a new upload to our database
+		postPhoto: async (parent, { file, user_id, locationID }) => {
+			//get read stream out of uploaded file
+			const { createReadStream } = await file;
+
+			const stream = createReadStream();
+
+			//await upload of stream to cloudinary
+			const upload = await new Promise((resolve, reject) => {
+				const uploadStream = cloudinary.uploader.upload_stream((err, file) =>
+					err ? reject(err) : resolve(file)
+				);
+
+				stream.pipe(uploadStream);
+			});
+
+			//get url from uploaded image
+			const { url } = upload;
+
+			//create new model for our db
+			const newPhoto = new Photo({ url, user_id, locationID });
+
+			//save model to database
+			const photo = await newPhoto.save();
+
+			//return photo
+			return photo;
 		},
 	},
 };

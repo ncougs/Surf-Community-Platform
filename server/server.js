@@ -1,6 +1,7 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
+const { graphqlUploadExpress } = require('graphql-upload');
 
 const session = require('express-session');
 
@@ -21,9 +22,12 @@ const sess = {
 };
 
 const server = new ApolloServer({
+	uploads: false,
 	typeDefs,
 	resolvers,
 });
+
+app.use(graphqlUploadExpress());
 
 server.applyMiddleware({ app });
 

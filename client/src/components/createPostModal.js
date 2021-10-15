@@ -7,10 +7,10 @@ import { POST_PHOTO } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const CreatePostModal = ({ openModal, closeModal }) => {
-	const [image, setImage] = useState('');
+	const [file, setImage] = useState('');
 	const [location, setLocation] = useState('');
 
-	const [postPhoto, { data, loading, error }] = useMutation(POST_PHOTO);
+	const [postPhoto, { loading, error }] = useMutation(POST_PHOTO);
 
 	const clearPostData = () => {
 		setImage('');
@@ -19,35 +19,21 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 
 	const uploadImage = async (e) => {
 		e.preventDefault();
-		clearPostData();
+
 		try {
 			const {
 				data: { _id },
 			} = Auth.getProfile();
 
-			const formData = new FormData();
-
-			formData.append('file', image);
-			formData.append('upload_preset', 'devSurfApp');
-			formData.append('cloud_name', 'dyhire8bc');
-
-			const upload = await fetch(
-				'https://api.cloudinary.com/v1_1/dyhire8bc/image/upload',
-				{
-					method: 'post',
-					body: formData,
-				}
-			);
-
-			const response = await upload.json();
-
-			const { url } = response;
-
-			const { data } = await postPhoto({
-				variables: { url, user_id: _id },
+			await postPhoto({
+				variables: {
+					file,
+					user_id: _id,
+					locationID: '6167a859c9ed2c5f1879c226',
+				},
 			});
 
-			console.log(data);
+			clearPostData();
 			closeModal();
 		} catch (e) {
 			console.log(e.message);

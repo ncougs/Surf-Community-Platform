@@ -13,13 +13,10 @@ export const LOGIN = gql`
 `;
 
 export const POST_PHOTO = gql`
-	mutation POST_PHOTO($url: String!, $user_id: ID!) {
-		postPhoto(url: $url, user_id: $user_id) {
-			date
+	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!) {
+		postPhoto(file: $file, user_id: $user_id, locationID: $locationID) {
 			url
-			user_id {
-				username
-			}
+			date
 		}
 	}
 `;
