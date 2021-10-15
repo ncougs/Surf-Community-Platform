@@ -7,7 +7,7 @@ import { LOGIN } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-const LoginModal = ({ openModal, closeLoginModal }) => {
+const LoginModal = ({ openModal, closeLoginModal, openSignupModal }) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -37,50 +37,61 @@ const LoginModal = ({ openModal, closeLoginModal }) => {
 	};
 
 	return (
-		<Modal
-			show={openModal}
-			onHide={() => {
-				closeLoginModal();
-				removeErrorMessage();
-			}}
-		>
-			<Modal.Header className='justify-content-center'>
-				<Modal.Title>Login</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				<Form onSubmit={handleLogin}>
-					<Form.Group className='mb-3' controlId='username'>
-						<Form.Label>Username</Form.Label>
-						<Form.Control
-							required
-							type='text'
-							placeholder='Username'
-							value={username}
-							onChange={(e) => {
-								setUsername(e.target.value);
-								removeErrorMessage();
-							}}
-						/>
-					</Form.Group>
+		<>
+			<Modal
+				show={openModal}
+				onHide={() => {
+					closeLoginModal();
+					removeErrorMessage();
+				}}
+			>
+				<Modal.Header className='justify-content-center'>
+					<Modal.Title>Login</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form onSubmit={handleLogin}>
+						<Form.Group className='mb-3' controlId='username'>
+							<Form.Label>Username</Form.Label>
+							<Form.Control
+								required
+								type='text'
+								placeholder='Username'
+								value={username}
+								onChange={(e) => {
+									setUsername(e.target.value);
+									removeErrorMessage();
+								}}
+							/>
+						</Form.Group>
 
-					<Form.Group className='mb-3' controlId='password'>
-						<Form.Label>Password</Form.Label>
-						<Form.Control
-							required
-							type='password'
-							placeholder='Password'
-							value={password}
-							onChange={(e) => {
-								setPassword(e.target.value);
-								removeErrorMessage();
+						<Form.Group className='mb-3' controlId='password'>
+							<Form.Label>Password</Form.Label>
+							<Form.Control
+								required
+								type='password'
+								placeholder='Password'
+								value={password}
+								onChange={(e) => {
+									setPassword(e.target.value);
+									removeErrorMessage();
+								}}
+							/>
+						</Form.Group>
+						{errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
+						<Button type='submit'>Login</Button>
+						<Button
+							type='submit'
+							onClick={() => {
+								closeLoginModal();
+								openSignupModal();
 							}}
-						/>
-					</Form.Group>
-					{errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
-					<Button type='submit'>Login</Button>
-				</Form>
-			</Modal.Body>
-		</Modal>
+						>
+							Sign Up ?
+						</Button>
+					</Form>
+				</Modal.Body>
+			</Modal>
+		</>
 	);
 };
 
