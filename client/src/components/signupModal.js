@@ -3,23 +3,46 @@ import { useEffect, useState } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations';
+import { CREATE_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-const SignupModal = ({ openModal, closeModal, closeLoginModal }) => {
+const SignupModal = ({ openModal, closeModal }) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 
-	const clearLoginData = () => {
+	const clearSignUpData = () => {
 		setUsername('');
 		setPassword('');
+		setFirstName('');
+		setLastName('');
+		setEmail('');
 	};
 
-	const [login, { data, loading, error }] = useMutation(LOGIN);
+	const [createUser, { data, loading, error }] = useMutation(CREATE_USER);
+
+	const handleSignup = async (e) => {
+		e.preventDefault();
+
+		try {
+			const { data } = await createUser({
+				variables: {
+					username,
+					first_name: firstName,
+					last_name: lastName,
+					email,
+					password,
+				},
+			});
+			Auth.login(data.createUser.token);
+			clearSignUpData();
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	return (
 		<Modal
@@ -32,7 +55,7 @@ const SignupModal = ({ openModal, closeModal, closeLoginModal }) => {
 				<Modal.Title>Sign Up</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form onSubmit={''}>
+				<Form onSubmit={handleSignup}>
 					<Form.Group className='mb-3' controlId='username'>
 						<Form.Label>Username</Form.Label>
 						<Form.Control
