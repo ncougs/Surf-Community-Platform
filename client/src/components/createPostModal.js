@@ -1,20 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Button, Form, Spinner } from 'react-bootstrap';
 
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { POST_PHOTO } from '../utils/mutations';
+import { LOCATIONS } from '../utils/queries';
 
 import Auth from '../utils/auth';
 
 const CreatePostModal = ({ openModal, closeModal }) => {
 	const [file, setImage] = useState('');
-	const [location, setLocation] = useState('');
+	const [locationID, updateSelectedLocationID] = useState('');
+	const [locations, updateLocations] = useState([]);
 
 	const [postPhoto, { loading, error }] = useMutation(POST_PHOTO);
 
+	useQuery(LOCATIONS, {
+		onCompleted: (data) => updateLocations(data.locations),
+	});
+
 	const clearPostData = () => {
 		setImage('');
-		setLocation('');
 	};
 
 	const uploadImage = async (e) => {
@@ -29,7 +34,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 				variables: {
 					file,
 					user_id: _id,
-					locationID: '6167a859c9ed2c5f1879c226',
+					locationID,
 				},
 			});
 
@@ -41,56 +46,60 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	};
 
 	return (
-		<Modal
-			show={openModal}
-			onHide={() => {
-				closeModal();
-			}}
-		>
-			<Modal.Header className='justify-content-center'>
-				<Modal.Title>Create Post</Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				<Form onSubmit={uploadImage}>
-					<Form.Group className='mb-3' controlId='username'>
-						<Form.Label>Location</Form.Label>
-						<Form.Control
-							required
-							type='text'
-							placeholder='Anglesea'
-							value={location}
-							onChange={(e) => {
-								setLocation(e.target.value);
-							}}
-						/>
-					</Form.Group>
+		<>
+			<Modal
+				show={openModal}
+				onHide={() => {
+					closeModal();
+				}}
+			>
+				<Modal.Header className='justify-content-center'>
+					<Modal.Title>Create Post</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form onSubmit={uploadImage}>
+						<Form.Group className='mb-3' controlId='username'>
+							<Form.Control
+								as='select'
+								aria-label='Default select example'
+								onChange={(e) => updateSelectedLocationID(e.target.value)}
+							>
+								<option>{'--Please Select--'}</option>
+								{locations.map((location, i) => (
+									<option key={i} value={location._id}>
+										{location.name}
+									</option>
+								))}
+							</Form.Control>
+						</Form.Group>
 
-					<Form.Group controlId='formFileSm' className='mb-3'>
-						<Form.Control
-							required
-							type='file'
-							size='sm'
-							onChange={(e) => setImage(e.target.files[0])}
-						/>
-					</Form.Group>
-					{loading ? (
-						<Button variant='primary' disabled>
-							<Spinner
-								as='span'
-								animation='border'
+						<Form.Group controlId='formFileSm' className='mb-3'>
+							<Form.Control
+								required
+								type='file'
 								size='sm'
-								role='status'
-								aria-hidden='true'
-								className='mx-1'
+								onChange={(e) => setImage(e.target.files[0])}
 							/>
-							Loading...
-						</Button>
-					) : (
-						<Button type='submit'>Upload Photo</Button>
-					)}
-				</Form>
-			</Modal.Body>
-		</Modal>
+						</Form.Group>
+						{loading ? (
+							<Button variant='primary' disabled>
+								<Spinner
+									as='span'
+									animation='border'
+									size='sm'
+									role='status'
+									aria-hidden='true'
+									className='mx-1'
+								/>
+								Loading...
+							</Button>
+						) : (
+							<Button type='submit'>Upload Photo</Button>
+						)}
+					</Form>
+				</Modal.Body>
+			</Modal>
+		</>
 	);
 };
 export default CreatePostModal;
