@@ -24,6 +24,13 @@ const typeDefs = gql`
 		locationID: Location!
 	}
 
+	type Video {
+		url: String!
+		date: String!
+		user_id: User!
+		locationID: Location!
+	}
+
 	type Location {
 		_id: ID
 		name: String!
@@ -49,6 +56,7 @@ const typeDefs = gql`
 		login(username: String!, password: String!): Auth
 		addLocation(name: String!, surflineID: String!): Location
 		postPhoto(file: Upload!, user_id: ID!, locationID: ID!): Photo!
+		postVideo(file: Upload!, user_id: ID!, locationID: ID!): Video!
 	}
 `;
 

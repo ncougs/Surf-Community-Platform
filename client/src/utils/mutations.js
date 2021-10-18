@@ -21,6 +21,15 @@ export const POST_PHOTO = gql`
 	}
 `;
 
+export const POST_VIDEO = gql`
+	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!) {
+		postVideo(file: $file, user_id: $user_id, locationID: $locationID) {
+			url
+			date
+		}
+	}
+`;
+
 export const CREATE_USER = gql`
 	mutation (
 		$username: String!

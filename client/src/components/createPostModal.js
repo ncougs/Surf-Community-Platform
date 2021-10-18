@@ -3,6 +3,7 @@ import { Modal, Button, Form, Spinner } from 'react-bootstrap';
 
 import { useMutation, useQuery } from '@apollo/client';
 import { POST_PHOTO } from '../utils/mutations';
+import { POST_VIDEO } from '../utils/mutations';
 import { LOCATIONS } from '../utils/queries';
 
 import Auth from '../utils/auth';
@@ -12,7 +13,11 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	const [locationID, updateSelectedLocationID] = useState('');
 	const [locations, updateLocations] = useState([]);
 
-	const [postPhoto, { loading, error }] = useMutation(POST_PHOTO);
+	const [postPhoto, { loading: photoLoading, error: photoError }] =
+		useMutation(POST_PHOTO);
+
+	const [postVideo, { loading: videoLoading, error: videoError }] =
+		useMutation(POST_VIDEO);
 
 	useQuery(LOCATIONS, {
 		onCompleted: (data) => updateLocations(data.locations),
@@ -45,6 +50,29 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 		}
 	};
 
+	const uploadVideo = async (e) => {
+		e.preventDefault();
+
+		try {
+			const {
+				data: { _id },
+			} = Auth.getProfile();
+
+			await postVideo({
+				variables: {
+					file,
+					user_id: _id,
+					locationID,
+				},
+			});
+
+			clearPostData();
+			closeModal();
+		} catch (e) {
+			console.log(e.message);
+		}
+	};
+
 	return (
 		<>
 			<Modal
@@ -57,7 +85,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 					<Modal.Title>Create Post</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form onSubmit={uploadImage}>
+					<Form onSubmit={uploadVideo}>
 						<Form.Group className='mb-3' controlId='username'>
 							<Form.Control
 								as='select'
@@ -81,7 +109,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 								onChange={(e) => setImage(e.target.files[0])}
 							/>
 						</Form.Group>
-						{loading ? (
+						{photoLoading || videoLoading ? (
 							<Button variant='primary' disabled>
 								<Spinner
 									as='span'

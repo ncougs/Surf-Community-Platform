@@ -1,4 +1,4 @@
-const { User, Photo, Location } = require('../models');
+const { User, Photo, Video, Location } = require('../models');
 const { signToken } = require('../utlis/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const cloudinary = require('../utlis/cloudinary');
@@ -27,7 +27,7 @@ const resolvers = {
 			return Location.find({});
 		},
 
-		//get all locations
+		//get a location
 		location: async (parent, { id }) => {
 			return Location.findById(id);
 		},
@@ -98,7 +98,7 @@ const resolvers = {
 			return savedLocation;
 		},
 
-		//add a new upload to our database
+		//add a new photo to our database
 		postPhoto: async (parent, { file, user_id, locationID }) => {
 			//get read stream out of uploaded file
 			const { createReadStream } = await file;
@@ -125,6 +125,39 @@ const resolvers = {
 
 			//return photo
 			return photo;
+		},
+
+		//add a new photo to our database
+		postVideo: async (parent, { file, user_id, locationID }) => {
+			//get read stream out of uploaded file
+			const { createReadStream } = await file;
+
+			const stream = createReadStream();
+
+			//Cloudinary::Uploader.upload("audio_sample.mp3",
+			//   :resource_type => :video)
+
+			//await upload of stream to cloudinary
+			const upload = await new Promise((resolve, reject) => {
+				const uploadStream = cloudinary.uploader.upload_stream(
+					{ resource_type: 'video' },
+					(err, file) => (err ? reject(err) : resolve(file))
+				);
+
+				stream.pipe(uploadStream);
+			});
+
+			//get url from uploaded image
+			const { url } = upload;
+
+			//create new model for our db
+			const newVideo = new Video({ url, user_id, locationID });
+
+			//save model to database
+			const video = await newVideo.save();
+
+			//return photo
+			return video;
 		},
 	},
 };
