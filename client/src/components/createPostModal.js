@@ -9,7 +9,7 @@ import { LOCATIONS } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const CreatePostModal = ({ openModal, closeModal }) => {
-	const [file, setImage] = useState('');
+	const [file, setFile] = useState('');
 	const [locationID, updateSelectedLocationID] = useState('');
 	const [locations, updateLocations] = useState([]);
 
@@ -24,12 +24,25 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	});
 
 	const clearPostData = () => {
-		setImage('');
+		setFile('');
 	};
 
-	const uploadImage = async (e) => {
+	const handleUpload = async (e) => {
 		e.preventDefault();
 
+		file.name
+			.split('.')
+			.at(-1)
+			.toLowerCase()
+			.match(/^(mp4|mov)$/)
+			? await uploadVideo()
+			: await uploadImage();
+
+		clearPostData();
+		closeModal();
+	};
+
+	const uploadImage = async () => {
 		try {
 			const {
 				data: { _id },
@@ -42,17 +55,12 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 					locationID,
 				},
 			});
-
-			clearPostData();
-			closeModal();
 		} catch (e) {
 			console.log(e.message);
 		}
 	};
 
-	const uploadVideo = async (e) => {
-		e.preventDefault();
-
+	const uploadVideo = async () => {
 		try {
 			const {
 				data: { _id },
@@ -65,9 +73,6 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 					locationID,
 				},
 			});
-
-			clearPostData();
-			closeModal();
 		} catch (e) {
 			console.log(e.message);
 		}
@@ -85,7 +90,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 					<Modal.Title>Create Post</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form onSubmit={uploadVideo}>
+					<Form onSubmit={handleUpload}>
 						<Form.Group className='mb-3' controlId='username'>
 							<Form.Control
 								as='select'
@@ -106,7 +111,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 								required
 								type='file'
 								size='sm'
-								onChange={(e) => setImage(e.target.files[0])}
+								onChange={(e) => setFile(e.target.files[0])}
 							/>
 						</Form.Group>
 						{photoLoading || videoLoading ? (
