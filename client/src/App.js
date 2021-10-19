@@ -10,7 +10,10 @@ import { createUploadLink } from 'apollo-upload-client';
 
 import { setContext } from '@apollo/client/link/context';
 
+import { Container } from 'react-bootstrap';
+import NavigationBar from './features/Navbar';
 import Home from './pages/Home';
+import Locations from './pages/locations';
 
 const httpLink = createHttpLink({
 	uri: '/graphql',
@@ -40,9 +43,13 @@ const App = () => {
 	return (
 		<ApolloProvider client={client}>
 			<Router>
-				<Switch>
-					<Route path='/' exact component={() => <Home />} />
-				</Switch>
+				<NavigationBar />
+				<Container>
+					<Switch>
+						<Route path='/' exact component={Home} />
+						<Route path='/locations' exact component={Locations} />
+					</Switch>
+				</Container>
 			</Router>
 		</ApolloProvider>
 	);

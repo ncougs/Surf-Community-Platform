@@ -6,6 +6,8 @@ export const LOCATIONS = gql`
 			_id
 			name
 			surflineID
+			lat
+			lng
 		}
 	}
 `;

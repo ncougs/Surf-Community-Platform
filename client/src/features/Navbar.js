@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button, Form, Navbar, Nav, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import LoginModal from '../components/LoginModal';
 import CreatePostModal from '../components/createPostModal';
 import SignupModal from '../components/signupModal';
@@ -28,7 +29,9 @@ const NavigationBar = () => {
 		<>
 			<Navbar bg='light' expand='lg'>
 				<Container fluid>
-					<Navbar.Brand href='#home'>Surf Community Application</Navbar.Brand>
+					<Navbar.Brand>
+						<Link to='/'>Surf Community Application</Link>
+					</Navbar.Brand>
 					<Navbar.Toggle aria-controls='basic-navbar-nav' />
 					<Form className='flex-grow-1'>
 						<Form.Group controlId='formBasicEmail'>
@@ -38,7 +41,9 @@ const NavigationBar = () => {
 					<Navbar.Collapse id='basic-navbar-nav' className='flex-grow-0'>
 						<Nav>
 							<Nav.Link href='#home'>About</Nav.Link>
-							<Nav.Link href='#link'>Locations</Nav.Link>
+							<Nav.Link>
+								<Link to='/locations'>Locations</Link>
+							</Nav.Link>
 							{isLoggedIn ? (
 								<>
 									<Nav.Link onClick={Auth.logout}>Log out</Nav.Link>

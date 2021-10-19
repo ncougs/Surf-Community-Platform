@@ -1,11 +1,5 @@
-import NavigationBar from '../features/Navbar';
-
 const Home = () => {
-	return (
-		<>
-			<NavigationBar />
-		</>
-	);
+	return <h1>Hello Home Page</h1>;
 };
 
 export default Home;

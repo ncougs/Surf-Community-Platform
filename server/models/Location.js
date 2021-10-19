@@ -7,6 +7,8 @@ const LocationSchema = new Schema({
 		unique: true,
 	},
 	surflineID: String,
+	lat: Number,
+	lng: Number,
 });
 
 const Location = mongoose.model('Location', LocationSchema);

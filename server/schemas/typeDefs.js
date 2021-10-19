@@ -35,6 +35,8 @@ const typeDefs = gql`
 		_id: ID
 		name: String!
 		surflineID: String!
+		lat: Float!
+		lng: Float!
 	}
 
 	type Query {
@@ -54,7 +56,12 @@ const typeDefs = gql`
 			password: String!
 		): Auth
 		login(username: String!, password: String!): Auth
-		addLocation(name: String!, surflineID: String!): Location
+		addLocation(
+			name: String!
+			surflineID: String!
+			lat: Float!
+			lng: Float!
+		): Location
 		postPhoto(file: Upload!, user_id: ID!, locationID: ID!): Photo!
 		postVideo(file: Upload!, user_id: ID!, locationID: ID!): Video!
 	}
