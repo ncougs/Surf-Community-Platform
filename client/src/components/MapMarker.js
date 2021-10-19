@@ -1,6 +1,7 @@
 import { InfoCircleFill } from 'react-bootstrap-icons';
 import { useState } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const MapMarker = ({ name }) => {
 	const [showDescription, setShowDescription] = useState(false);
@@ -27,7 +28,9 @@ const MapMarker = ({ name }) => {
 					<Popover>
 						<Popover.Header as='h3'>{name}</Popover.Header>
 						<Popover.Body>
-							<strong>Holy guacamole!</strong> Check this info.
+							<Link to={`/location/${name}`}>
+								Woahhh get more info here at the locations page
+							</Link>
 						</Popover.Body>
 					</Popover>
 				}
