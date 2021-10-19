@@ -88,11 +88,8 @@ const resolvers = {
 
 		//Add a new location
 		addLocation: async (parent, { name, surflineID, lat, lng }) => {
-			console.log(lat, lng);
 			//create new model for our db
 			const newLocation = new Location({ name, surflineID, lat, lng });
-
-			console.log(newLocation);
 
 			//save model to database
 			const savedLocation = await newLocation.save();

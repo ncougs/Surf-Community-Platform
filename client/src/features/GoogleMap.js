@@ -2,9 +2,7 @@ import GoogleMapReact from 'google-map-react';
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { LOCATIONS } from '../utils/queries';
-
-//test marker
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+import MapMarker from '../components/MapMarker';
 
 const Map = () => {
 	const [locations, updateLocations] = useState([]);
@@ -28,11 +26,13 @@ const Map = () => {
 				defaultCenter={defaultLocation.center}
 				defaultZoom={defaultLocation.zoom}
 			>
-				<AnyReactComponent
-					lat={locations[0].lat}
-					lng={locations[0].lng}
-					text='My Marker'
-				/>
+				{locations.map((location) => (
+					<MapMarker
+						lat={location.lat}
+						lng={location.lng}
+						name={location.name}
+					/>
+				))}
 			</GoogleMapReact>
 		</div>
 	);

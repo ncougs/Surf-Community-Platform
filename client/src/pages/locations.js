@@ -1,5 +1,5 @@
 import { Form, FloatingLabel, Container } from 'react-bootstrap';
-import Map from '../components/GoogleMap';
+import Map from '../features/GoogleMap';
 
 const Locations = () => {
 	return (
