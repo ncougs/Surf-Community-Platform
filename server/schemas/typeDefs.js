@@ -26,6 +26,7 @@ const typeDefs = gql`
 	}
 
 	type Video {
+		_id: ID!
 		url: String!
 		date: String!
 		user_id: User!

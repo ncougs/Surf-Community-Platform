@@ -47,7 +47,7 @@ const LocationPage = () => {
 			</Row>
 			{showComments && <ShowComments />}
 			{showPhotos && <ShowPhotos location={location} />}
-			{showVideos && <ShowVideos />}
+			{showVideos && <ShowVideos location={location} />}
 		</>
 	);
 };
