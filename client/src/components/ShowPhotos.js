@@ -13,7 +13,7 @@ const ShowPhotos = ({ location }) => {
 	return (
 		<>
 			<h4>Show Photos</h4>
-			{photos ? (
+			{photos.length ? (
 				photos.map((photo) => {
 					return <img src={photo.url} alt='surf'></img>;
 				})

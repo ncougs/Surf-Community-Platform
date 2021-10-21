@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { LOCATION_TODAY_VIDEOS } from '../utils/queries';
 import { useState } from 'react';
+import ReactPlayer from 'react-player';
 
 const ShowVideos = ({ location }) => {
 	const [videos, updatePhotos] = useState([]);
@@ -13,9 +14,11 @@ const ShowVideos = ({ location }) => {
 	return (
 		<>
 			<h4>Show Videos</h4>
-			{videos ? (
-				videos.map((photo) => {
-					return <img src={videos.url} alt='surf'></img>;
+			{videos.length ? (
+				videos.map((video) => {
+					return (
+						<ReactPlayer url={video.url} className='react-player' controls />
+					);
 				})
 			) : (
 				<p>No videos uploaded for the day</p>
