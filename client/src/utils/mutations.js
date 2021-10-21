@@ -12,24 +12,6 @@ export const LOGIN = gql`
 	}
 `;
 
-export const POST_PHOTO = gql`
-	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!) {
-		postPhoto(file: $file, user_id: $user_id, locationID: $locationID) {
-			url
-			date
-		}
-	}
-`;
-
-export const POST_VIDEO = gql`
-	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!) {
-		postVideo(file: $file, user_id: $user_id, locationID: $locationID) {
-			url
-			date
-		}
-	}
-`;
-
 export const CREATE_USER = gql`
 	mutation (
 		$username: String!
@@ -50,6 +32,34 @@ export const CREATE_USER = gql`
 				email
 			}
 			token
+		}
+	}
+`;
+
+export const POST_PHOTO = gql`
+	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!) {
+		postPhoto(file: $file, user_id: $user_id, locationID: $locationID) {
+			url
+			date
+		}
+	}
+`;
+
+export const POST_VIDEO = gql`
+	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!) {
+		postVideo(file: $file, user_id: $user_id, locationID: $locationID) {
+			url
+			date
+		}
+	}
+`;
+
+export const POST_COMMENT = gql`
+	mutation ($body: String!, $user_id: ID!, $locationID: ID!) {
+		postComment(body: $body, user_id: $user_id, locationID: $locationID) {
+			_id
+			body
+			date
 		}
 	}
 `;

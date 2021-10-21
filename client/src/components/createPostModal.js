@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Modal, Button, Form, Spinner } from 'react-bootstrap';
+import { Modal, Button, Form, Spinner, FloatingLabel } from 'react-bootstrap';
 
 import { useMutation, useQuery } from '@apollo/client';
 import { POST_PHOTO } from '../utils/mutations';
 import { POST_VIDEO } from '../utils/mutations';
+import { POST_COMMENT } from '../utils/mutations';
 import { LOCATIONS } from '../utils/queries';
 
 import Auth from '../utils/auth';
 
 const CreatePostModal = ({ openModal, closeModal }) => {
 	const [file, setFile] = useState('');
+	const [comment, updateComment] = useState('');
 	const [locationID, updateSelectedLocationID] = useState('');
 	const [locations, updateLocations] = useState([]);
 
@@ -19,6 +21,9 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	const [postVideo, { loading: videoLoading, error: videoError }] =
 		useMutation(POST_VIDEO);
 
+	const [postComment, { loading: commentLoading, error: commentError }] =
+		useMutation(POST_COMMENT);
+
 	useQuery(LOCATIONS, {
 		onCompleted: (data) => updateLocations(data.locations),
 	});
@@ -27,9 +32,12 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 		setFile('');
 	};
 
-	const handleUpload = async (e) => {
+	const handleFormSubmit = (e) => {
 		e.preventDefault();
+		comment ? uploadComment() : handleUpload();
+	};
 
+	const handleUpload = async () => {
 		file.name
 			.split('.')
 			.at(-1)
@@ -40,6 +48,24 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 
 		clearPostData();
 		closeModal();
+	};
+
+	const uploadComment = async () => {
+		try {
+			const {
+				data: { _id },
+			} = Auth.getProfile();
+
+			await postComment({
+				variables: {
+					body: comment,
+					user_id: _id,
+					locationID,
+				},
+			});
+		} catch (e) {
+			console.log(e.message);
+		}
 	};
 
 	const uploadImage = async () => {
@@ -90,9 +116,10 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 					<Modal.Title>Create Post</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form onSubmit={handleUpload}>
+					<Form onSubmit={handleFormSubmit}>
 						<Form.Group className='mb-3' controlId='username'>
 							<Form.Control
+								required
 								as='select'
 								aria-label='Default select example'
 								onChange={(e) => updateSelectedLocationID(e.target.value)}
@@ -106,15 +133,27 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 							</Form.Control>
 						</Form.Group>
 
-						<Form.Group controlId='formFileSm' className='mb-3'>
+						<Form.Group controlId='uploadFile' className='mb-3'>
 							<Form.Control
-								required
 								type='file'
 								size='sm'
 								onChange={(e) => setFile(e.target.files[0])}
 							/>
 						</Form.Group>
-						{photoLoading || videoLoading ? (
+
+						<Form.Group controlId='comment' className='mb-3'>
+							<FloatingLabel
+								controlId='addComment'
+								label='Comment'
+								className='mb-3'
+								value={comment}
+								onChange={(e) => updateComment(e.target.value)}
+							>
+								<Form.Control as='textarea' />
+							</FloatingLabel>
+						</Form.Group>
+
+						{photoLoading || videoLoading || commentLoading ? (
 							<Button variant='primary' disabled>
 								<Spinner
 									as='span'
@@ -127,7 +166,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 								Loading...
 							</Button>
 						) : (
-							<Button type='submit'>Upload Photo</Button>
+							<Button type='submit'>Create Post</Button>
 						)}
 					</Form>
 				</Modal.Body>
