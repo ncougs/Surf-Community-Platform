@@ -1,4 +1,4 @@
-const { User, Photo, Video, Location } = require('../models');
+const { User, Photo, Video, Location, Comment } = require('../models');
 const { signToken } = require('../utlis/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const cloudinary = require('../utlis/cloudinary');
@@ -86,6 +86,35 @@ const resolvers = {
 			});
 
 			return todaysVideos;
+		},
+
+		//find all comments
+		comments: async () => {
+			return Comment.find({}).populate('user_id').populate('locationID');
+		},
+
+		//find all comments for the current day at a location
+		locationCurrentDayComments: async (parent, { location }) => {
+			const currentComments = await Comment.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const locationComents = currentComments.filter((comment) => {
+				if (comment.locationID.name === location) {
+					return comment;
+				}
+			});
+
+			const todaysComments = locationComents.filter((comment) => {
+				if (
+					moment(comment.date, 'x').format('DD/MMM/YYYY') ===
+					moment().format('DD/MMM/YYYY')
+				) {
+					return comment;
+				}
+			});
+
+			return todaysComments;
 		},
 
 		//find all videos for the current day at a location
@@ -245,6 +274,18 @@ const resolvers = {
 
 			//return photo
 			return video;
+		},
+
+		//add a new comment to our database
+		postComment: async (parent, { body, user_id, locationID }) => {
+			//create new model for our db
+			const newComment = new Comment({ body, user_id, locationID });
+
+			//save model to database
+			const comment = await newComment.save();
+
+			//return photo
+			return comment;
 		},
 	},
 };

@@ -33,6 +33,14 @@ const typeDefs = gql`
 		locationID: Location!
 	}
 
+	type Comment {
+		_id: ID!
+		body: String!
+		date: String!
+		user_id: User!
+		locationID: Location!
+	}
+
 	type Location {
 		_id: ID
 		name: String!
@@ -50,6 +58,8 @@ const typeDefs = gql`
 		videos: [Video]
 		currentDayVideos: [Video]
 		locationCurrentDayVideos(location: String!): [Video]
+		comments: [Comment]
+		locationCurrentDayComments(location: String!): [Comment]
 		locations: [Location]!
 		location(id: ID!): Location!
 	}
@@ -71,6 +81,7 @@ const typeDefs = gql`
 		): Location
 		postPhoto(file: Upload!, user_id: ID!, locationID: ID!): Photo!
 		postVideo(file: Upload!, user_id: ID!, locationID: ID!): Video!
+		postComment(body: String!, user_id: ID!, locationID: ID!): Comment!
 	}
 `;
 
