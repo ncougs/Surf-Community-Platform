@@ -160,3 +160,28 @@ export const LOCATION_TODAY_VIDEOS = gql`
 		}
 	}
 `;
+
+//Get all comments for the current day at a particular location
+export const LOCATION_TODAY_COMMENTS = gql`
+	query ($location: String!) {
+		locationCurrentDayComments(location: $location) {
+			_id
+			date
+			body
+			user_id {
+				_id
+				username
+				first_name
+				last_name
+				email
+			}
+			locationID {
+				_id
+				name
+				surflineID
+				lat
+				lng
+			}
+		}
+	}
+`;

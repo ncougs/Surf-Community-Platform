@@ -45,7 +45,7 @@ const LocationPage = () => {
 					Videos
 				</Col>
 			</Row>
-			{showComments && <ShowComments />}
+			{showComments && <ShowComments location={location} />}
 			{showPhotos && <ShowPhotos location={location} />}
 			{showVideos && <ShowVideos location={location} />}
 		</>
