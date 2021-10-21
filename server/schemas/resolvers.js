@@ -65,6 +65,53 @@ const resolvers = {
 			return todaysPhotos;
 		},
 
+		//find all videos
+		videos: async () => {
+			return Video.find({}).populate('user_id').populate('locationID');
+		},
+
+		//find all videos for the current day
+		currentDayVideos: async () => {
+			const currentVideos = await Video.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const todaysVideos = currentVideos.filter((video) => {
+				if (
+					moment(video.date, 'x').format('DD/MMM/YYYY') ===
+					moment().format('DD/MMM/YYYY')
+				) {
+					return video;
+				}
+			});
+
+			return todaysVideos;
+		},
+
+		//find all videos for the current day at a location
+		locationCurrentDayVideos: async (parent, { location }) => {
+			const currentVideos = await Video.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const locationVideos = currentVideos.filter((video) => {
+				if (video.locationID.name === location) {
+					return video;
+				}
+			});
+
+			const todaysVideos = locationVideos.filter((video) => {
+				if (
+					moment(video.date, 'x').format('DD/MMM/YYYY') ===
+					moment().format('DD/MMM/YYYY')
+				) {
+					return video;
+				}
+			});
+
+			return todaysVideos;
+		},
+
 		//get all locations
 		locations: async () => {
 			return Location.find({});
@@ -176,9 +223,6 @@ const resolvers = {
 			const { createReadStream } = await file;
 
 			const stream = createReadStream();
-
-			//Cloudinary::Uploader.upload("audio_sample.mp3",
-			//   :resource_type => :video)
 
 			//await upload of stream to cloudinary
 			const upload = await new Promise((resolve, reject) => {
