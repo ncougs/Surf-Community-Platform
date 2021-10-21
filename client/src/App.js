@@ -49,7 +49,7 @@ const App = () => {
 					<Switch>
 						<Route path='/' exact component={Home} />
 						<Route path='/locations' exact component={Locations} />
-						<Route path='/location/:name' exact component={LocationPage} />
+						<Route path='/location/:location' exact component={LocationPage} />
 					</Switch>
 				</Container>
 			</Router>

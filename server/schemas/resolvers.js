@@ -3,6 +3,7 @@ const { signToken } = require('../utlis/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const cloudinary = require('../utlis/cloudinary');
 const { GraphQLUpload } = require('graphql-upload');
+const moment = require('moment');
 
 const resolvers = {
 	Upload: GraphQLUpload,
@@ -19,7 +20,49 @@ const resolvers = {
 
 		//find all photos
 		photos: async () => {
-			return Photo.find({}).populate('user_id');
+			return Photo.find({}).populate('user_id').populate('locationID');
+		},
+
+		//find all photos for the current day
+		currentDayPhotos: async () => {
+			const currentPhotos = await Photo.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const todaysPhotos = currentPhotos.filter((photo) => {
+				if (
+					moment(photo.date, 'x').format('DD/MMM/YYYY') ===
+					moment().format('DD/MMM/YYYY')
+				) {
+					return photo;
+				}
+			});
+
+			return todaysPhotos;
+		},
+
+		//find all photos for the current day at a location
+		locationCurrentDayPhotos: async (parent, { location }) => {
+			const currentPhotos = await Photo.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const locationPhotos = currentPhotos.filter((photo) => {
+				if (photo.locationID.name === location) {
+					return photo;
+				}
+			});
+
+			const todaysPhotos = locationPhotos.filter((photo) => {
+				if (
+					moment(photo.date, 'x').format('DD/MMM/YYYY') ===
+					moment().format('DD/MMM/YYYY')
+				) {
+					return photo;
+				}
+			});
+
+			return todaysPhotos;
 		},
 
 		//get all locations

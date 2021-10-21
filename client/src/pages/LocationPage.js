@@ -7,7 +7,7 @@ import ShowPhotos from '../components/ShowPhotos';
 import ShowVideos from '../components/ShowVideos';
 
 const LocationPage = () => {
-	const { name } = useParams();
+	const { location } = useParams();
 	const currentDay = moment().format('dddd, Do MMMM YYYY');
 
 	const [showComments, setShowComments] = useState(false);
@@ -27,7 +27,7 @@ const LocationPage = () => {
 
 	return (
 		<>
-			<h2 className='text-center'>Hello {name} Page</h2>
+			<h2 className='text-center'>Hello {location} Page</h2>
 			<Row className='border border-2'>
 				<Col className='text-start'>19°</Col>
 				<Col className='text-center'>3ft</Col>
@@ -46,7 +46,7 @@ const LocationPage = () => {
 				</Col>
 			</Row>
 			{showComments && <ShowComments />}
-			{showPhotos && <ShowPhotos />}
+			{showPhotos && <ShowPhotos location={location} />}
 			{showVideos && <ShowVideos />}
 		</>
 	);

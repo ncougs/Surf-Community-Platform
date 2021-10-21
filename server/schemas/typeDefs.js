@@ -18,6 +18,7 @@ const typeDefs = gql`
 	}
 
 	type Photo {
+		_id: ID!
 		url: String!
 		date: String!
 		user_id: User!
@@ -43,6 +44,8 @@ const typeDefs = gql`
 		users: [User]!
 		user(id: ID!): User!
 		photos: [Photo]
+		currentDayPhotos: [Photo]
+		locationCurrentDayPhotos(location: String!): [Photo]
 		locations: [Location]!
 		location(id: ID!): Location!
 	}

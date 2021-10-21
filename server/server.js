@@ -27,15 +27,17 @@ const server = new ApolloServer({
 	resolvers,
 });
 
-app.use(graphqlUploadExpress());
+server.start().then(() => {
+	app.use(graphqlUploadExpress());
 
-server.applyMiddleware({ app });
+	server.applyMiddleware({ app });
 
-app.use(session(sess));
+	app.use(session(sess));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+	app.use(express.json());
+	app.use(express.urlencoded({ extended: true }));
+	app.use(express.static(path.join(__dirname, 'public')));
+});
 
 db.once('open', () => {
 	app.listen(PORT, () => {
