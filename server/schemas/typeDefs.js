@@ -76,7 +76,7 @@ const typeDefs = gql`
 		locationCurrentDayComments(location: String!): [Comment]
 		locations: [Location]!
 		location(id: ID!): Location!
-		surfData(surflineID: String!): [Wave]!
+		surfData(name: String!): [Wave]!
 	}
 
 	type Mutation {

@@ -5,10 +5,19 @@ import { useState } from 'react';
 import ShowComments from '../components/ShowComments';
 import ShowPhotos from '../components/ShowPhotos';
 import ShowVideos from '../components/ShowVideos';
+import { useQuery } from '@apollo/client';
+import { LOCATION_SURF_DATA } from '../utils/queries';
 
 const LocationPage = () => {
 	const { location } = useParams();
 	const currentDay = moment().format('dddd, Do MMMM YYYY');
+
+	const [surfData, updateSurfData] = useState([]);
+
+	useQuery(LOCATION_SURF_DATA, {
+		variables: { name: location },
+		onCompleted: (data) => updateSurfData(data.surfData),
+	});
 
 	const [showComments, setShowComments] = useState(false);
 	const [showVideos, setShowVideos] = useState(false);
@@ -30,7 +39,7 @@ const LocationPage = () => {
 			<h2 className='text-center'>Hello {location} Page</h2>
 			<Row className='border border-2'>
 				<Col className='text-start'>19°</Col>
-				<Col className='text-center'>3ft</Col>
+				<Col className='text-center'>{surfData[0]?.swells[0]?.height}</Col>
 				<Col className='text-end'>NE</Col>
 			</Row>
 			<p className='text-center'>{currentDay}</p>

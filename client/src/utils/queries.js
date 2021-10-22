@@ -185,3 +185,18 @@ export const LOCATION_TODAY_COMMENTS = gql`
 		}
 	}
 `;
+
+//Get surf data for a location
+export const LOCATION_SURF_DATA = gql`
+	query ($name: String!) {
+		surfData(name: $name) {
+			timestamp
+			utcOffset
+			swells {
+				direction
+				height
+				period
+			}
+		}
+	}
+`;

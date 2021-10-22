@@ -153,7 +153,9 @@ const resolvers = {
 		},
 
 		//get surf data for a location
-		surfData: async (parent, { surflineID }) => {
+		surfData: async (parent, { name }) => {
+			const { surflineID } = await Location.findOne({ name });
+
 			const request = await axios.get(
 				`https://services.surfline.com/kbyg/spots/forecasts/wave?spotId=${surflineID}&days=6&intervalHours=24`
 			);
