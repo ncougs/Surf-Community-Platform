@@ -4,6 +4,7 @@ const { AuthenticationError } = require('apollo-server-express');
 const cloudinary = require('../utlis/cloudinary');
 const { GraphQLUpload } = require('graphql-upload');
 const moment = require('moment');
+const axios = require('axios');
 
 const resolvers = {
 	Upload: GraphQLUpload,
@@ -149,6 +150,17 @@ const resolvers = {
 		//get a location
 		location: async (parent, { id }) => {
 			return Location.findById(id);
+		},
+
+		//get surf data for a location
+		surfData: async (parent, { surflineID }) => {
+			const request = await axios.get(
+				`https://services.surfline.com/kbyg/spots/forecasts/wave?spotId=${surflineID}&days=6&intervalHours=24`
+			);
+
+			if (request.status === 200) {
+				return request.data.data.wave;
+			}
 		},
 	},
 

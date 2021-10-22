@@ -49,6 +49,20 @@ const typeDefs = gql`
 		lng: Float!
 	}
 
+	type Swells {
+		height: Float
+		period: Int
+		direction: Float
+		directionMin: Float
+		optimalScore: Int
+	}
+
+	type Wave {
+		timestamp: String!
+		utcOffset: Int
+		swells: [Swells]
+	}
+
 	type Query {
 		users: [User]!
 		user(id: ID!): User!
@@ -62,6 +76,7 @@ const typeDefs = gql`
 		locationCurrentDayComments(location: String!): [Comment]
 		locations: [Location]!
 		location(id: ID!): Location!
+		surfData(surflineID: String!): [Wave]!
 	}
 
 	type Mutation {
