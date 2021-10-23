@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { User, Photo, Video, Location, Comment } = require('../models');
 const { signToken } = require('../utlis/auth');
 const { AuthenticationError } = require('apollo-server-express');
@@ -154,14 +155,22 @@ const resolvers = {
 
 		//get surf data for a location
 		surfData: async (parent, { name }) => {
-			const { surflineID } = await Location.findOne({ name });
+			const params =
+				'swellHeight,waveHeight,airTemperature,gust,swellDirection,windDirection,windSpeed';
 
-			const request = await axios.get(
-				`https://services.surfline.com/kbyg/spots/forecasts/wave?spotId=${surflineID}&days=6&intervalHours=24`
+			const { lat, lng } = await Location.findOne({ name });
+
+			const request = await axios(
+				`https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=noaa`,
+				{
+					headers: {
+						Authorization: process.env.stormglass_api_key,
+					},
+				}
 			);
 
 			if (request.status === 200) {
-				return request.data.data.wave;
+				return request.data.hours;
 			}
 		},
 	},
@@ -220,9 +229,9 @@ const resolvers = {
 		},
 
 		//Add a new location
-		addLocation: async (parent, { name, surflineID, lat, lng }) => {
+		addLocation: async (parent, { name, lat, lng }) => {
 			//create new model for our db
-			const newLocation = new Location({ name, surflineID, lat, lng });
+			const newLocation = new Location({ name, lat, lng });
 
 			//save model to database
 			const savedLocation = await newLocation.save();

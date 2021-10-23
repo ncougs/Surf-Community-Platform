@@ -6,7 +6,6 @@ const LocationSchema = new Schema({
 		type: String,
 		unique: true,
 	},
-	surflineID: String,
 	lat: Number,
 	lng: Number,
 });

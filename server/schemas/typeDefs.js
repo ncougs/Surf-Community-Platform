@@ -44,23 +44,23 @@ const typeDefs = gql`
 	type Location {
 		_id: ID
 		name: String!
-		surflineID: String!
 		lat: Float!
 		lng: Float!
 	}
 
-	type Swells {
-		height: Float
-		period: Int
-		direction: Float
-		directionMin: Float
-		optimalScore: Int
+	type NOAA {
+		noaa: Float
 	}
 
-	type Wave {
-		timestamp: String!
-		utcOffset: Int
-		swells: [Swells]
+	type SurfHour {
+		airTemperature: NOAA
+		gust: NOAA
+		swellDirection: NOAA
+		swellHeight: NOAA
+		time: String
+		waveHeight: NOAA
+		windDirection: NOAA
+		windSpeed: NOAA
 	}
 
 	type Query {
@@ -76,7 +76,7 @@ const typeDefs = gql`
 		locationCurrentDayComments(location: String!): [Comment]
 		locations: [Location]!
 		location(id: ID!): Location!
-		surfData(name: String!): [Wave]!
+		surfData(name: String!): [SurfHour]
 	}
 
 	type Mutation {
@@ -88,12 +88,7 @@ const typeDefs = gql`
 			password: String!
 		): Auth
 		login(username: String!, password: String!): Auth
-		addLocation(
-			name: String!
-			surflineID: String!
-			lat: Float!
-			lng: Float!
-		): Location
+		addLocation(name: String!, lat: Float!, lng: Float!): Location
 		postPhoto(file: Upload!, user_id: ID!, locationID: ID!): Photo!
 		postVideo(file: Upload!, user_id: ID!, locationID: ID!): Video!
 		postComment(body: String!, user_id: ID!, locationID: ID!): Comment!
