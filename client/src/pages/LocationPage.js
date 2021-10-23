@@ -7,6 +7,7 @@ import ShowPhotos from '../components/ShowPhotos';
 import ShowVideos from '../components/ShowVideos';
 import { useQuery } from '@apollo/client';
 import { LOCATION_SURF_DATA } from '../utils/queries';
+import SurfDataCard from '../components/surfDataCard';
 
 const LocationPage = () => {
 	const { location } = useParams();
@@ -37,10 +38,19 @@ const LocationPage = () => {
 	return (
 		<>
 			<h2 className='text-center'>Hello {location} Page</h2>
-			<Row className='border border-2'>
-				<Col className='text-start'>19°</Col>
-				<Col className='text-center'>{surfData[0]?.swells[0]?.height}</Col>
-				<Col className='text-end'>NE</Col>
+			<Row>
+				{surfData.length ? (
+					surfData.map((data) => (
+						<SurfDataCard
+							time={moment(data.time).utc().format('hh:mm a')}
+							height={data.waveHeight.noaa}
+							direction={data.windDirection.noaa}
+							degrees={data.airTemperature.noaa}
+						/>
+					))
+				) : (
+					<p>data loading...</p>
+				)}
 			</Row>
 			<p className='text-center'>{currentDay}</p>
 			<Row>

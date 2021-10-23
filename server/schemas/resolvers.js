@@ -155,13 +155,15 @@ const resolvers = {
 
 		//get surf data for a location
 		surfData: async (parent, { name }) => {
+			const end = moment().utc().endOf('day').unix();
+
 			const params =
 				'swellHeight,waveHeight,airTemperature,gust,swellDirection,windDirection,windSpeed';
 
 			const { lat, lng } = await Location.findOne({ name });
 
 			const request = await axios(
-				`https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=noaa`,
+				`https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=noaa&end=${end}`,
 				{
 					headers: {
 						Authorization: process.env.stormglass_api_key,
@@ -170,7 +172,15 @@ const resolvers = {
 			);
 
 			if (request.status === 200) {
-				return request.data.hours;
+				const filteredData = request.data.hours.filter((hour) => {
+					const timeStamp = moment(hour.time).utc().format('hh:mm a');
+
+					if (timeStamp.match(/^(06:00 am|12:00 pm|04:00 pm)$/)) {
+						return hour;
+					}
+				});
+
+				return filteredData;
 			}
 		},
 	},
