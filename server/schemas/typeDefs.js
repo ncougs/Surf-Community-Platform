@@ -48,19 +48,22 @@ const typeDefs = gql`
 		lng: Float!
 	}
 
-	type NOAA {
-		noaa: Float
+	type SurfData {
+		_id: ID
+		airTemperature: Float
+		gust: Float
+		swellDirection: Float
+		swellHeight: Float
+		dateTime: String
+		waveHeight: Float
+		windDirection: Float
+		windSpeed: Float
 	}
 
-	type SurfHour {
-		airTemperature: NOAA
-		gust: NOAA
-		swellDirection: NOAA
-		swellHeight: NOAA
-		time: String
-		waveHeight: NOAA
-		windDirection: NOAA
-		windSpeed: NOAA
+	type DailyData {
+		_id: ID
+		date: String
+		data: [SurfData]
 	}
 
 	type Query {
@@ -76,7 +79,7 @@ const typeDefs = gql`
 		locationCurrentDayComments(location: String!): [Comment]
 		locations: [Location]!
 		location(id: ID!): Location!
-		surfData(name: String!): [SurfHour]
+		surfData(name: String!): DailyData
 	}
 
 	type Mutation {

@@ -1,5 +1,12 @@
 require('dotenv').config();
-const { User, Photo, Video, Location, Comment } = require('../models');
+const {
+	User,
+	Photo,
+	Video,
+	Location,
+	Comment,
+	SurfData,
+} = require('../models');
 const { signToken } = require('../utlis/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const cloudinary = require('../utlis/cloudinary');
@@ -155,32 +162,104 @@ const resolvers = {
 
 		//get surf data for a location
 		surfData: async (parent, { name }) => {
+			//prepare paramateres
 			const end = moment().utc().endOf('day').unix();
+			const start = moment().utc().startOf('day');
 
 			const params =
 				'swellHeight,waveHeight,airTemperature,gust,swellDirection,windDirection,windSpeed';
 
-			const { lat, lng } = await Location.findOne({ name });
-
-			const request = await axios(
-				`https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=noaa&end=${end}`,
-				{
-					headers: {
-						Authorization: process.env.stormglass_api_key,
-					},
-				}
+			//find once location with the same name
+			const location = await Location.findOne({ name }).populate(
+				'dailySurfData'
 			);
 
-			if (request.status === 200) {
-				const filteredData = request.data.hours.filter((hour) => {
-					const timeStamp = moment(hour.time).utc().format('hh:mm a');
+			//IF daily surf data already exsits, return that data rather then seeking more from the API
+			if (
+				location.dailySurfData.find(
+					(data) =>
+						moment(data.date).format('YYYY-DD-MM') ===
+						start.format('YYYY-DD-MM')
+				)
+			) {
+				//return data witin our db
+				console.log('returning original data');
 
-					if (timeStamp.match(/^(06:00 am|12:00 pm|04:00 pm)$/)) {
-						return hour;
+				const filteredData = location.dailySurfData.filter(
+					(data) =>
+						moment(data.date).format('YYYY-DD-MM') ===
+						start.format('YYYY-DD-MM')
+				);
+
+				return filteredData[0];
+			} else {
+				//fetch new data from external api
+				console.log('fetching new data');
+
+				//stormglass api
+				const request = await axios(
+					`https://api.stormglass.io/v2/weather/point?lat=${location.lat}&lng=${location.lng}&params=${params}&source=noaa&end=${end}`,
+					{
+						headers: {
+							Authorization: process.env.stormglass_api_key,
+						},
 					}
-				});
+				);
 
-				return filteredData;
+				//on sucessfull request
+				if (request.status === 200) {
+					//find data at exactly 6am, 12pm and 4pm for the current day
+					const filteredData = request.data.hours.filter((hour) => {
+						const timeStamp = moment(hour.time).utc().format('hh:mm a');
+
+						if (timeStamp.match(/^(06:00 am|12:00 pm|04:00 pm)$/)) {
+							return hour;
+						}
+					});
+
+					//create new data model
+					const newSurfData = await SurfData.create({
+						date: moment().utc().startOf('day'),
+						data: [],
+					});
+
+					//push filtered data into new model
+					filteredData.forEach((data) => {
+						newSurfData.data.push({
+							dateTime: data.time,
+							airTemperature: data.airTemperature.noaa,
+							gust: data.gust.noaa,
+							swellDirection: data.swellDirection.noaa,
+							swellHeight: data.swellHeight.noaa,
+							waveHeight: data.waveHeight.noaa,
+							windDirection: data.windDirection.noaa,
+							windSpeed: data.windSpeed.noaa,
+						});
+					});
+
+					//save the new data model
+					await newSurfData.save();
+
+					//push new data into location
+					location.dailySurfData.push(newSurfData._id);
+
+					//save the main locaiton model back to the db
+					await location.save();
+
+					//Get updated location model
+					const updatedLocation = await Location.findOne({ name }).populate(
+						'dailySurfData'
+					);
+
+					//return todays location data from db
+					const result = updatedLocation.dailySurfData.filter(
+						(data) =>
+							moment(data.date).format('YYYY-DD-MM') ===
+							start.format('YYYY-DD-MM')
+					);
+
+					return result[0];
+				}
 			}
 		},
 	},

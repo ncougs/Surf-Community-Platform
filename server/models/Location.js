@@ -8,6 +8,12 @@ const LocationSchema = new Schema({
 	},
 	lat: Number,
 	lng: Number,
+	dailySurfData: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'SurfData',
+		},
+	],
 });
 
 const Location = mongoose.model('Location', LocationSchema);
