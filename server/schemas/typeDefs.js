@@ -10,6 +10,7 @@ const typeDefs = gql`
 		last_name: String
 		email: String
 		password: String
+		favourite_locations: [Location]
 	}
 
 	type Auth {
@@ -96,6 +97,7 @@ const typeDefs = gql`
 		postPhoto(file: Upload!, user_id: ID!, locationID: ID!): Photo!
 		postVideo(file: Upload!, user_id: ID!, locationID: ID!): Video!
 		postComment(body: String!, user_id: ID!, locationID: ID!): Comment!
+		favouriteLocation(user_id: ID!, location: String!): User!
 	}
 `;
 

@@ -8,7 +8,12 @@ const UserSchema = new Schema({
 	last_name: String,
 	email: String,
 	password: String,
-	favourite_locations: [String],
+	favourite_locations: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Location',
+		},
+	],
 });
 
 //Hash password on save

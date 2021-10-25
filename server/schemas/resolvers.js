@@ -401,6 +401,30 @@ const resolvers = {
 			//return photo
 			return comment;
 		},
+
+		//add a new favourtie location to you a user
+		favouriteLocation: async (parent, { location, user_id }) => {
+			//find the username within our db - Usernames are unqiue
+			const user = await User.findById(user_id).populate('favourite_locations');
+			const { _id } = await Location.findOne({ name: location });
+
+			//If location already exists, return the existing user
+			if (user.favourite_locations.find((i) => i.name === location)) {
+				return user;
+			} else {
+				//add new location to favourite locations
+				//if 3 locations already exsit, remove the 1st item, add to the end of the array
+				user.favourite_locations.length === 3
+					? (user.favourite_locations.shift(),
+					  user.favourite_locations.push(_id))
+					: user.favourite_locations.push(_id);
+
+				await user.save();
+
+				//return user
+				return user;
+			}
+		},
 	},
 };
 
