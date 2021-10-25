@@ -28,7 +28,6 @@ export const PHOTOS = gql`
 			locationID {
 				_id
 				name
-				surflineID
 				lat
 				lng
 			}
@@ -53,7 +52,6 @@ export const TODAY_PHOTOS = gql`
 			locationID {
 				_id
 				name
-				surflineID
 				lat
 				lng
 			}
@@ -78,7 +76,6 @@ export const LOCATION_TODAY_PHOTOS = gql`
 			locationID {
 				_id
 				name
-				surflineID
 				lat
 				lng
 			}
@@ -102,7 +99,6 @@ export const VIDEOS = gql`
 			locationID {
 				_id
 				name
-				surflineID
 				lat
 				lng
 			}
@@ -127,7 +123,6 @@ export const TODAY_VIDEOS = gql`
 			locationID {
 				_id
 				name
-				surflineID
 				lat
 				lng
 			}
@@ -152,7 +147,6 @@ export const LOCATION_TODAY_VIDEOS = gql`
 			locationID {
 				_id
 				name
-				surflineID
 				lat
 				lng
 			}
@@ -177,7 +171,6 @@ export const LOCATION_TODAY_COMMENTS = gql`
 			locationID {
 				_id
 				name
-				surflineID
 				lat
 				lng
 			}
@@ -199,6 +192,25 @@ export const LOCATION_SURF_DATA = gql`
 				waveHeight
 				windDirection
 				windSpeed
+			}
+		}
+	}
+`;
+
+//Get curent user info
+export const USER = gql`
+	query ($userId: ID!) {
+		user(id: $userId) {
+			_id
+			username
+			first_name
+			last_name
+			email
+			favourite_locations {
+				_id
+				name
+				lat
+				lng
 			}
 		}
 	}

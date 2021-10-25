@@ -24,7 +24,7 @@ const resolvers = {
 
 		//find user by _id
 		user: async (parent, { id }) => {
-			return User.findById(id);
+			return User.findById(id).populate('favourite_locations');
 		},
 
 		//find all photos
@@ -408,22 +408,31 @@ const resolvers = {
 			const user = await User.findById(user_id).populate('favourite_locations');
 			const { _id } = await Location.findOne({ name: location });
 
+			const existingLocation = user.favourite_locations.filter(
+				(i) => i.name === location
+			);
+
 			//If location already exists, return the existing user
-			if (user.favourite_locations.find((i) => i.name === location)) {
-				return user;
+			if (existingLocation.length) {
+				console.log('removising exisitng location');
+
+				const updatedLocation = user.favourite_locations.filter(
+					(i) => i.name != location
+				);
+
+				user.favourite_locations = updatedLocation;
+			} else if (user.favourite_locations.length === 3) {
+				//if 3 locations already exsit, remove the 1st item, add to the end of the array
+				user.favourite_locations.shift();
+				user.favourite_locations.push(_id);
 			} else {
 				//add new location to favourite locations
-				//if 3 locations already exsit, remove the 1st item, add to the end of the array
-				user.favourite_locations.length === 3
-					? (user.favourite_locations.shift(),
-					  user.favourite_locations.push(_id))
-					: user.favourite_locations.push(_id);
-
-				await user.save();
-
-				//return user
-				return user;
+				user.favourite_locations.push(_id);
 			}
+			await user.save();
+
+			//return user
+			return await User.findById(user_id).populate('favourite_locations');
 		},
 	},
 };

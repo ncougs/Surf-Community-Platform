@@ -63,3 +63,21 @@ export const POST_COMMENT = gql`
 		}
 	}
 `;
+
+export const FAVOURITE_LOCATION = gql`
+	mutation ($user_id: ID!, $location: String!) {
+		favouriteLocation(user_id: $user_id, location: $location) {
+			_id
+			username
+			first_name
+			last_name
+			email
+			favourite_locations {
+				_id
+				name
+				lat
+				lng
+			}
+		}
+	}
+`;
