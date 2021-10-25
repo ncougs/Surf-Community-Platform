@@ -319,13 +319,15 @@ const resolvers = {
 
 		//Add a new location
 		addLocation: async (parent, { name, lat, lng }) => {
-			//create new model for our db
-			const newLocation = new Location({ name, lat, lng });
-
 			//save model to database
-			const savedLocation = await newLocation.save();
+			const savedLocation = await Location.create({
+				name,
+				lat,
+				lng,
+				dailySurfData: [],
+			});
 
-			//return photo with populated user_id
+			//return new model
 			return savedLocation;
 		},
 

@@ -46,6 +46,7 @@ const typeDefs = gql`
 		name: String!
 		lat: Float!
 		lng: Float!
+		dailySurfData: [DailyData]
 	}
 
 	type SurfData {
