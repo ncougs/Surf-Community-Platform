@@ -189,27 +189,16 @@ export const LOCATION_TODAY_COMMENTS = gql`
 export const LOCATION_SURF_DATA = gql`
 	query ($name: String!) {
 		surfData(name: $name) {
-			airTemperature {
-				noaa
-			}
-			gust {
-				noaa
-			}
-			swellDirection {
-				noaa
-			}
-			swellHeight {
-				noaa
-			}
-			time
-			waveHeight {
-				noaa
-			}
-			windDirection {
-				noaa
-			}
-			windSpeed {
-				noaa
+			date
+			data {
+				airTemperature
+				gust
+				swellDirection
+				swellHeight
+				dateTime
+				waveHeight
+				windDirection
+				windSpeed
 			}
 		}
 	}

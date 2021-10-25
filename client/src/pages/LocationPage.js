@@ -17,7 +17,7 @@ const LocationPage = () => {
 
 	useQuery(LOCATION_SURF_DATA, {
 		variables: { name: location },
-		onCompleted: (data) => updateSurfData(data.surfData),
+		onCompleted: (data) => updateSurfData(data.surfData.data),
 	});
 
 	const [showComments, setShowComments] = useState(false);
@@ -43,9 +43,9 @@ const LocationPage = () => {
 					surfData.map((data) => (
 						<SurfDataCard
 							time={moment(data.time).utc().format('hh:mm a')}
-							height={data.waveHeight.noaa}
-							direction={data.windDirection.noaa}
-							degrees={data.airTemperature.noaa}
+							height={data.waveHeight}
+							direction={data.windDirection}
+							degrees={data.airTemperature}
 						/>
 					))
 				) : (
