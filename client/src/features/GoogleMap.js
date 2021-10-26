@@ -16,11 +16,11 @@ const Map = () => {
 			lat: -37.840935,
 			lng: 144.946457,
 		},
-		zoom: 7,
+		zoom: 8,
 	};
 
 	return (
-		<div style={{ height: '100vh', width: '100%' }}>
+		<div className={'flex-grow-1'}>
 			<GoogleMapReact
 				bootstrapURLKeys={{ key: process.env.REACT_APP_google_maps_apiKey }}
 				defaultCenter={defaultLocation.center}

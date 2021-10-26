@@ -10,15 +10,11 @@ const Locations = () => {
 				spot
 			</p>
 			<Form>
-				<FloatingLabel
-					controlId='floatingInput'
-					label='Enter a Location'
-					className='mb-3'
-				>
+				<FloatingLabel controlId='floatingInput' label='Enter a Location'>
 					<Form.Control type='text' />
 				</FloatingLabel>
 			</Form>
-			<Container className='p-0'>
+			<Container className='p-0 py-4 flex-grow-1 d-flex'>
 				<Map />
 			</Container>
 		</>

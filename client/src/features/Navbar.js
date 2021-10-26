@@ -25,32 +25,65 @@ const NavigationBar = () => {
 	const closeSignupModal = () => showSignup(false);
 	const openSignupModal = () => showSignup(true);
 
+	const Styles = {
+		link: {
+			color: '#F5F6F9',
+			textDecoration: 'none',
+			fontSize: '20px',
+		},
+		mainButton: {
+			backgroundColor: '#0A9D7B',
+			borderColor: '#0A9D7B',
+			color: '#F5F6F9',
+			fontSize: '20px',
+		},
+		searchBar: {
+			backgroundColor: '#F5F6F9',
+		},
+	};
+
 	return (
 		<>
-			<Navbar bg='light' expand='lg'>
+			<Navbar expand='lg'>
 				<Container fluid>
 					<Navbar.Brand>
-						<Link to='/'>Surf Community Application</Link>
+						<Link to='/' style={Styles.link}>
+							Surf Community Application
+						</Link>
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls='basic-navbar-nav' />
 					<Form className='flex-grow-1'>
-						<Form.Group controlId='formBasicEmail'>
-							<Form.Control type='text' placeholder='Search' />
+						<Form.Group controlId='searchBar'>
+							<Form.Control
+								type='text'
+								placeholder='Search'
+								style={Styles.searchBar}
+							/>
 						</Form.Group>
 					</Form>
 					<Navbar.Collapse id='basic-navbar-nav' className='flex-grow-0'>
 						<Nav>
-							<Nav.Link href='#home'>About</Nav.Link>
+							<Nav.Link href='#home' style={Styles.link}>
+								About
+							</Nav.Link>
 							<Nav.Link>
-								<Link to='/locations'>Locations</Link>
+								<Link to='/locations' style={Styles.link}>
+									Locations
+								</Link>
 							</Nav.Link>
 							{isLoggedIn ? (
 								<>
-									<Nav.Link onClick={Auth.logout}>Log out</Nav.Link>
-									<Button onClick={openPostModal}>Create Post</Button>
+									<Nav.Link onClick={Auth.logout} style={Styles.link}>
+										Log out
+									</Nav.Link>
+									<Button onClick={openPostModal} style={Styles.mainButton}>
+										Create Post
+									</Button>
 								</>
 							) : (
-								<Button onClick={OpenLoginModal}>Login</Button>
+								<Button onClick={OpenLoginModal} style={Styles.mainButton}>
+									Login
+								</Button>
 							)}
 						</Nav>
 					</Navbar.Collapse>

@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { LOCATION_TODAY_VIDEOS } from '../utils/queries';
 import { useState } from 'react';
-import ReactPlayer from 'react-player';
+import VideoCard from './videoCard';
 
 const ShowVideos = ({ location }) => {
 	const [videos, updatePhotos] = useState([]);
@@ -17,7 +17,7 @@ const ShowVideos = ({ location }) => {
 			{videos.length ? (
 				videos.map((video) => {
 					return (
-						<ReactPlayer url={video.url} className='react-player' controls />
+						<VideoCard url={video.url} date={video.date} location={location} />
 					);
 				})
 			) : (

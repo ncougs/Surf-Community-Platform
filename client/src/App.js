@@ -41,17 +41,31 @@ const client = new ApolloClient({
 });
 
 const App = () => {
+	const styles = {
+		background: {
+			backgroundColor: '#0A769D',
+		},
+	};
 	return (
 		<ApolloProvider client={client}>
 			<Router>
-				<NavigationBar />
-				<Container>
-					<Switch>
-						<Route path='/' exact component={Home} />
-						<Route path='/locations' exact component={Locations} />
-						<Route path='/location/:location' exact component={LocationPage} />
-					</Switch>
-				</Container>
+				<div
+					className={'min-vh-100 d-flex flex-column'}
+					style={{ ...styles.background, ...styles.colour }}
+				>
+					<NavigationBar />
+					<Container className={'flex-grow-1 d-flex flex-column'}>
+						<Switch>
+							<Route path='/' exact component={Home} />
+							<Route path='/locations' exact component={Locations} />
+							<Route
+								path='/location/:location'
+								exact
+								component={LocationPage}
+							/>
+						</Switch>
+					</Container>
+				</div>
 			</Router>
 		</ApolloProvider>
 	);
