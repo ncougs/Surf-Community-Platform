@@ -13,6 +13,7 @@ import { setContext } from '@apollo/client/link/context';
 import { Container } from 'react-bootstrap';
 import NavigationBar from './features/Navbar';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 import Locations from './pages/locations';
 import LocationPage from './pages/LocationPage';
 
@@ -57,6 +58,7 @@ const App = () => {
 					<Container className={'flex-grow-1 d-flex flex-column'}>
 						<Switch>
 							<Route path='/' exact component={Home} />
+							<Route path='/profile' exact component={Profile} />
 							<Route path='/locations' exact component={Locations} />
 							<Route
 								path='/location/:location'

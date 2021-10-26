@@ -66,6 +66,13 @@ const NavigationBar = () => {
 							<Nav.Link href='#home' style={Styles.link}>
 								About
 							</Nav.Link>
+							{isLoggedIn ? (
+								<Nav.Link>
+									<Link to='/profile' style={Styles.link}>
+										Profile
+									</Link>
+								</Nav.Link>
+							) : null}
 							<Nav.Link>
 								<Link to='/locations' style={Styles.link}>
 									Locations
