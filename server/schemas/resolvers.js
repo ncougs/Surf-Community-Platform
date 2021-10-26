@@ -50,6 +50,19 @@ const resolvers = {
 			return todaysPhotos;
 		},
 
+		//find all of a users photos
+		userPhotos: async (parent, { user_id }) => {
+			const currentPhotos = await Photo.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const usersPhotos = currentPhotos.filter(
+				(photo) => photo.user_id._id == user_id
+			);
+
+			return usersPhotos;
+		},
+
 		//find all photos for the current day at a location
 		locationCurrentDayPhotos: async (parent, { location }) => {
 			const currentPhotos = await Photo.find({})
@@ -95,6 +108,19 @@ const resolvers = {
 			});
 
 			return todaysVideos;
+		},
+
+		//find all of a users videos
+		userVideos: async (parent, { user_id }) => {
+			const currentVideos = await Video.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const usersVideos = currentVideos.filter(
+				(video) => video.user_id._id == user_id
+			);
+
+			return usersVideos;
 		},
 
 		//find all comments
