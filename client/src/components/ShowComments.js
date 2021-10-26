@@ -1,20 +1,21 @@
 import { useQuery } from '@apollo/client';
 import { LOCATION_TODAY_COMMENTS } from '../utils/queries';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ShowComments = ({ location }) => {
-	const [comments, updatePhotos] = useState([]);
-
-	useQuery(LOCATION_TODAY_COMMENTS, {
+	const { data, loading, error, refetch } = useQuery(LOCATION_TODAY_COMMENTS, {
 		variables: { location },
-		onCompleted: (data) => updatePhotos(data.locationCurrentDayComments),
+	});
+
+	useEffect(() => {
+		refetch();
 	});
 
 	return (
 		<>
 			<h4>Show Comments</h4>
-			{comments.length ? (
-				comments.map((comment) => {
+			{data?.locationCurrentDayComments.length ? (
+				data.locationCurrentDayComments.map((comment) => {
 					return (
 						<>
 							<h5>{comment.user_id.username}</h5>
