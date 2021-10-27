@@ -27,6 +27,13 @@ const resolvers = {
 			return User.findById(id).populate('favourite_locations');
 		},
 
+		//find users favourite locations by _id
+		userFavLocations: async (parent, { id }) => {
+			const user = await User.findById(id).populate('favourite_locations');
+
+			return user.favourite_locations;
+		},
+
 		//find all photos
 		photos: async () => {
 			return Photo.find({}).populate('user_id').populate('locationID');

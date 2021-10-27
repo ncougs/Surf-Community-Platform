@@ -71,6 +71,7 @@ const typeDefs = gql`
 	type Query {
 		users: [User]!
 		user(id: ID!): User!
+		userFavLocations(id: ID!): [Location]
 		photos: [Photo]
 		currentDayPhotos: [Photo]
 		locationCurrentDayPhotos(location: String!): [Photo]

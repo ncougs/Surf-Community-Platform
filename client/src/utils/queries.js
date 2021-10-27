@@ -258,3 +258,15 @@ export const USER = gql`
 		}
 	}
 `;
+
+//Get curent user fav locations
+export const USER_FAV_LOCATIONS = gql`
+	query Query($id: ID!) {
+		userFavLocations(id: $id) {
+			_id
+			name
+			lat
+			lng
+		}
+	}
+`;
