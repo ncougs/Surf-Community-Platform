@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client';
 import { LOCATION_SURF_DATA } from '../utils/queries';
 import SurfDataCard from '../components/surfDataCard';
 import FavLocation from '../components/FavLocation';
+import Auth from '../utils/auth';
 
 const LocationPage = () => {
 	//state variables
@@ -46,7 +47,10 @@ const LocationPage = () => {
 	return (
 		<>
 			<h2 className='text-center'>
-				Hello {location} Page <FavLocation location={location} />
+				Hello {location} Page
+				{Auth.loggedIn() && (
+					<FavLocation location={location} user={Auth.getProfile()} />
+				)}
 			</h2>
 
 			<Row>
