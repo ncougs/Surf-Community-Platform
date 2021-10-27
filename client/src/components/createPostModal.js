@@ -32,9 +32,12 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 		setFile('');
 	};
 
-	const handleFormSubmit = (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		comment ? uploadComment() : handleUpload();
+
+		clearPostData();
+		closeModal();
 	};
 
 	const handleUpload = async () => {
@@ -45,9 +48,6 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 			.match(/^(mp4|mov)$/)
 			? await uploadVideo()
 			: await uploadImage();
-
-		clearPostData();
-		closeModal();
 	};
 
 	const uploadComment = async () => {

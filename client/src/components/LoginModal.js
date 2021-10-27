@@ -31,6 +31,7 @@ const LoginModal = ({ openModal, closeLoginModal, openSignupModal }) => {
 			});
 			Auth.login(data.login.token);
 			clearLoginData();
+			closeLoginModal();
 		} catch (e) {
 			setError(e.message);
 		}

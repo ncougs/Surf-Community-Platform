@@ -39,6 +39,7 @@ const SignupModal = ({ openModal, closeModal }) => {
 			});
 			Auth.login(data.createUser.token);
 			clearSignUpData();
+			closeModal();
 		} catch (err) {
 			console.error(err);
 		}
