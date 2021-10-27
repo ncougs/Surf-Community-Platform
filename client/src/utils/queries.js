@@ -270,3 +270,31 @@ export const USER_FAV_LOCATIONS = gql`
 		}
 	}
 `;
+
+//Get current day media
+export const CURRENT_DAY_MEDIA = gql`
+	query Query {
+		currentDayMedia {
+			_id
+			url
+			date
+			locationID {
+				name
+			}
+		}
+	}
+`;
+
+//Get all media for a user
+export const USER_MEDIA = gql`
+	query Query($userId: ID!) {
+		userMedia(userID: $userId) {
+			_id
+			url
+			date
+			locationID {
+				name
+			}
+		}
+	}
+`;

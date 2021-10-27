@@ -1,23 +1,17 @@
-import { Row, Col, CardGroup, Card } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
-import { TODAY_PHOTOS, TODAY_VIDEOS } from '../utils/queries';
+import { useEffect } from 'react';
+import { CURRENT_DAY_MEDIA } from '../utils/queries';
 import PhotoCard from '../components/photoCard';
 import VideoCard from '../components/videoCard';
 
 const Home = () => {
-	//get the photos for the current day
-	const {
-		loading: photosLoading,
-		error: photosError,
-		data: photosData,
-	} = useQuery(TODAY_PHOTOS);
+	//get the media for the current day
+	const { loading, error, data, refetch } = useQuery(CURRENT_DAY_MEDIA);
 
-	//get the videos for the current day
-	const {
-		loading: videosLoading,
-		error: videosError,
-		data: videosData,
-	} = useQuery(TODAY_VIDEOS);
+	useEffect(() => {
+		refetch();
+	});
 
 	const Styles = {
 		mainHeading: {
@@ -46,27 +40,24 @@ const Home = () => {
 				</Col>
 			</Row>
 			<Row>
-				{photosData?.currentDayPhotos.length ? (
-					photosData?.currentDayPhotos.map((photo) => (
-						<PhotoCard
-							location={photo.locationID.name}
-							url={photo.url}
-							date={photo.date}
-						/>
-					))
-				) : (
-					<p>No media uploaded for the day</p>
-				)}
-			</Row>
-			<Row>
-				{videosData?.currentDayVideos.length ? (
-					videosData?.currentDayVideos.map((video) => (
-						<VideoCard
-							location={video.locationID.name}
-							url={video.url}
-							date={video.date}
-						/>
-					))
+				{data ? (
+					data?.currentDayMedia.map((media, i) =>
+						media.url.includes('video/upload') ? (
+							<VideoCard
+								key={i}
+								location={media.locationID.name}
+								url={media.url}
+								date={media.date}
+							/>
+						) : (
+							<PhotoCard
+								key={i}
+								location={media.locationID.name}
+								url={media.url}
+								date={media.date}
+							/>
+						)
+					)
 				) : (
 					<p>No media uploaded for the day</p>
 				)}

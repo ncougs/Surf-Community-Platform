@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Container } from 'react-bootstrap';
 import Auth from '../utils/auth';
-import { USER_PHOTOS, USER_VIDEOS } from '../utils/queries';
+import { USER_MEDIA } from '../utils/queries';
 import PhotoCard from '../components/photoCard';
 import VideoCard from '../components/videoCard';
 import DisplayFavLocations from '../components/displayFavLocations';
@@ -9,13 +9,8 @@ import DisplayFavLocations from '../components/displayFavLocations';
 const Profile = () => {
 	const currentUser = Auth.getProfile();
 
-	//return photos of the current user
-	const { data: photoData } = useQuery(USER_PHOTOS, {
-		variables: { userId: currentUser?.data._id },
-	});
-
-	//return videos of the current user
-	const { data: videoData } = useQuery(USER_VIDEOS, {
+	//return all media for the current user
+	const { data, loading, error } = useQuery(USER_MEDIA, {
 		variables: { userId: currentUser?.data._id },
 	});
 
@@ -28,28 +23,27 @@ const Profile = () => {
 			</Container>
 			<Container>
 				<h4>Your Uploaded Media</h4>
-				{photoData?.userPhotos.length
-					? photoData?.userPhotos.map((photo) => {
-							return (
-								<PhotoCard
-									url={photo.url}
-									date={photo.date}
-									location={photo.locationID.name}
-								/>
-							);
-					  })
-					: null}
-				{videoData?.userVideos.length
-					? videoData?.userVideos.map((video) => {
-							return (
-								<VideoCard
-									url={video.url}
-									date={video.date}
-									location={video.locationID.name}
-								/>
-							);
-					  })
-					: null}
+				{data ? (
+					data?.userMedia.map((media, i) =>
+						media.url.includes('video/upload') ? (
+							<VideoCard
+								key={i}
+								location={media.locationID.name}
+								url={media.url}
+								date={media.date}
+							/>
+						) : (
+							<PhotoCard
+								key={i}
+								location={media.locationID.name}
+								url={media.url}
+								date={media.date}
+							/>
+						)
+					)
+				) : (
+					<p>No media uploaded</p>
+				)}
 			</Container>
 		</>
 	);
