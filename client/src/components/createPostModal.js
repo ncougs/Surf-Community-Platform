@@ -34,7 +34,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		comment ? uploadComment() : handleUpload();
+		comment ? await uploadComment() : await handleUpload();
 
 		clearPostData();
 		closeModal();

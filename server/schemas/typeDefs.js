@@ -34,6 +34,14 @@ const typeDefs = gql`
 		locationID: Location!
 	}
 
+	type Media {
+		_id: ID!
+		url: String!
+		date: String!
+		user_id: User!
+		locationID: Location!
+	}
+
 	type Comment {
 		_id: ID!
 		body: String!
@@ -80,6 +88,9 @@ const typeDefs = gql`
 		currentDayVideos: [Video]
 		locationCurrentDayVideos(location: String!): [Video]
 		userVideos(user_id: ID!): [Video]
+		media: [Media]
+		currentDayMedia: [Media]
+		userMedia(userID: ID!): [Media]
 		comments: [Comment]
 		locationCurrentDayComments(location: String!): [Comment]
 		locations: [Location]!

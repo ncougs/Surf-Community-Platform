@@ -130,6 +130,78 @@ const resolvers = {
 			return usersVideos;
 		},
 
+		//find all media
+		media: async () => {
+			const videos = await Video.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const photos = await Photo.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const media = videos.concat(photos);
+
+			return media;
+		},
+
+		//find all media for the current day
+		currentDayMedia: async () => {
+			const videos = await Video.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const photos = await Photo.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const combinedMedia = videos.concat(photos);
+
+			const todayMedia = combinedMedia.filter((media) => {
+				if (
+					moment(media.date, 'x').format('DD/MMM/YYYY') ===
+					moment().format('DD/MMM/YYYY')
+				) {
+					return media;
+				}
+			});
+
+			//sort by newest to oldest
+			todayMedia.sort((a, b) => {
+				var dateA = moment(a.date);
+				var dateB = moment(b.date);
+				return dateB - dateA;
+			});
+
+			return todayMedia;
+		},
+
+		//find all media for the current user
+		userMedia: async (parent, { userID }) => {
+			const videos = await Video.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const photos = await Photo.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const combinedMedia = videos.concat(photos);
+
+			const userMedia = combinedMedia.filter(
+				(media) => media.user_id._id == userID
+			);
+
+			//sort by newest to oldest
+			userMedia.sort((a, b) => {
+				var dateA = moment(a.date);
+				var dateB = moment(b.date);
+				return dateB - dateA;
+			});
+
+			return userMedia;
+		},
+
 		//find all comments
 		comments: async () => {
 			return Comment.find({}).populate('user_id').populate('locationID');
