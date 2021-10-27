@@ -7,6 +7,8 @@ const VideoCard = ({ location, date, url }) => {
 		card: {
 			width: '18rem',
 			height: '25rem',
+			borderColor: '#FEFFFF',
+			borderRadius: '0',
 		},
 		cardMedidaHeight: {
 			height: '20rem',
@@ -15,9 +17,9 @@ const VideoCard = ({ location, date, url }) => {
 	return (
 		<>
 			<Col className='my-2'>
-				<Card className='m-auto' style={Styles.card}>
-					<Card.Title className='text-center'>{location}</Card.Title>
-					<Card.Body style={Styles.cardMedidaHeight}>
+				<Card className='m-auto shadow-lg border-1' style={Styles.card}>
+					<Card.Title className='p-2'>{location}</Card.Title>
+					<Card.Body style={Styles.cardMedidaHeight} className='p-0'>
 						<ReactPlayer url={url} width='100%' height='100%' controls />
 					</Card.Body>
 					<Card.Footer>

@@ -1,4 +1,4 @@
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { CURRENT_DAY_MEDIA } from '../utils/queries';
@@ -20,11 +20,11 @@ const Home = () => {
 		},
 		secondaryHeading: {
 			fontSize: '10vh',
-			color: '#F5F6F9',
+			color: '#042D3C',
 			textAlign: 'center',
 		},
-		card: {
-			width: '18rem',
+		recentMedia: {
+			backgroundColor: '#F5F6F9',
 		},
 	};
 	return (
@@ -34,34 +34,34 @@ const Home = () => {
 					<h1 style={Styles.mainHeading}>Local Surf Community Platform</h1>
 				</Col>
 			</Row>
-			<Row>
-				<Col>
-					<h2 style={Styles.secondaryHeading}>Recent Activity</h2>
-				</Col>
-			</Row>
-			<Row>
-				{data ? (
-					data?.currentDayMedia.map((media, i) =>
-						media.url.includes('video/upload') ? (
-							<VideoCard
-								key={i}
-								location={media.locationID.name}
-								url={media.url}
-								date={media.date}
-							/>
+			<Container fluid className='p-0 m-0' style={Styles.recentMedia}>
+				<h2 style={Styles.secondaryHeading}>Recent Activity</h2>
+				<Container>
+					<Row>
+						{data?.currentDayMedia.length ? (
+							data?.currentDayMedia.map((media, i) =>
+								media.url.includes('video/upload') ? (
+									<VideoCard
+										key={i}
+										location={media.locationID.name}
+										url={media.url}
+										date={media.date}
+									/>
+								) : (
+									<PhotoCard
+										key={i}
+										location={media.locationID.name}
+										url={media.url}
+										date={media.date}
+									/>
+								)
+							)
 						) : (
-							<PhotoCard
-								key={i}
-								location={media.locationID.name}
-								url={media.url}
-								date={media.date}
-							/>
-						)
-					)
-				) : (
-					<p>No media uploaded for the day</p>
-				)}
-			</Row>
+							<p>No media uploaded for the day</p>
+						)}
+					</Row>
+				</Container>
+			</Container>
 		</>
 	);
 };

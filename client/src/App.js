@@ -55,7 +55,7 @@ const App = () => {
 					style={{ ...styles.background, ...styles.colour }}
 				>
 					<NavigationBar />
-					<Container className={'flex-grow-1 d-flex flex-column'}>
+					<Container className={'flex-grow-1 d-flex flex-column p-0 m-0'} fluid>
 						<Switch>
 							<Route path='/' exact component={Home} />
 							<Route path='/profile' exact component={Profile} />
