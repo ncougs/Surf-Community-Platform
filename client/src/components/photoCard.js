@@ -1,5 +1,6 @@
 import { Col, Card } from 'react-bootstrap';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 const PhotoCard = ({ location, date, url }) => {
 	const Styles = {
@@ -11,19 +12,26 @@ const PhotoCard = ({ location, date, url }) => {
 		img: {
 			borderRadius: '0',
 		},
+		heading: {
+			color: '#042D3C',
+		},
 	};
 	return (
 		<>
-			<Col className='my-2'>
+			<Col lg='4' className='my-2'>
 				<Card style={Styles.card} className='m-auto shadow-lg border-1'>
-					<Card.Title className='p-2'>{location}</Card.Title>
-					<Card.Img variant='top' src={url} style={Styles.img} />
-					<Card.Footer>
-						<small className='text-muted p-2'>{`uploaded at ${moment(
-							date,
-							'x'
-						).format('hh:mm a, DD/MM/YYYY')}`}</small>
-					</Card.Footer>
+					<Link className='text-decoration-none' to={`/location/${location}`}>
+						<Card.Title className='p-2' style={Styles.heading}>
+							{location}
+						</Card.Title>
+						<Card.Img variant='top' src={url} style={Styles.img} />
+						<Card.Footer>
+							<small className='text-muted p-2'>{`uploaded at ${moment(
+								date,
+								'x'
+							).format('hh:mm a, DD/MM/YYYY')}`}</small>
+						</Card.Footer>
+					</Link>
 				</Card>
 			</Col>
 		</>

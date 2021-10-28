@@ -15,11 +15,14 @@ const Home = () => {
 
 	const Styles = {
 		mainHeading: {
-			fontSize: '10vh',
+			fontSize: '5vw',
 			color: '#F5F6F9',
 		},
+		section: {
+			minHeight: '80vh',
+		},
 		secondaryHeading: {
-			fontSize: '10vh',
+			fontSize: '5vw',
 			color: '#042D3C',
 			textAlign: 'center',
 		},
@@ -29,13 +32,17 @@ const Home = () => {
 	};
 	return (
 		<>
-			<Row className={'m-auto'}>
-				<Col className={'col-8'}>
-					<h1 style={Styles.mainHeading}>Local Surf Community Platform</h1>
+			<Row className={'m-auto'} style={Styles.section}>
+				<Col className={'col-8 d-flex'}>
+					<h1 className='m-auto' style={Styles.mainHeading}>
+						Local Surf Community Platform
+					</h1>
 				</Col>
 			</Row>
 			<Container fluid className='p-0 m-0' style={Styles.recentMedia}>
-				<h2 style={Styles.secondaryHeading}>Recent Activity</h2>
+				<h2 className='p-2' style={Styles.secondaryHeading}>
+					Recent Activity
+				</h2>
 				<Container>
 					<Row>
 						{data?.currentDayMedia.length ? (

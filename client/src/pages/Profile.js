@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Container } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { USER_MEDIA } from '../utils/queries';
 import PhotoCard from '../components/photoCard';
@@ -14,36 +14,73 @@ const Profile = () => {
 		variables: { userId: currentUser?.data._id },
 	});
 
+	const Styles = {
+		mainHeading: {
+			fontSize: '5vw',
+			color: '#F5F6F9',
+		},
+		mainHeadingText: {
+			fontSize: '2vw',
+			color: '#F5F6F9',
+		},
+		mainSection: {
+			minHeight: '30vh',
+		},
+		secondaryBackground: {
+			backgroundColor: '#F5F6F9',
+		},
+		secondaryHeading: {
+			fontSize: '5vw',
+			color: '#042D3C',
+		},
+		secondarySection: {
+			position: 'relative',
+			bottom: '80px',
+		},
+	};
+
 	return (
 		<>
-			<h3>{`Hi ${currentUser?.data?.username},`}</h3>
-			<p>Welcome to your profile.</p>
-			<Container>
-				<DisplayFavLocations id={currentUser?.data?._id} />
+			<Container className='my-5' style={Styles.mainSection}>
+				<h3
+					style={Styles.mainHeading}
+				>{`Hi ${currentUser?.data?.username},`}</h3>
+				<p style={Styles.mainHeadingText}>Welcome to your profile.</p>
 			</Container>
-			<Container>
-				<h4>Your Uploaded Media</h4>
-				{data ? (
-					data?.userMedia.map((media, i) =>
-						media.url.includes('video/upload') ? (
-							<VideoCard
-								key={i}
-								location={media.locationID.name}
-								url={media.url}
-								date={media.date}
-							/>
-						) : (
-							<PhotoCard
-								key={i}
-								location={media.locationID.name}
-								url={media.url}
-								date={media.date}
-							/>
-						)
-					)
-				) : (
-					<p>No media uploaded</p>
-				)}
+			<Container fluid className='p-0 m-0' style={Styles.secondaryBackground}>
+				<Container>
+					<DisplayFavLocations id={currentUser?.data?._id} />
+				</Container>
+				<Container>
+					<h4 className='text-center mb-5' style={Styles.secondaryHeading}>
+						Your Uploaded Media
+					</h4>
+					<Container>
+						<Row>
+							{data ? (
+								data?.userMedia.map((media, i) =>
+									media.url.includes('video/upload') ? (
+										<VideoCard
+											key={i}
+											location={media.locationID.name}
+											url={media.url}
+											date={media.date}
+										/>
+									) : (
+										<PhotoCard
+											key={i}
+											location={media.locationID.name}
+											url={media.url}
+											date={media.date}
+										/>
+									)
+								)
+							) : (
+								<p>No media uploaded</p>
+							)}
+						</Row>
+					</Container>
+				</Container>
 			</Container>
 		</>
 	);
