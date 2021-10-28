@@ -5,6 +5,7 @@ import LoginModal from '../components/LoginModal';
 import CreatePostModal from '../components/createPostModal';
 import SignupModal from '../components/signupModal';
 import Auth from '../utils/auth';
+import LocationSearchBar from '../components/locationSearchBar';
 
 const NavigationBar = () => {
 	const [loginModal, LoginModalOpened] = useState(false);
@@ -52,15 +53,7 @@ const NavigationBar = () => {
 						</Link>
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls='basic-navbar-nav' />
-					<Form className='flex-grow-1'>
-						<Form.Group controlId='searchBar'>
-							<Form.Control
-								type='text'
-								placeholder='Search'
-								style={Styles.searchBar}
-							/>
-						</Form.Group>
-					</Form>
+					<LocationSearchBar />
 					<Navbar.Collapse id='basic-navbar-nav' className='flex-grow-0'>
 						<Nav>
 							<Nav.Link href='#home' style={Styles.link}>
