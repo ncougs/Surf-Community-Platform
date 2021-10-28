@@ -45,6 +45,7 @@ const App = () => {
 	const styles = {
 		background: {
 			backgroundColor: '#0A769D',
+			backgroundImage: `linear-gradient(0deg, #F5F6F9, transparent)`,
 		},
 	};
 	return (
@@ -52,7 +53,7 @@ const App = () => {
 			<Router>
 				<div
 					className={'min-vh-100 d-flex flex-column'}
-					style={{ ...styles.background, ...styles.colour }}
+					style={styles.background}
 				>
 					<NavigationBar />
 					<Container className={'flex-grow-1 d-flex flex-column p-0 m-0'} fluid>

@@ -10,9 +10,9 @@ const Home = () => {
 	//get the media for the current day
 	const { loading, error, data, refetch } = useQuery(CURRENT_DAY_MEDIA);
 
-	useEffect(() => {
-		refetch();
-	});
+	// useEffect(() => {
+	// 	refetch();
+	// });
 
 	const [vertical, setVertical] = useState(false);
 
