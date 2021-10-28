@@ -6,6 +6,9 @@ const DisplayDots = ({ handleClick }) => {
 		dots: {
 			width: 'fit-content',
 			fontSize: '2rem',
+			backgroundColor: '#0A9D7B',
+			borderColor: '#0A9D7B',
+			color: '#F5F6F9',
 		},
 	};
 
