@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { USER_FAV_LOCATIONS } from '../utils/queries';
@@ -30,6 +30,12 @@ const DisplayFavLocations = ({ id }) => {
 			color: '#042D3C',
 			fontSize: '1vw',
 		},
+		mainButton: {
+			backgroundColor: '#0A9D7B',
+			borderColor: '#0A9D7B',
+			color: '#F5F6F9',
+			fontSize: '20px',
+		},
 	};
 
 	return (
@@ -53,7 +59,7 @@ const DisplayFavLocations = ({ id }) => {
 											to={`/location/${location.name}`}
 											style={Styles.text}
 										>
-											{location.name}
+											<Button style={Styles.mainButton}>{location.name}</Button>
 										</Link>
 									</Col>
 								</>
