@@ -1,9 +1,12 @@
 import { useQuery } from '@apollo/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { LOCATION_TODAY_VIDEOS } from '../utils/queries';
 import VideoCard from './videoCard';
+import DisplayDots from './displayDots';
 
 const ShowVideos = ({ location }) => {
+	const [vertical, setVertical] = useState(false);
+
 	const { data, loading, error, refetch } = useQuery(LOCATION_TODAY_VIDEOS, {
 		variables: { location },
 	});
@@ -12,14 +15,27 @@ const ShowVideos = ({ location }) => {
 		refetch();
 	});
 
+	const handleClick = (e) => {
+		setVertical(!vertical);
+	};
+
 	return (
 		<>
 			{data?.locationCurrentDayVideos.length ? (
-				data.locationCurrentDayVideos.map((video) => {
-					return (
-						<VideoCard url={video.url} date={video.date} location={location} />
-					);
-				})
+				<>
+					<DisplayDots handleClick={handleClick} />
+					{data?.locationCurrentDayVideos.map((video, i) => {
+						return (
+							<VideoCard
+								key={i}
+								url={video.url}
+								date={video.date}
+								location={location}
+								isVertical={vertical}
+							/>
+						);
+					})}
+				</>
 			) : (
 				<p>No videos uploaded for the day</p>
 			)}

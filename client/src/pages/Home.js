@@ -1,9 +1,10 @@
 import { Row, Col, Container } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { CURRENT_DAY_MEDIA } from '../utils/queries';
 import PhotoCard from '../components/photoCard';
 import VideoCard from '../components/videoCard';
+import DisplayDots from '../components/displayDots';
 
 const Home = () => {
 	//get the media for the current day
@@ -12,6 +13,12 @@ const Home = () => {
 	useEffect(() => {
 		refetch();
 	});
+
+	const [vertical, setVertical] = useState(false);
+
+	const handleClick = (e) => {
+		setVertical(!vertical);
+	};
 
 	const Styles = {
 		mainHeading: {
@@ -46,23 +53,28 @@ const Home = () => {
 				<Container>
 					<Row>
 						{data?.currentDayMedia.length ? (
-							data?.currentDayMedia.map((media, i) =>
-								media.url.includes('video/upload') ? (
-									<VideoCard
-										key={i}
-										location={media.locationID.name}
-										url={media.url}
-										date={media.date}
-									/>
-								) : (
-									<PhotoCard
-										key={i}
-										location={media.locationID.name}
-										url={media.url}
-										date={media.date}
-									/>
-								)
-							)
+							<>
+								<DisplayDots handleClick={handleClick} />
+								{data?.currentDayMedia.map((media, i) =>
+									media.url.includes('video/upload') ? (
+										<VideoCard
+											key={i}
+											location={media.locationID.name}
+											url={media.url}
+											date={media.date}
+											isVertical={vertical}
+										/>
+									) : (
+										<PhotoCard
+											key={i}
+											location={media.locationID.name}
+											url={media.url}
+											date={media.date}
+											isVertical={vertical}
+										/>
+									)
+								)}
+							</>
 						) : (
 							<p>No media uploaded for the day</p>
 						)}

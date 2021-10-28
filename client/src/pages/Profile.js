@@ -1,12 +1,20 @@
 import { useQuery } from '@apollo/client';
 import { Container, Row } from 'react-bootstrap';
+import { useState } from 'react';
 import Auth from '../utils/auth';
 import { USER_MEDIA } from '../utils/queries';
 import PhotoCard from '../components/photoCard';
 import VideoCard from '../components/videoCard';
 import DisplayFavLocations from '../components/displayFavLocations';
+import DisplayDots from '../components/displayDots';
 
 const Profile = () => {
+	const [vertical, setVertical] = useState(false);
+
+	const handleClick = (e) => {
+		setVertical(!vertical);
+	};
+
 	const currentUser = Auth.getProfile();
 
 	//return all media for the current user
@@ -58,23 +66,28 @@ const Profile = () => {
 					<Container>
 						<Row>
 							{data ? (
-								data?.userMedia.map((media, i) =>
-									media.url.includes('video/upload') ? (
-										<VideoCard
-											key={i}
-											location={media.locationID.name}
-											url={media.url}
-											date={media.date}
-										/>
-									) : (
-										<PhotoCard
-											key={i}
-											location={media.locationID.name}
-											url={media.url}
-											date={media.date}
-										/>
-									)
-								)
+								<>
+									<DisplayDots handleClick={handleClick} />
+									{data?.userMedia.map((media, i) =>
+										media.url.includes('video/upload') ? (
+											<VideoCard
+												key={i}
+												location={media.locationID.name}
+												url={media.url}
+												date={media.date}
+												isVertical={vertical}
+											/>
+										) : (
+											<PhotoCard
+												key={i}
+												location={media.locationID.name}
+												url={media.url}
+												date={media.date}
+												isVertical={vertical}
+											/>
+										)
+									)}
+								</>
 							) : (
 								<p>No media uploaded</p>
 							)}

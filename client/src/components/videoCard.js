@@ -3,7 +3,7 @@ import moment from 'moment';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
-const VideoCard = ({ location, date, url }) => {
+const VideoCard = ({ location, date, url, isVertical }) => {
 	const Styles = {
 		card: {
 			width: '18rem',
@@ -20,7 +20,7 @@ const VideoCard = ({ location, date, url }) => {
 	};
 	return (
 		<>
-			<Col className='my-2'>
+			<Col lg={isVertical ? '12' : '4'} className='m-auto my-2'>
 				<Card className='m-auto shadow-lg border-1' style={Styles.card}>
 					<Link className='text-decoration-none' to={`/location/${location}`}>
 						<Card.Title className='p-2' style={Styles.heading}>

@@ -154,7 +154,6 @@ const LocationPage = () => {
 							</Nav.Link>
 						</Nav.Item>
 					</Nav>
-					<Row></Row>
 					<Container>
 						<Row>
 							{showComments && <ShowComments location={location} />}

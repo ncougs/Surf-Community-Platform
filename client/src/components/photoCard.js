@@ -2,7 +2,7 @@ import { Col, Card } from 'react-bootstrap';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-const PhotoCard = ({ location, date, url }) => {
+const PhotoCard = ({ location, date, url, isVertical }) => {
 	const Styles = {
 		card: {
 			width: '18rem',
@@ -18,7 +18,7 @@ const PhotoCard = ({ location, date, url }) => {
 	};
 	return (
 		<>
-			<Col lg='4' className='my-2'>
+			<Col lg={isVertical ? '12' : '4'} className='m-auto my-2'>
 				<Card style={Styles.card} className='m-auto shadow-lg border-1'>
 					<Link className='text-decoration-none' to={`/location/${location}`}>
 						<Card.Title className='p-2' style={Styles.heading}>

@@ -8,6 +8,10 @@ import {
 	ArrowUpRight,
 	ArrowDownLeft,
 	ArrowDownRight,
+	Thermometer,
+	Wind,
+	Speedometer,
+	Tsunami,
 } from 'react-bootstrap-icons';
 
 const SurfDataCard = ({ time, height, direction, degrees, windSpeed }) => {
@@ -32,26 +36,42 @@ const SurfDataCard = ({ time, height, direction, degrees, windSpeed }) => {
 		);
 	};
 
+	//convert wind speed from mps to km/h
 	const convertToKMPH = (speedMPS) => {
-		return `${Math.round(speedMPS * 3.6)} km/h`;
+		return Math.round(speedMPS * 3.6);
+	};
+
+	const Styles = {
+		text: {
+			color: '#042D3C',
+		},
+		background: {
+			backgroundColor: '#F5F6F9',
+		},
 	};
 
 	return (
-		<Col className='text-center'>
-			<Card className='shadow m-5'>
-				<Card.Title className='fs-3'>{time}</Card.Title>
+		<Col className='text-center' style={Styles.text}>
+			<Card className='shadow-lg m-5 p-3' style={Styles.background}>
+				<Card.Title className='fs-4 text-muted'>{time}</Card.Title>
 				<Card.Body>
-					<Card.Title className='fs-1'>{`${height}ft`}</Card.Title>
+					<Card.Title className='fs-1 fw-bold'>
+						<span className='px-2'>
+							<Tsunami />
+						</span>
+						{`${height}ft`}
+					</Card.Title>
 					<Row>
-						<Col>
-							<Card.Title>{`${degrees}°`}</Card.Title>
-						</Col>
-						<Col>
-							<Card.Title>{convertToKMPH(windSpeed)}</Card.Title>
-						</Col>
-						<Col>
-							<Card.Title>{getDirection(direction)}</Card.Title>
-						</Col>
+						<p className='fw-bold fs-5'>
+							<Thermometer />
+							{`${degrees}°`}
+						</p>
+
+						<p className='fw-bold fs-5'>
+							<Wind className='m-2' />
+							{`${convertToKMPH(windSpeed)}  km/h`}
+							<span className='mx-2'>{getDirection(direction)}</span>
+						</p>
 					</Row>
 				</Card.Body>
 			</Card>
