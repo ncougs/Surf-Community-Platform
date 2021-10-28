@@ -1,4 +1,5 @@
-import { Star, StarFill } from 'react-bootstrap-icons';
+import { Heart, HeartFill } from 'react-bootstrap-icons';
+import { Button } from 'react-bootstrap';
 import { FAVOURITE_LOCATION } from '../utils/mutations';
 import { USER_FAV_LOCATIONS } from '../utils/queries';
 import { useMutation, useQuery } from '@apollo/client';
@@ -40,12 +41,27 @@ const FavLocation = ({ location, user }) => {
 		}
 	}, [data]);
 
+	const Styles = {
+		fav: {
+			color: '#0A9D7B',
+			cursor: 'pointer',
+		},
+	};
+
 	return (
 		<>
 			{isFavouriteLocation ? (
-				<StarFill className='mx-3' onClick={handleFavouriteLocation} />
+				<HeartFill
+					style={Styles.fav}
+					className='mx-3'
+					onClick={handleFavouriteLocation}
+				/>
 			) : (
-				<Star className='mx-3' onClick={handleFavouriteLocation} />
+				<Heart
+					style={Styles.fav}
+					className='mx-3'
+					onClick={handleFavouriteLocation}
+				/>
 			)}
 		</>
 	);
