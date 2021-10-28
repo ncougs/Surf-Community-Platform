@@ -13,7 +13,6 @@ const ShowComments = ({ location }) => {
 
 	return (
 		<>
-			<h4>Show Comments</h4>
 			{data?.locationCurrentDayComments.length ? (
 				data.locationCurrentDayComments.map((comment) => {
 					return (

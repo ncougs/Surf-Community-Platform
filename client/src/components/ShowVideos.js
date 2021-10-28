@@ -14,7 +14,6 @@ const ShowVideos = ({ location }) => {
 
 	return (
 		<>
-			<h4>Show Videos</h4>
 			{data?.locationCurrentDayVideos.length ? (
 				data.locationCurrentDayVideos.map((video) => {
 					return (

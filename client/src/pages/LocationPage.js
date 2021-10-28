@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container, Nav } from 'react-bootstrap';
 import moment from 'moment';
 import { useState } from 'react';
 import ShowComments from '../components/ShowComments';
@@ -37,52 +37,133 @@ const LocationPage = () => {
 		e.preventDefault();
 		const section = e.target.textContent.toLowerCase();
 
-		section.match(/^comments$/)
-			? setShowComments(!showComments)
-			: section.match(/^videos$/)
-			? setShowVideos(!showVideos)
-			: setShowPhotos(!showPhotos);
+		if (section.match(/^comments$/)) {
+			setShowVideos(false);
+			setShowPhotos(false);
+
+			return setShowComments(!showComments);
+		}
+
+		if (section.match(/^videos$/)) {
+			setShowComments(false);
+			setShowPhotos(false);
+
+			return setShowVideos(!showVideos);
+		}
+
+		if (section.match(/^photos$/)) {
+			setShowComments(false);
+			setShowVideos(false);
+
+			return setShowPhotos(!showPhotos);
+		}
+	};
+
+	const Styles = {
+		mainHeading: {
+			fontSize: '3vw',
+			color: '#F5F6F9',
+		},
+		dateHeading: {
+			fontSize: '2vw',
+			color: '#F5F6F9',
+		},
+		secondaryBackground: {
+			backgroundColor: '#F5F6F9',
+		},
+		secondaryHeading: {
+			fontSize: '2vw',
+			color: '#042D3C',
+		},
 	};
 
 	return (
 		<>
-			<h2 className='text-center'>
-				Hello {location} Page
-				{Auth.loggedIn() && (
-					<FavLocation location={location} user={Auth.getProfile()} />
-				)}
-			</h2>
+			<Container>
+				<h2 className='text-center p-2' style={Styles.mainHeading}>
+					{location}
+					{Auth.loggedIn() && (
+						<FavLocation location={location} user={Auth.getProfile()} />
+					)}
+				</h2>
+			</Container>
 
-			<Row>
-				{!surfDataLoading ? (
-					surfData.surfData.data.map((data, i) => (
-						<SurfDataCard
-							key={i}
-							time={moment(data.dateTime, 'x').utc().format('hh:mm a')}
-							height={data.waveHeight}
-							direction={data.windDirection}
-							degrees={data.airTemperature}
-						/>
-					))
-				) : (
-					<p>data loading...</p>
-				)}
-			</Row>
-			<p className='text-center'>{currentDay}</p>
-			<Row>
-				<Col className='text-center' onClick={handleShowField}>
-					Comments
-				</Col>
-				<Col className='text-center' onClick={handleShowField}>
-					Photos
-				</Col>
-				<Col className='text-center' onClick={handleShowField}>
-					Videos
-				</Col>
-			</Row>
-			{showComments && <ShowComments location={location} />}
-			{showPhotos && <ShowPhotos location={location} />}
-			{showVideos && <ShowVideos location={location} />}
+			<Container>
+				<p className='text-center p-2' style={Styles.dateHeading}>
+					{currentDay}
+				</p>
+			</Container>
+
+			<Container>
+				<Row>
+					{!surfDataLoading ? (
+						surfData.surfData.data.map((data, i) => (
+							<SurfDataCard
+								key={i}
+								time={moment(data.dateTime, 'x').utc().format('hh:mm a')}
+								height={data.waveHeight}
+								direction={data.windDirection}
+								degrees={data.airTemperature}
+								windSpeed={data.windSpeed}
+							/>
+						))
+					) : (
+						<p>data loading...</p>
+					)}
+				</Row>
+			</Container>
+
+			<Container
+				fluid
+				style={Styles.secondaryBackground}
+				className='flex-grow-1 p-0'
+			>
+				<Container>
+					<Nav className='justify-content-center' activeKey='/home'>
+						<Nav.Item>
+							<Nav.Link eventKey='link-2'>
+								<Col
+									className='text-center fw-bold p-5'
+									onClick={handleShowField}
+									style={Styles.secondaryHeading}
+								>
+									Photos
+								</Col>
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link eventKey='link-2'>
+								<Col
+									className='text-center fw-bold p-5'
+									onClick={handleShowField}
+									style={Styles.secondaryHeading}
+								>
+									Comments
+								</Col>
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link eventKey='link-3'>
+								<Col
+									className='text-center fw-bold p-5'
+									onClick={handleShowField}
+									style={Styles.secondaryHeading}
+								>
+									Videos
+								</Col>
+							</Nav.Link>
+						</Nav.Item>
+					</Nav>
+					<Row></Row>
+					<Container>
+						<Row>
+							{showComments && <ShowComments location={location} />}
+							{showPhotos && <ShowPhotos location={location} />}
+							{showVideos && <ShowVideos location={location} />}
+						</Row>
+					</Container>
+				</Container>
+			</Container>
 		</>
 	);
 };

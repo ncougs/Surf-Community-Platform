@@ -14,7 +14,6 @@ const ShowPhotos = ({ location }) => {
 
 	return (
 		<>
-			<h4>Show Photos</h4>
 			{data?.locationCurrentDayPhotos.length ? (
 				data.locationCurrentDayPhotos.map((photo) => {
 					return (
