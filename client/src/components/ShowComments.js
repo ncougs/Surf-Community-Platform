@@ -3,12 +3,9 @@ import { LOCATION_TODAY_COMMENTS } from '../utils/queries';
 import { useEffect, useState } from 'react';
 
 const ShowComments = ({ location }) => {
-	const { data, loading, error, refetch } = useQuery(LOCATION_TODAY_COMMENTS, {
+	const { data, loading, error } = useQuery(LOCATION_TODAY_COMMENTS, {
 		variables: { location },
-	});
-
-	useEffect(() => {
-		refetch();
+		pollInterval: 5000,
 	});
 
 	return (

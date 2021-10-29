@@ -8,11 +8,9 @@ import DisplayDots from '../components/displayDots';
 
 const Home = () => {
 	//get the media for the current day
-	const { loading, error, data, refetch } = useQuery(CURRENT_DAY_MEDIA);
-
-	// useEffect(() => {
-	// 	refetch();
-	// });
+	const { loading, error, data, refetch } = useQuery(CURRENT_DAY_MEDIA, {
+		pollInterval: 5000,
+	});
 
 	const [vertical, setVertical] = useState(false);
 

@@ -11,12 +11,9 @@ const ShowPhotos = ({ location }) => {
 		setVertical(!vertical);
 	};
 
-	const { data, loading, error, refetch } = useQuery(LOCATION_TODAY_PHOTOS, {
+	const { data, loading, error } = useQuery(LOCATION_TODAY_PHOTOS, {
 		variables: { location },
-	});
-
-	useEffect(() => {
-		refetch();
+		pollInterval: 5000,
 	});
 
 	return (

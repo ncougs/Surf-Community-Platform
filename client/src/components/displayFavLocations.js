@@ -6,13 +6,8 @@ import { USER_FAV_LOCATIONS } from '../utils/queries';
 
 const DisplayFavLocations = ({ id }) => {
 	//return users fav locations
-	const { data, refetch } = useQuery(USER_FAV_LOCATIONS, {
+	const { data } = useQuery(USER_FAV_LOCATIONS, {
 		variables: { id },
-	});
-
-	//refetch on any state change
-	useEffect(() => {
-		refetch();
 	});
 
 	const Styles = {

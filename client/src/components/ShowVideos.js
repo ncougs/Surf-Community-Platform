@@ -7,12 +7,9 @@ import DisplayDots from './displayDots';
 const ShowVideos = ({ location }) => {
 	const [vertical, setVertical] = useState(false);
 
-	const { data, loading, error, refetch } = useQuery(LOCATION_TODAY_VIDEOS, {
+	const { data, loading, error } = useQuery(LOCATION_TODAY_VIDEOS, {
 		variables: { location },
-	});
-
-	useEffect(() => {
-		refetch();
+		pollInterval: 5000,
 	});
 
 	const handleClick = (e) => {
