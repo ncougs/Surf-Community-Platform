@@ -43,18 +43,16 @@ const client = new ApolloClient({
 
 const App = () => {
 	const styles = {
-		background: {
+		main: {
 			backgroundColor: '#0A769D',
 			backgroundImage: `linear-gradient(0deg, #F5F6F9, transparent)`,
+			fontFamily: `'Passion One', cursive`,
 		},
 	};
 	return (
 		<ApolloProvider client={client}>
 			<Router>
-				<div
-					className={'min-vh-100 d-flex flex-column'}
-					style={styles.background}
-				>
+				<div className={'min-vh-100 d-flex flex-column'} style={styles.main}>
 					<NavigationBar />
 					<Container className={'flex-grow-1 d-flex flex-column p-0 m-0'} fluid>
 						<Switch>

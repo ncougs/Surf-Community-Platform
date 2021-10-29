@@ -46,6 +46,9 @@ const LoginModal = ({ openModal, closeLoginModal, openSignupModal }) => {
 	};
 
 	const Styles = {
+		font: {
+			fontFamily: `'Passion One', cursive`,
+		},
 		mainHeading: {
 			color: '#042D3C',
 		},
@@ -73,6 +76,7 @@ const LoginModal = ({ openModal, closeLoginModal, openSignupModal }) => {
 					closeLoginModal();
 					removeErrorMessage();
 				}}
+				style={Styles.font}
 			>
 				<Modal.Header
 					className='justify-content-center'

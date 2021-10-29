@@ -46,6 +46,9 @@ const SignupModal = ({ openModal, closeModal }) => {
 	};
 
 	const Styles = {
+		font: {
+			fontFamily: `'Passion One', cursive`,
+		},
 		mainHeading: {
 			color: '#042D3C',
 		},
@@ -71,6 +74,7 @@ const SignupModal = ({ openModal, closeModal }) => {
 			onHide={() => {
 				closeModal();
 			}}
+			style={Styles.font}
 		>
 			<Modal.Header
 				style={Styles.background}

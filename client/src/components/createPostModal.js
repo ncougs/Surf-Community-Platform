@@ -127,6 +127,9 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	};
 
 	const Styles = {
+		font: {
+			fontFamily: `'Passion One', cursive`,
+		},
 		mainHeading: {
 			color: '#042D3C',
 		},
@@ -158,6 +161,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 				onHide={() => {
 					closeModal();
 				}}
+				style={Styles.font}
 			>
 				<Modal.Header
 					className='justify-content-center'
