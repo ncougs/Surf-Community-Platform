@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { useEffect, useState } from 'react';
-import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import { useState } from 'react';
+import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
 import { CREATE_USER } from '../utils/mutations';
@@ -45,84 +45,140 @@ const SignupModal = ({ openModal, closeModal }) => {
 		}
 	};
 
+	const Styles = {
+		mainHeading: {
+			color: '#042D3C',
+		},
+		background: {
+			backgroundColor: '#F5F6F9',
+		},
+		mainButton: {
+			backgroundColor: '#0A9D7B',
+			borderColor: '#0A9D7B',
+			color: '#F5F6F9',
+			fontSize: '20px',
+			width: '100%',
+		},
+		pointer: {
+			cursor: 'pointer',
+		},
+	};
+
 	return (
 		<Modal
+			size='sm'
 			show={openModal}
 			onHide={() => {
 				closeModal();
 			}}
 		>
-			<Modal.Header className='justify-content-center'>
-				<Modal.Title>Sign Up</Modal.Title>
+			<Modal.Header
+				style={Styles.background}
+				className='justify-content-center'
+			>
+				<Modal.Title style={Styles.mainHeading} className='fs-1 fw-bold'>
+					Sign Up
+				</Modal.Title>
 			</Modal.Header>
-			<Modal.Body>
-				<Form onSubmit={handleSignup}>
+			<Modal.Body style={Styles.background}>
+				<Form onSubmit={handleSignup} style={Styles.background}>
 					<Form.Group className='mb-3' controlId='username'>
-						<Form.Label>Username</Form.Label>
-						<Form.Control
-							required
-							type='text'
-							// placeholder='Username'
-							value={username}
-							onChange={(e) => {
-								setUsername(e.target.value);
-							}}
-						/>
+						<FloatingLabel
+							controlId='floatingInput'
+							label='Username'
+							className='mb-3'
+						>
+							<Form.Control
+								required
+								type='text'
+								placeholder='Username'
+								value={username}
+								onChange={(e) => {
+									setUsername(e.target.value);
+								}}
+							/>
+						</FloatingLabel>
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='firstName'>
-						<Form.Label>First Name</Form.Label>
-						<Form.Control
-							required
-							type='text'
-							// placeholder='First Name'
-							value={firstName}
-							onChange={(e) => {
-								setFirstName(e.target.value);
-							}}
-						/>
+						<FloatingLabel
+							controlId='floatingInput'
+							label='First Name'
+							className='mb-3'
+						>
+							<Form.Control
+								required
+								type='text'
+								placeholder='First Name'
+								value={firstName}
+								onChange={(e) => {
+									setFirstName(e.target.value);
+								}}
+							/>
+						</FloatingLabel>
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='lastName'>
-						<Form.Label>Last Name</Form.Label>
-						<Form.Control
-							required
-							type='text'
-							// placeholder='Last Name'
-							value={lastName}
-							onChange={(e) => {
-								setLastName(e.target.value);
-							}}
-						/>
+						<FloatingLabel
+							controlId='floatingInput'
+							label='Last Name'
+							className='mb-3'
+						>
+							<Form.Control
+								required
+								type='text'
+								placeholder='Last Name'
+								value={lastName}
+								onChange={(e) => {
+									setLastName(e.target.value);
+								}}
+							/>
+						</FloatingLabel>
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='email'>
-						<Form.Label>Email</Form.Label>
-						<Form.Control
-							required
-							type='email'
-							// placeholder='Email'
-							value={email}
-							onChange={(e) => {
-								setEmail(e.target.value);
-							}}
-						/>
+						<FloatingLabel
+							controlId='floatingInput'
+							label='Email'
+							className='mb-3'
+						>
+							<Form.Control
+								required
+								type='email'
+								placeholder='Email'
+								value={email}
+								onChange={(e) => {
+									setEmail(e.target.value);
+								}}
+							/>
+						</FloatingLabel>
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='password'>
-						<Form.Label>Password</Form.Label>
-						<Form.Control
-							required
-							type='password'
-							// placeholder='Password'
-							value={password}
-							onChange={(e) => {
-								setPassword(e.target.value);
-							}}
-						/>
+						<FloatingLabel
+							controlId='floatingInput'
+							label='Password'
+							className='mb-3'
+						>
+							<Form.Control
+								required
+								type='password'
+								placeholder='Password'
+								value={password}
+								onChange={(e) => {
+									setPassword(e.target.value);
+								}}
+							/>
+						</FloatingLabel>
 					</Form.Group>
 
-					<Button type='submit'>Sign Up</Button>
+					<Button
+						type='submit'
+						style={Styles.mainButton}
+						className='p-3 fw-bold'
+					>
+						Create New Account
+					</Button>
 				</Form>
 			</Modal.Body>
 		</Modal>

@@ -1,5 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Modal, Button, Form, Spinner, FloatingLabel } from 'react-bootstrap';
+import { useState } from 'react';
+import {
+	Modal,
+	Button,
+	Form,
+	Spinner,
+	FloatingLabel,
+	Row,
+	Col,
+} from 'react-bootstrap';
 
 import { useMutation, useQuery } from '@apollo/client';
 import { POST_PHOTO } from '../utils/mutations';
@@ -10,6 +18,8 @@ import { LOCATIONS } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const CreatePostModal = ({ openModal, closeModal }) => {
+	const [showComments, setShowComments] = useState(false);
+	const [showMedia, setShowMedia] = useState(false);
 	const [file, setFile] = useState('');
 	const [comment, updateComment] = useState('');
 	const [locationID, updateSelectedLocationID] = useState('');
@@ -27,6 +37,18 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	useQuery(LOCATIONS, {
 		onCompleted: (data) => updateLocations(data.locations),
 	});
+
+	const handleSectionRender = (e) => {
+		e.preventDefault();
+
+		if (e.target.value == 'comments') {
+			setShowComments(true);
+			setShowMedia(false);
+		} else {
+			setShowComments(false);
+			setShowMedia(true);
+		}
+	};
 
 	const clearPostData = () => {
 		setFile('');
@@ -104,6 +126,31 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 		}
 	};
 
+	const Styles = {
+		mainHeading: {
+			color: '#042D3C',
+		},
+		background: {
+			backgroundColor: '#F5F6F9',
+		},
+		mainButton: {
+			backgroundColor: '#0A9D7B',
+			borderColor: '#0A9D7B',
+			color: '#F5F6F9',
+			fontSize: '20px',
+			width: '100%',
+		},
+		secondaryButton: {
+			backgroundColor: '#042D3C',
+			borderColor: '#042D3C',
+			color: '#F5F6F9',
+			fontSize: '20px',
+		},
+		pointer: {
+			cursor: 'pointer',
+		},
+	};
+
 	return (
 		<>
 			<Modal
@@ -112,11 +159,16 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 					closeModal();
 				}}
 			>
-				<Modal.Header className='justify-content-center'>
-					<Modal.Title>Create Post</Modal.Title>
+				<Modal.Header
+					className='justify-content-center'
+					style={Styles.background}
+				>
+					<Modal.Title style={Styles.mainHeading} className='fs-1 fw-bold'>
+						Create Post
+					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
-					<Form onSubmit={handleFormSubmit}>
+				<Modal.Body style={Styles.background}>
+					<Form onSubmit={handleFormSubmit} style={Styles.background}>
 						<Form.Group className='mb-3' controlId='username'>
 							<Form.Control
 								required
@@ -133,25 +185,56 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 							</Form.Control>
 						</Form.Group>
 
-						<Form.Group controlId='uploadFile' className='mb-3'>
-							<Form.Control
-								type='file'
-								size='sm'
-								onChange={(e) => setFile(e.target.files[0])}
-							/>
-						</Form.Group>
+						<Row className='mb-4'>
+							<Col className='d-flex'>
+								<Button
+									onClick={handleSectionRender}
+									value='comments'
+									className='m-auto'
+									style={Styles.secondaryButton}
+								>
+									Add Comment
+								</Button>
+							</Col>
+							<Col className='d-flex'>
+								<Button
+									onClick={handleSectionRender}
+									value='media'
+									className='m-auto'
+									style={Styles.secondaryButton}
+								>
+									Upload Media
+								</Button>
+							</Col>
+						</Row>
 
-						<Form.Group controlId='comment' className='mb-3'>
-							<FloatingLabel
-								controlId='addComment'
-								label='Comment'
-								className='mb-3'
-								value={comment}
-								onChange={(e) => updateComment(e.target.value)}
-							>
-								<Form.Control as='textarea' />
-							</FloatingLabel>
-						</Form.Group>
+						{showMedia && (
+							<>
+								<Form.Group controlId='uploadFile' className='mb-3'>
+									<Form.Control
+										required
+										type='file'
+										onChange={(e) => setFile(e.target.files[0])}
+									/>
+								</Form.Group>
+							</>
+						)}
+
+						{showComments && (
+							<>
+								<Form.Group controlId='comment' className='mb-3'>
+									<FloatingLabel
+										controlId='addComment'
+										label='Comment'
+										className='mb-3'
+										value={comment}
+										onChange={(e) => updateComment(e.target.value)}
+									>
+										<Form.Control required as='textarea' />
+									</FloatingLabel>
+								</Form.Group>
+							</>
+						)}
 
 						{photoLoading || videoLoading || commentLoading ? (
 							<Button variant='primary' disabled>
@@ -166,7 +249,13 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 								Loading...
 							</Button>
 						) : (
-							<Button type='submit'>Create Post</Button>
+							<Button
+								type='submit'
+								style={Styles.mainButton}
+								className='p-3 fw-bold'
+							>
+								Create Post
+							</Button>
 						)}
 					</Form>
 				</Modal.Body>

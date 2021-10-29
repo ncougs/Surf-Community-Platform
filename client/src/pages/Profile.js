@@ -65,7 +65,7 @@ const Profile = () => {
 					</h4>
 					<Container>
 						<Row>
-							{data ? (
+							{data?.userMedia.length ? (
 								<>
 									<DisplayDots handleClick={handleClick} />
 									{data?.userMedia.map((media, i) =>
