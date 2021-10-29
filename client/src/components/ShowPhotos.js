@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DisplayDots from './displayDots';
 import { LOCATION_TODAY_PHOTOS } from '../utils/queries';
 import PhotoCard from './photoCard';

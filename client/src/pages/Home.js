@@ -1,6 +1,6 @@
 import { Row, Col, Container } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CURRENT_DAY_MEDIA } from '../utils/queries';
 import PhotoCard from '../components/photoCard';
 import VideoCard from '../components/videoCard';

@@ -22,7 +22,7 @@ const LocationSearchBar = ({ children }) => {
 					<Col>
 						<FloatingLabel controlId='floatingInput' label='Enter a Location'>
 							<input
-								class='form-control'
+								className='form-control'
 								list='datalistOptions'
 								placeholder='Type to search...'
 								value={search}
@@ -30,8 +30,8 @@ const LocationSearchBar = ({ children }) => {
 							/>
 							<datalist id='datalistOptions'>
 								{data?.locations.length ? (
-									data?.locations.map((location) => (
-										<option value={location.name} />
+									data?.locations.map((location, i) => (
+										<option key={i} value={location.name} />
 									))
 								) : (
 									<option value='San Francisco' />

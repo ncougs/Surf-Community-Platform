@@ -56,24 +56,21 @@ const NavigationBar = () => {
 					<LocationSearchBar />
 					<Navbar.Collapse id='basic-navbar-nav' className='flex-grow-0'>
 						<Nav>
-							<Nav.Link href='#home' style={Styles.link}>
-								About
-							</Nav.Link>
 							{isLoggedIn ? (
-								<Nav.Link>
-									<Link to='/profile' style={Styles.link}>
-										Profile
-									</Link>
-								</Nav.Link>
-							) : null}
-							<Nav.Link>
-								<Link to='/locations' style={Styles.link}>
-									Locations
+								<Link className='m-auto mx-2' to='/profile' style={Styles.link}>
+									Profile
 								</Link>
-							</Nav.Link>
+							) : null}
+							<Link className='m-auto mx-2' to='/locations' style={Styles.link}>
+								Locations
+							</Link>
 							{isLoggedIn ? (
 								<>
-									<Nav.Link onClick={Auth.logout} style={Styles.link}>
+									<Nav.Link
+										className='m-auto mx-2'
+										onClick={Auth.logout}
+										style={Styles.link}
+									>
 										Log out
 									</Nav.Link>
 									<Button onClick={openPostModal} style={Styles.mainButton}>

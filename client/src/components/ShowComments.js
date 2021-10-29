@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client';
 import { LOCATION_TODAY_COMMENTS } from '../utils/queries';
-import { useEffect, useState } from 'react';
 
 const ShowComments = ({ location }) => {
 	const { data, loading, error } = useQuery(LOCATION_TODAY_COMMENTS, {
@@ -11,12 +10,12 @@ const ShowComments = ({ location }) => {
 	return (
 		<>
 			{data?.locationCurrentDayComments.length ? (
-				data.locationCurrentDayComments.map((comment) => {
+				data.locationCurrentDayComments.map((comment, i) => {
 					return (
-						<>
+						<div key={i}>
 							<h5>{comment.user_id.username}</h5>
 							<p>{comment.body}</p>
-						</>
+						</div>
 					);
 				})
 			) : (

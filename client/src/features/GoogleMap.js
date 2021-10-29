@@ -26,8 +26,9 @@ const Map = () => {
 				defaultCenter={defaultLocation.center}
 				defaultZoom={defaultLocation.zoom}
 			>
-				{locations.map((location) => (
+				{locations.map((location, i) => (
 					<MapMarker
+						key={i}
 						lat={location.lat}
 						lng={location.lng}
 						name={location.name}

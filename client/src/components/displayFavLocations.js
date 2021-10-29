@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 import { USER_FAV_LOCATIONS } from '../utils/queries';
 
 const DisplayFavLocations = ({ id }) => {
@@ -47,17 +46,15 @@ const DisplayFavLocations = ({ id }) => {
 					<Row className='text-center'>
 						{data?.userFavLocations.length ? (
 							data.userFavLocations.map((location, i) => (
-								<>
-									<Col key={i} className='fs-4'>
-										<Link
-											className='text-decoration-none'
-											to={`/location/${location.name}`}
-											style={Styles.text}
-										>
-											<Button style={Styles.mainButton}>{location.name}</Button>
-										</Link>
-									</Col>
-								</>
+								<Col key={i} className='fs-4'>
+									<Link
+										className='text-decoration-none'
+										to={`/location/${location.name}`}
+										style={Styles.text}
+									>
+										<Button style={Styles.mainButton}>{location.name}</Button>
+									</Link>
+								</Col>
 							))
 						) : (
 							<Col>No favourite Locations</Col>

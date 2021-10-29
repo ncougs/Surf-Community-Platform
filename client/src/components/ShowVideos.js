@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { LOCATION_TODAY_VIDEOS } from '../utils/queries';
 import VideoCard from './videoCard';
 import DisplayDots from './displayDots';
