@@ -445,8 +445,11 @@ const resolvers = {
 
 			//await upload of stream to cloudinary
 			const upload = await new Promise((resolve, reject) => {
-				const uploadStream = cloudinary.uploader.upload_stream((err, file) =>
-					err ? reject(err) : resolve(file)
+				const uploadStream = cloudinary.uploader.upload_stream(
+					{
+						fetch_format: 'auto',
+					},
+					(err, file) => (err ? reject(err) : resolve(file))
 				);
 
 				stream.pipe(uploadStream);
