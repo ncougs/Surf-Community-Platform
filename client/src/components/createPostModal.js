@@ -22,6 +22,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	const [showMedia, setShowMedia] = useState(false);
 	const [file, setFile] = useState('');
 	const [comment, updateComment] = useState('');
+	const [caption, updateCaption] = useState('');
 	const [locationID, updateSelectedLocationID] = useState('');
 	const [locations, updateLocations] = useState([]);
 
@@ -52,6 +53,8 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 
 	const clearPostData = () => {
 		setFile('');
+		updateComment('');
+		updateCaption('');
 	};
 
 	const handleFormSubmit = async (e) => {
@@ -101,6 +104,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 					file,
 					user_id: _id,
 					locationID,
+					caption,
 				},
 			});
 		} catch (e) {
@@ -220,6 +224,18 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 										type='file'
 										onChange={(e) => setFile(e.target.files[0])}
 									/>
+								</Form.Group>
+
+								<Form.Group controlId='caption' className='mb-3'>
+									<FloatingLabel
+										controlId='addCaption'
+										label='caption'
+										className='mb-3'
+										value={caption}
+										onChange={(e) => updateCaption(e.target.value)}
+									>
+										<Form.Control required as='textarea' />
+									</FloatingLabel>
 								</Form.Group>
 							</>
 						)}

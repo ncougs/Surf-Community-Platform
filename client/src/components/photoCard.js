@@ -2,7 +2,7 @@ import { Col, Card } from 'react-bootstrap';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-const PhotoCard = ({ location, date, url, isVertical }) => {
+const PhotoCard = ({ location, date, url, isVertical, caption, user }) => {
 	const Styles = {
 		card: {
 			width: '18rem',
@@ -26,6 +26,12 @@ const PhotoCard = ({ location, date, url, isVertical }) => {
 						</Card.Title>
 						<Card.Img variant='top' src={url} style={Styles.img} />
 						<Card.Footer>
+							<p>
+								<small className='text-muted p-2'>{`${user}${
+									caption ? `: ${caption}` : ''
+								}`}</small>
+							</p>
+
 							<small className='text-muted p-2'>{`uploaded at ${moment(
 								date,
 								'x'

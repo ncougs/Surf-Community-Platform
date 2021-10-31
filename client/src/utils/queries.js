@@ -18,6 +18,7 @@ export const PHOTOS = gql`
 		photos {
 			url
 			date
+			caption
 			user_id {
 				_id
 				username
@@ -42,6 +43,7 @@ export const TODAY_PHOTOS = gql`
 			_id
 			date
 			url
+			caption
 			user_id {
 				_id
 				username
@@ -66,6 +68,7 @@ export const LOCATION_TODAY_PHOTOS = gql`
 			_id
 			date
 			url
+			caption
 			user_id {
 				_id
 				username
@@ -90,6 +93,7 @@ export const USER_PHOTOS = gql`
 			_id
 			url
 			date
+			caption
 			locationID {
 				name
 			}
@@ -278,8 +282,12 @@ export const CURRENT_DAY_MEDIA = gql`
 			_id
 			url
 			date
+			caption
 			locationID {
 				name
+			}
+			user_id {
+				username
 			}
 		}
 	}
@@ -292,8 +300,12 @@ export const USER_MEDIA = gql`
 			_id
 			url
 			date
+			caption
 			locationID {
 				name
+			}
+			user_id {
+				username
 			}
 		}
 	}

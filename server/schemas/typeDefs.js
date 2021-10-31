@@ -24,6 +24,7 @@ const typeDefs = gql`
 		date: String!
 		user_id: User!
 		locationID: Location!
+		caption: String
 	}
 
 	type Video {
@@ -40,6 +41,7 @@ const typeDefs = gql`
 		date: String!
 		user_id: User!
 		locationID: Location!
+		caption: String
 	}
 
 	type Comment {
@@ -108,7 +110,12 @@ const typeDefs = gql`
 		): Auth
 		login(username: String!, password: String!): Auth
 		addLocation(name: String!, lat: Float!, lng: Float!): Location
-		postPhoto(file: Upload!, user_id: ID!, locationID: ID!): Photo!
+		postPhoto(
+			file: Upload!
+			user_id: ID!
+			locationID: ID!
+			caption: String
+		): Photo!
 		postVideo(file: Upload!, user_id: ID!, locationID: ID!): Video!
 		postComment(body: String!, user_id: ID!, locationID: ID!): Comment!
 		favouriteLocation(user_id: ID!, location: String!): User!

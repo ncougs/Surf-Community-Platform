@@ -37,17 +37,28 @@ export const CREATE_USER = gql`
 `;
 
 export const POST_PHOTO = gql`
-	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!) {
-		postPhoto(file: $file, user_id: $user_id, locationID: $locationID) {
+	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!, $caption: String) {
+		postPhoto(
+			file: $file
+			user_id: $user_id
+			locationID: $locationID
+			caption: $caption
+		) {
 			url
 			date
+			caption
 		}
 	}
 `;
 
 export const POST_VIDEO = gql`
-	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!) {
-		postVideo(file: $file, user_id: $user_id, locationID: $locationID) {
+	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!, $caption: String) {
+		postVideo(
+			file: $file
+			user_id: $user_id
+			locationID: $locationID
+			caption: $caption
+		) {
 			url
 			date
 		}

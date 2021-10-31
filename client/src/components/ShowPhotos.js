@@ -29,6 +29,8 @@ const ShowPhotos = ({ location }) => {
 								date={photo.date}
 								location={location}
 								isVertical={vertical}
+								caption={photo.caption}
+								user={photo.user_id.username}
 							/>
 						);
 					})}
