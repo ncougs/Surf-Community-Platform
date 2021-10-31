@@ -16,6 +16,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Locations from './pages/locations';
 import LocationPage from './pages/LocationPage';
+import Error from './pages/Error';
 
 const httpLink = createHttpLink({
 	uri: '/graphql',
@@ -64,6 +65,7 @@ const App = () => {
 								exact
 								component={LocationPage}
 							/>
+							<Route path='*' exact component={Error} />
 						</Switch>
 					</Container>
 				</div>
