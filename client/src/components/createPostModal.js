@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	Modal,
 	Button,
@@ -10,6 +10,7 @@ import {
 } from 'react-bootstrap';
 
 import { useMutation, useQuery } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 import { POST_PHOTO } from '../utils/mutations';
 import { POST_VIDEO } from '../utils/mutations';
 import { POST_COMMENT } from '../utils/mutations';
@@ -25,6 +26,9 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	const [caption, updateCaption] = useState('');
 	const [locationID, updateSelectedLocationID] = useState('');
 	const [locations, updateLocations] = useState([]);
+	const [preSelectedLocation, setPreSelectedLocation] = useState('');
+
+	const location = useLocation();
 
 	const [postPhoto, { loading: photoLoading, error: photoError }] =
 		useMutation(POST_PHOTO);
@@ -38,6 +42,19 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	useQuery(LOCATIONS, {
 		onCompleted: (data) => updateLocations(data.locations),
 	});
+
+	useEffect(() => {
+		const foundLocation = location.pathname.split('/').at(-1);
+
+		const filteredLocations = locations.filter((i) => i.name === foundLocation);
+
+		if (filteredLocations.length) {
+			setPreSelectedLocation(foundLocation);
+			updateSelectedLocationID(filteredLocations[0]._id);
+		} else {
+			setPreSelectedLocation('');
+		}
+	}, [locations, location]);
 
 	const handleSectionRender = (e) => {
 		e.preventDefault();
@@ -182,10 +199,14 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 							<Form.Control
 								required
 								as='select'
-								aria-label='Default select example'
 								onChange={(e) => updateSelectedLocationID(e.target.value)}
 							>
-								<option>{'--Please Select--'}</option>
+								{preSelectedLocation ? (
+									<option>{preSelectedLocation}</option>
+								) : (
+									<option>{'--Please Select--'}</option>
+								)}
+
 								{locations.map((location, i) => (
 									<option key={i} value={location._id}>
 										{location.name}
