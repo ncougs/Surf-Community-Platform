@@ -198,21 +198,21 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 							<Col className='d-flex'>
 								<Button
 									onClick={handleSectionRender}
-									value='comments'
-									className='m-auto'
-									style={Styles.secondaryButton}
-								>
-									Add Comment
-								</Button>
-							</Col>
-							<Col className='d-flex'>
-								<Button
-									onClick={handleSectionRender}
 									value='media'
 									className='m-auto'
 									style={Styles.secondaryButton}
 								>
 									Upload Media
+								</Button>
+							</Col>
+							<Col className='d-flex'>
+								<Button
+									onClick={handleSectionRender}
+									value='comments'
+									className='m-auto'
+									style={Styles.secondaryButton}
+								>
+									Add Comment
 								</Button>
 							</Col>
 						</Row>
