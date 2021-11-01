@@ -46,7 +46,9 @@ const Home = () => {
 			<Row className={'m-auto'} style={Styles.section}>
 				<Col className={'col-8 d-flex'}>
 					<h1 className='m-auto' style={Styles.mainHeading}>
-						Local Surf Community Platform
+						Surf Spot
+						<br />
+						The Local surf community application.
 					</h1>
 				</Col>
 			</Row>

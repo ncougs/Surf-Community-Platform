@@ -48,8 +48,8 @@ const NavigationBar = () => {
 			<Navbar expand='lg'>
 				<Container fluid>
 					<Navbar.Brand>
-						<Link to='/' style={Styles.link}>
-							Surf Community Application
+						<Link className='fs-1' to='/' style={Styles.link}>
+							Surf Spot
 						</Link>
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls='basic-navbar-nav' />
