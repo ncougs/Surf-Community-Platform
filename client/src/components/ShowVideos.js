@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
+import { Col, Spinner } from 'react-bootstrap';
 import { LOCATION_TODAY_VIDEOS } from '../utils/queries';
 import VideoCard from './videoCard';
 import DisplayDots from './displayDots';
@@ -16,9 +17,27 @@ const ShowVideos = ({ location }) => {
 		setVertical(!vertical);
 	};
 
+	const Styles = {
+		loadingWheel: {
+			color: '#0A9D7B',
+		},
+		fontColour: {
+			color: '#042D3C',
+		},
+	};
+
 	return (
 		<>
-			{data?.locationCurrentDayVideos.length ? (
+			{loading ? (
+				<>
+					<Col>
+						<Spinner animation='border' style={Styles.loadingWheel} />
+						<span className='mx-2' style={Styles.fontColour}>
+							Loading...
+						</span>
+					</Col>
+				</>
+			) : data?.locationCurrentDayVideos.length ? (
 				<>
 					<DisplayDots handleClick={handleClick} />
 					{data?.locationCurrentDayVideos.map((video, i) => {

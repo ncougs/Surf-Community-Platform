@@ -1,4 +1,4 @@
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Spinner } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { CURRENT_DAY_MEDIA } from '../utils/queries';
@@ -34,6 +34,12 @@ const Home = () => {
 		recentMedia: {
 			backgroundColor: '#F5F6F9',
 		},
+		loadingWheel: {
+			color: '#0A9D7B',
+		},
+		fontColour: {
+			color: '#042D3C',
+		},
 	};
 	return (
 		<>
@@ -50,7 +56,16 @@ const Home = () => {
 				</h2>
 				<Container>
 					<Row>
-						{data?.currentDayMedia.length ? (
+						{loading ? (
+							<>
+								<Col>
+									<Spinner animation='border' style={Styles.loadingWheel} />
+									<span className='mx-2' style={Styles.fontColour}>
+										Loading...
+									</span>
+								</Col>
+							</>
+						) : data?.currentDayMedia.length ? (
 							<>
 								<DisplayDots handleClick={handleClick} />
 								{data?.currentDayMedia.map((media, i) =>

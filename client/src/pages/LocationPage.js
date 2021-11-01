@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Row, Col, Container, Nav } from 'react-bootstrap';
+import { Row, Col, Container, Nav, Spinner } from 'react-bootstrap';
 import moment from 'moment';
 import { useState } from 'react';
 import ShowComments from '../components/ShowComments';
@@ -75,6 +75,12 @@ const LocationPage = () => {
 			fontSize: '2vw',
 			color: '#042D3C',
 		},
+		loadingWheel: {
+			color: '#0A9D7B',
+		},
+		fontColour: {
+			color: '#F5F6F9',
+		},
 	};
 
 	return (
@@ -108,7 +114,14 @@ const LocationPage = () => {
 							/>
 						))
 					) : (
-						<p>data loading...</p>
+						<>
+							<Col>
+								<Spinner animation='border' style={Styles.loadingWheel} />
+								<span className='mx-2' style={Styles.fontColour}>
+									Loading...
+								</span>
+							</Col>
+						</>
 					)}
 				</Row>
 			</Container>

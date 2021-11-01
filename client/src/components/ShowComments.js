@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { Col, Spinner } from 'react-bootstrap';
 import { LOCATION_TODAY_COMMENTS } from '../utils/queries';
 
 const ShowComments = ({ location }) => {
@@ -7,9 +8,27 @@ const ShowComments = ({ location }) => {
 		pollInterval: 5000,
 	});
 
+	const Styles = {
+		loadingWheel: {
+			color: '#0A9D7B',
+		},
+		fontColour: {
+			color: '#042D3C',
+		},
+	};
+
 	return (
 		<>
-			{data?.locationCurrentDayComments.length ? (
+			{loading ? (
+				<>
+					<Col>
+						<Spinner animation='border' style={Styles.loadingWheel} />
+						<span className='mx-2' style={Styles.fontColour}>
+							Loading...
+						</span>
+					</Col>
+				</>
+			) : data?.locationCurrentDayComments.length ? (
 				data.locationCurrentDayComments.map((comment, i) => {
 					return (
 						<div key={i}>

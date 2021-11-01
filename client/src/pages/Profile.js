@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useState } from 'react';
 import Auth from '../utils/auth';
 import { USER_MEDIA } from '../utils/queries';
@@ -46,6 +46,12 @@ const Profile = () => {
 			position: 'relative',
 			bottom: '80px',
 		},
+		loadingWheel: {
+			color: '#0A9D7B',
+		},
+		fontColour: {
+			color: '#042D3C',
+		},
 	};
 
 	return (
@@ -66,7 +72,16 @@ const Profile = () => {
 					</h4>
 					<Container>
 						<Row>
-							{data?.userMedia.length ? (
+							{loading ? (
+								<>
+									<Col>
+										<Spinner animation='border' style={Styles.loadingWheel} />
+										<span className='mx-2' style={Styles.fontColour}>
+											Loading...
+										</span>
+									</Col>
+								</>
+							) : data?.userMedia.length ? (
 								<>
 									<DisplayDots handleClick={handleClick} />
 									{data?.userMedia.map((media, i) =>
