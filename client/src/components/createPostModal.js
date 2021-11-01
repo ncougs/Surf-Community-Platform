@@ -291,11 +291,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 								Loading...
 							</Button>
 						) : (
-							<Button
-								type='submit'
-								style={Styles.mainButton}
-								className='p-3 fw-bold'
-							>
+							<Button type='submit' style={Styles.mainButton} className='p-3'>
 								Create Post
 							</Button>
 						)}

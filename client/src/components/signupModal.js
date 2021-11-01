@@ -176,11 +176,7 @@ const SignupModal = ({ openModal, closeModal }) => {
 						</FloatingLabel>
 					</Form.Group>
 
-					<Button
-						type='submit'
-						style={Styles.mainButton}
-						className='p-3 fw-bold'
-					>
+					<Button type='submit' style={Styles.mainButton} className='p-3'>
 						Create New Account
 					</Button>
 				</Form>

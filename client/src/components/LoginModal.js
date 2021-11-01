@@ -128,11 +128,7 @@ const LoginModal = ({ openModal, closeLoginModal, openSignupModal }) => {
 						{errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
 						<Row className='justify-content-space'>
 							<Col xs='12' className='mb-4'>
-								<Button
-									type='submit'
-									style={Styles.mainButton}
-									className='p-3 fw-bold'
-								>
+								<Button type='submit' style={Styles.mainButton} className='p-3'>
 									Login
 								</Button>
 							</Col>
@@ -144,7 +140,7 @@ const LoginModal = ({ openModal, closeLoginModal, openSignupModal }) => {
 								}}
 								style={Styles.pointer}
 							>
-								<p className='text-muted text-center fw-bold'>
+								<p className='text-muted text-center'>
 									Don't have an account? Create a new account here!
 								</p>
 							</Col>
