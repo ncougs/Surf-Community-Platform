@@ -17,9 +17,11 @@ This media shraing platform allows users to share and receive information about 
 
 ## Application Functionalitity and Apperance
 
+![image](https://user-images.githubusercontent.com/84214872/139641887-3ccb90ae-68fa-44a3-9434-19e1fe972384.png)
 
+![image](https://user-images.githubusercontent.com/84214872/139641963-b26c0569-6ad2-4df0-9d29-47620936e636.png)
 
-
+![image](https://user-images.githubusercontent.com/84214872/139642022-21cdfa9d-6070-4ad8-8aa9-1a93d8240c5f.png)
 
 ## Questions
 
