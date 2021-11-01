@@ -123,6 +123,7 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 					file,
 					user_id: _id,
 					locationID,
+					caption,
 				},
 			});
 		} catch (e) {

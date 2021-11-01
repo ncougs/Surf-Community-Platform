@@ -469,7 +469,7 @@ const resolvers = {
 		},
 
 		//add a new photo to our database
-		postVideo: async (parent, { file, user_id, locationID }) => {
+		postVideo: async (parent, { file, user_id, locationID, caption }) => {
 			//get read stream out of uploaded file
 			const { createReadStream } = await file;
 
@@ -489,7 +489,7 @@ const resolvers = {
 			const { url } = upload;
 
 			//create new model for our db
-			const newVideo = new Video({ url, user_id, locationID });
+			const newVideo = new Video({ url, user_id, locationID, caption });
 
 			//save model to database
 			const video = await newVideo.save();

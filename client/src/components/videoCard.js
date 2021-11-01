@@ -3,11 +3,11 @@ import moment from 'moment';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 
-const VideoCard = ({ location, date, url, isVertical }) => {
+const VideoCard = ({ location, date, url, isVertical, caption, user }) => {
 	const Styles = {
 		card: {
 			width: '18rem',
-			height: '25rem',
+			height: 'max-content',
 			borderColor: '#FEFFFF',
 			borderRadius: '0',
 		},
@@ -30,7 +30,13 @@ const VideoCard = ({ location, date, url, isVertical }) => {
 							<ReactPlayer url={url} width='100%' height='100%' controls />
 						</Card.Body>
 						<Card.Footer>
-							<small className='text-muted'>{`uploaded at ${moment(
+							<p>
+								<small className='text-muted p-2'>{`${user}${
+									caption ? `: ${caption}` : ''
+								}`}</small>
+							</p>
+
+							<small className='text-muted p-2'>{`uploaded at ${moment(
 								date,
 								'x'
 							).format('hh:mm a, DD/MM/YYYY')}`}</small>

@@ -61,6 +61,8 @@ const Home = () => {
 											url={media.url}
 											date={media.date}
 											isVertical={vertical}
+											caption={media.caption}
+											user={media.user_id.username}
 										/>
 									) : (
 										<PhotoCard

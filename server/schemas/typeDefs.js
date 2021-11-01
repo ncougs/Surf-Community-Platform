@@ -33,6 +33,7 @@ const typeDefs = gql`
 		date: String!
 		user_id: User!
 		locationID: Location!
+		caption: String
 	}
 
 	type Media {
@@ -116,7 +117,12 @@ const typeDefs = gql`
 			locationID: ID!
 			caption: String
 		): Photo!
-		postVideo(file: Upload!, user_id: ID!, locationID: ID!): Video!
+		postVideo(
+			file: Upload!
+			user_id: ID!
+			locationID: ID!
+			caption: String
+		): Video!
 		postComment(body: String!, user_id: ID!, locationID: ID!): Comment!
 		favouriteLocation(user_id: ID!, location: String!): User!
 	}

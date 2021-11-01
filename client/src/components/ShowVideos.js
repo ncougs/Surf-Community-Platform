@@ -29,6 +29,8 @@ const ShowVideos = ({ location }) => {
 								date={video.date}
 								location={location}
 								isVertical={vertical}
+								caption={video.caption}
+								user={video.user_id.username}
 							/>
 						);
 					})}
