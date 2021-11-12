@@ -468,6 +468,15 @@ const resolvers = {
 			return photo;
 		},
 
+		//Delete users photo
+		deletePhoto: async (parent, { id }) => {
+			//get photo by id and delete
+			const deletePhoto = await Photo.findByIdAndDelete(id);
+
+			//return Boolean value once deleted
+			return true;
+		},
+
 		//add a new photo to our database
 		postVideo: async (parent, { file, user_id, locationID, caption }) => {
 			//get read stream out of uploaded file

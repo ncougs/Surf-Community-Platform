@@ -117,6 +117,7 @@ const typeDefs = gql`
 			locationID: ID!
 			caption: String
 		): Photo!
+		deletePhoto(id: ID!): Boolean!
 		postVideo(
 			file: Upload!
 			user_id: ID!
