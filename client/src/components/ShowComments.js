@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Col, Spinner } from 'react-bootstrap';
 import { LOCATION_TODAY_COMMENTS } from '../utils/queries';
+import CommentCard from './commentCard';
 
 const ShowComments = ({ location }) => {
 	const { data, loading, error } = useQuery(LOCATION_TODAY_COMMENTS, {
@@ -31,10 +32,13 @@ const ShowComments = ({ location }) => {
 			) : data?.locationCurrentDayComments.length ? (
 				data.locationCurrentDayComments.map((comment, i) => {
 					return (
-						<div key={i}>
-							<h5>{comment.user_id.username}</h5>
-							<p>{comment.body}</p>
-						</div>
+						<CommentCard
+							key={i}
+							body={comment.body}
+							username={comment.user_id.username}
+							userID={comment.user_id._id}
+							id={comment._id}
+						/>
 					);
 				})
 			) : (

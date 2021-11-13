@@ -87,6 +87,15 @@ export const POST_COMMENT = gql`
 	}
 `;
 
+export const UPDATE_COMMENT = gql`
+	mutation ($body: String!, $updateCommentId: ID!) {
+		updateComment(body: $body, id: $updateCommentId) {
+			_id
+			body
+		}
+	}
+`;
+
 export const FAVOURITE_LOCATION = gql`
 	mutation ($user_id: ID!, $location: String!) {
 		favouriteLocation(user_id: $user_id, location: $location) {
