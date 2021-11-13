@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Col, Row, Button, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-import { UPDATE_COMMENT } from '../utils/mutations';
+import { UPDATE_COMMENT, DELETE_COMMENT } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const CommentCard = ({ id, username, body, userID }) => {
@@ -16,7 +16,19 @@ const CommentCard = ({ id, username, body, userID }) => {
 		setUpdateComment(body);
 	};
 
-	const [updateComment, { data, loading, error }] = useMutation(UPDATE_COMMENT);
+	const [updateComment] = useMutation(UPDATE_COMMENT);
+
+	const [deleteComment] = useMutation(DELETE_COMMENT);
+
+	const handleDelete = async (e) => {
+		e.preventDefault();
+
+		const deletedComment = await deleteComment({
+			variables: {
+				deleteCommentId: id,
+			},
+		});
+	};
 
 	const handleUpdateComment = async (e) => {
 		e.preventDefault();
@@ -48,9 +60,14 @@ const CommentCard = ({ id, username, body, userID }) => {
 						<h5>{username}</h5>
 					</Col>
 					{isUser ? (
-						<Col>
-							<Button onClick={(e) => handleShowUpdate(e)}>Update</Button>
-						</Col>
+						<>
+							<Col>
+								<Button onClick={(e) => handleShowUpdate(e)}>Update</Button>
+							</Col>
+							<Col>
+								<Button onClick={(e) => handleDelete(e)}>Delete</Button>
+							</Col>
+						</>
 					) : (
 						''
 					)}

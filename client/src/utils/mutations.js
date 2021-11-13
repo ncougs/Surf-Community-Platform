@@ -96,6 +96,12 @@ export const UPDATE_COMMENT = gql`
 	}
 `;
 
+export const DELETE_COMMENT = gql`
+	mutation ($deleteCommentId: ID!) {
+		deleteComment(id: $deleteCommentId)
+	}
+`;
+
 export const FAVOURITE_LOCATION = gql`
 	mutation ($user_id: ID!, $location: String!) {
 		favouriteLocation(user_id: $user_id, location: $location) {
