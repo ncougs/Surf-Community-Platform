@@ -51,6 +51,12 @@ export const POST_PHOTO = gql`
 	}
 `;
 
+export const DELETE_PHOTO = gql`
+	mutation ($deletePhotoId: ID!) {
+		deletePhoto(id: $deletePhotoId)
+	}
+`;
+
 export const POST_VIDEO = gql`
 	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!, $caption: String) {
 		postVideo(

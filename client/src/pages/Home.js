@@ -90,6 +90,7 @@ const Home = () => {
 											isVertical={vertical}
 											caption={media.caption}
 											user={media.user_id.username}
+											id={media._id}
 										/>
 									)
 								)}

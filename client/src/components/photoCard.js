@@ -1,8 +1,25 @@
-import { Col, Card } from 'react-bootstrap';
+import { Col, Card, Row } from 'react-bootstrap';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { X } from 'react-bootstrap-icons';
+import { DELETE_PHOTO } from '../utils/mutations';
 
-const PhotoCard = ({ location, date, url, isVertical, caption, user }) => {
+const PhotoCard = ({ location, date, url, isVertical, caption, user, id }) => {
+	const [deletePhoto, { data, loading, error }] = useMutation(DELETE_PHOTO, {
+		variables: { deletePhotoId: id },
+	});
+
+	const handleClick = async (e) => {
+		e.preventDefault();
+
+		try {
+			await deletePhoto(id);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
 	const Styles = {
 		card: {
 			width: '18rem',
@@ -22,7 +39,12 @@ const PhotoCard = ({ location, date, url, isVertical, caption, user }) => {
 				<Card style={Styles.card} className='m-auto shadow-lg border-1'>
 					<Link className='text-decoration-none' to={`/location/${location}`}>
 						<Card.Title className='p-2' style={Styles.heading}>
-							{location}
+							<Row>
+								<Col>{location}</Col>
+								<Col className='d-flex justify-content-end'>
+									<X onClick={(e) => handleClick(e)} />
+								</Col>
+							</Row>
 						</Card.Title>
 						<Card.Img variant='top' src={url} style={Styles.img} />
 						<Card.Footer>

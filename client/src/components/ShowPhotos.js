@@ -50,6 +50,7 @@ const ShowPhotos = ({ location }) => {
 								isVertical={vertical}
 								caption={photo.caption}
 								user={photo.user_id.username}
+								id={photo._id}
 							/>
 						);
 					})}
