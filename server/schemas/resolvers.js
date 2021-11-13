@@ -557,6 +557,13 @@ const resolvers = {
 			return comment;
 		},
 
+		//update comment
+		updateComment: async (parent, { id, body }) => {
+			const updatedComment = await Comment.findByIdAndUpdate(id, { body });
+
+			return updatedComment;
+		},
+
 		//add a new favourtie location to you a user
 		favouriteLocation: async (parent, { location, user_id }) => {
 			//find the username within our db - Usernames are unqiue
