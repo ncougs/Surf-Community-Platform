@@ -509,16 +509,40 @@ const resolvers = {
 			});
 
 			//get url from uploaded image
-			const { url } = upload;
+			const { url, public_id } = upload;
 
 			//create new model for our db
-			const newVideo = new Video({ url, user_id, locationID, caption });
+			const newVideo = new Video({
+				url,
+				user_id,
+				locationID,
+				caption,
+				public_id,
+			});
 
 			//save model to database
 			const video = await newVideo.save();
 
 			//return photo
 			return video;
+		},
+
+		//Delete users video
+		deleteVideo: async (parent, { id, public_id }) => {
+			//get video by id and delete
+			const deleteVideo = await Video.findByIdAndDelete(id);
+
+			//await delete from cloundinary
+			const deleteCloudVideo = await new Promise((resolve, reject) => {
+				const deletedVideo = cloudinary.uploader.destroy(
+					public_id,
+					{ resource_type: 'video' },
+					(err, file) => (err ? reject(err) : resolve(file))
+				);
+			});
+
+			//return Boolean value once deleted
+			return true;
 		},
 
 		//add a new comment to our database

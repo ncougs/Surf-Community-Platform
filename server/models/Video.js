@@ -16,6 +16,7 @@ const VideoSchema = new Schema({
 		ref: 'Location',
 	},
 	caption: String,
+	public_id: String,
 });
 
 const Video = mongoose.model('Video', VideoSchema);
