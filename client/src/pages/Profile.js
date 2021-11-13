@@ -94,6 +94,9 @@ const Profile = () => {
 												isVertical={vertical}
 												caption={media.caption}
 												user={media.user_id.username}
+												id={media._id}
+												public_id={media.public_id}
+												userID={media.user_id._id}
 											/>
 										) : (
 											<PhotoCard

@@ -71,6 +71,12 @@ export const POST_VIDEO = gql`
 	}
 `;
 
+export const DELETE_VIDEO = gql`
+	mutation ($deleteVideoId: ID!, $publicId: String!) {
+		deleteVideo(id: $deleteVideoId, public_id: $publicId)
+	}
+`;
+
 export const POST_COMMENT = gql`
 	mutation ($body: String!, $user_id: ID!, $locationID: ID!) {
 		postComment(body: $body, user_id: $user_id, locationID: $locationID) {

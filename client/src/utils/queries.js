@@ -112,6 +112,7 @@ export const VIDEOS = gql`
 			url
 			date
 			caption
+			public_id
 			user_id {
 				_id
 				username
@@ -137,6 +138,7 @@ export const TODAY_VIDEOS = gql`
 			date
 			url
 			caption
+			public_id
 			user_id {
 				_id
 				username
@@ -162,6 +164,7 @@ export const LOCATION_TODAY_VIDEOS = gql`
 			date
 			url
 			caption
+			public_id
 			user_id {
 				_id
 				username
@@ -187,6 +190,7 @@ export const USER_VIDEOS = gql`
 			url
 			date
 			caption
+			public_id
 			locationID {
 				name
 			}

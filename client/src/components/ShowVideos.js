@@ -50,6 +50,9 @@ const ShowVideos = ({ location }) => {
 								isVertical={vertical}
 								caption={video.caption}
 								user={video.user_id.username}
+								id={video._id}
+								public_id={video.public_id}
+								userID={video.user_id._id}
 							/>
 						);
 					})}
