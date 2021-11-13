@@ -51,6 +51,7 @@ const ShowPhotos = ({ location }) => {
 								caption={photo.caption}
 								user={photo.user_id.username}
 								id={photo._id}
+								public_id={photo.public_id}
 							/>
 						);
 					})}

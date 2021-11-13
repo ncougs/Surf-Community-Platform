@@ -105,6 +105,7 @@ const Profile = () => {
 												caption={media.caption}
 												user={media.user_id.username}
 												id={media._id}
+												public_id={media.public_id}
 											/>
 										)
 									)}

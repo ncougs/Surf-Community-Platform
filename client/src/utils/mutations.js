@@ -52,8 +52,8 @@ export const POST_PHOTO = gql`
 `;
 
 export const DELETE_PHOTO = gql`
-	mutation ($deletePhotoId: ID!) {
-		deletePhoto(id: $deletePhotoId)
+	mutation ($deletePhotoId: ID!, $publicId: String!) {
+		deletePhoto(id: $deletePhotoId, public_id: $publicId)
 	}
 `;
 

@@ -5,16 +5,25 @@ import { useMutation } from '@apollo/client';
 import { X } from 'react-bootstrap-icons';
 import { DELETE_PHOTO } from '../utils/mutations';
 
-const PhotoCard = ({ location, date, url, isVertical, caption, user, id }) => {
+const PhotoCard = ({
+	location,
+	date,
+	url,
+	isVertical,
+	caption,
+	user,
+	id,
+	public_id,
+}) => {
 	const [deletePhoto, { data, loading, error }] = useMutation(DELETE_PHOTO, {
-		variables: { deletePhotoId: id },
+		variables: { deletePhotoId: id, publicId: public_id },
 	});
 
 	const handleClick = async (e) => {
 		e.preventDefault();
 
 		try {
-			await deletePhoto(id);
+			await deletePhoto(id, public_id);
 		} catch (err) {
 			console.error(err);
 		}
