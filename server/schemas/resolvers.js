@@ -564,6 +564,14 @@ const resolvers = {
 			return updatedComment;
 		},
 
+		//delete comment
+		deleteComment: async (parent, { id }) => {
+			//get comment by id and delete
+			const deleteComment = await Comment.findByIdAndDelete(id);
+
+			return true;
+		},
+
 		//add a new favourtie location to you a user
 		favouriteLocation: async (parent, { location, user_id }) => {
 			//find the username within our db - Usernames are unqiue
