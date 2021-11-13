@@ -25,6 +25,7 @@ const typeDefs = gql`
 		user_id: User!
 		locationID: Location!
 		caption: String
+		public_id: String
 	}
 
 	type Video {
@@ -43,6 +44,7 @@ const typeDefs = gql`
 		user_id: User!
 		locationID: Location!
 		caption: String
+		public_id: String
 	}
 
 	type Comment {
@@ -116,8 +118,9 @@ const typeDefs = gql`
 			user_id: ID!
 			locationID: ID!
 			caption: String
+			public_id: String
 		): Photo!
-		deletePhoto(id: ID!): Boolean!
+		deletePhoto(id: ID!, public_id: String!): Boolean!
 		postVideo(
 			file: Upload!
 			user_id: ID!

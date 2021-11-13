@@ -16,6 +16,7 @@ const PhotoSchema = new Schema({
 		ref: 'Location',
 	},
 	caption: String,
+	public_id: String,
 });
 
 const Photo = mongoose.model('Photo', PhotoSchema);

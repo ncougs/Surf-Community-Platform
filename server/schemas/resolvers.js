@@ -456,10 +456,16 @@ const resolvers = {
 			});
 
 			//get url from uploaded image
-			const { url } = upload;
+			const { url, public_id } = upload;
 
 			//create new model for our db
-			const newPhoto = new Photo({ url, user_id, locationID, caption });
+			const newPhoto = new Photo({
+				url,
+				user_id,
+				locationID,
+				caption,
+				public_id,
+			});
 
 			//save model to database
 			const photo = await newPhoto.save();
@@ -469,9 +475,17 @@ const resolvers = {
 		},
 
 		//Delete users photo
-		deletePhoto: async (parent, { id }) => {
+		deletePhoto: async (parent, { id, public_id }) => {
 			//get photo by id and delete
 			const deletePhoto = await Photo.findByIdAndDelete(id);
+
+			//await delete from cloundinary
+			const deleteCloudPhoto = await new Promise((resolve, reject) => {
+				const deletedPhoto = cloudinary.uploader.destroy(
+					public_id,
+					(err, file) => (err ? reject(err) : resolve(file))
+				);
+			});
 
 			//return Boolean value once deleted
 			return true;
