@@ -52,6 +52,7 @@ const ShowPhotos = ({ location }) => {
 								user={photo.user_id.username}
 								id={photo._id}
 								public_id={photo.public_id}
+								userID={photo.user_id._id}
 							/>
 						);
 					})}

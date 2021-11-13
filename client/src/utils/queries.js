@@ -296,6 +296,7 @@ export const CURRENT_DAY_MEDIA = gql`
 				name
 			}
 			user_id {
+				_id
 				username
 			}
 		}
@@ -315,6 +316,7 @@ export const USER_MEDIA = gql`
 				name
 			}
 			user_id {
+				_id
 				username
 			}
 		}

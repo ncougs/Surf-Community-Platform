@@ -1,9 +1,11 @@
-import { Col, Card, Row } from 'react-bootstrap';
+import { Col, Card, Row, Spinner } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { X } from 'react-bootstrap-icons';
 import { DELETE_PHOTO } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const PhotoCard = ({
 	location,
@@ -12,12 +14,24 @@ const PhotoCard = ({
 	isVertical,
 	caption,
 	user,
+	userID,
 	id,
 	public_id,
 }) => {
+	const [isUser, setIsUser] = useState(false);
+
 	const [deletePhoto, { data, loading, error }] = useMutation(DELETE_PHOTO, {
 		variables: { deletePhotoId: id, publicId: public_id },
 	});
+
+	const isLoggedIn = Auth.loggedIn();
+
+	useEffect(() => {
+		if (isLoggedIn) {
+			const currentUser = Auth.getProfile();
+			currentUser?.data?._id === userID ? setIsUser(true) : setIsUser(false);
+		}
+	}, [isLoggedIn, userID]);
 
 	const handleClick = async (e) => {
 		e.preventDefault();
@@ -51,7 +65,15 @@ const PhotoCard = ({
 							<Row>
 								<Col>{location}</Col>
 								<Col className='d-flex justify-content-end'>
-									<X onClick={(e) => handleClick(e)} />
+									{isUser ? (
+										loading ? (
+											<Spinner animation='border' style={Styles.heading} />
+										) : (
+											<X onClick={(e) => handleClick(e)} />
+										)
+									) : (
+										''
+									)}
 								</Col>
 							</Row>
 						</Card.Title>
