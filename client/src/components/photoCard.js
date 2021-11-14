@@ -58,8 +58,8 @@ const PhotoCard = ({
 	};
 	return (
 		<>
-			<Col lg={isVertical ? '12' : '4'} className='m-auto my-2'>
-				<Card style={Styles.card} className='m-auto shadow-lg border-1'>
+			<Col lg={isVertical ? '12' : '4'} className='mx-auto my-2'>
+				<Card style={Styles.card} className='mx-auto shadow-lg border-1'>
 					<Link className='text-decoration-none' to={`/location/${location}`}>
 						<Card.Title className='p-2' style={Styles.heading}>
 							<Row>

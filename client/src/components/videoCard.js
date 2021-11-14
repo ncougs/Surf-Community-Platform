@@ -57,11 +57,14 @@ const VideoCard = ({
 		footer: {
 			border: 'none',
 		},
+		video: {
+			lineHeight: 'normal',
+		},
 	};
 	return (
 		<>
-			<Col lg={isVertical ? '12' : '4'} className='m-auto my-2'>
-				<Card className='m-auto shadow-lg border-1' style={Styles.card}>
+			<Col lg={isVertical ? '12' : '4'} className='mx-auto my-2'>
+				<Card className='mx-auto shadow-lg border-1' style={Styles.card}>
 					<Link className='text-decoration-none' to={`/location/${location}`}>
 						<Card.Title className='p-2' style={Styles.heading}>
 							<Row>
@@ -79,7 +82,15 @@ const VideoCard = ({
 								</Col>
 							</Row>
 						</Card.Title>
-						<ReactPlayer url={url} width='100%' height='100%' controls />
+						<ReactPlayer
+							url={url}
+							width='100%'
+							height='100%'
+							volume={null}
+							muted={true}
+							controls
+							style={Styles.video}
+						/>
 						<Card.Footer style={Styles.footer}>
 							<p>
 								<small className='text-muted p-2'>{`${user}${
