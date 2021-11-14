@@ -46,16 +46,16 @@ const VideoCard = ({
 
 	const Styles = {
 		card: {
-			width: '18rem',
+			width: '25rem',
 			height: 'max-content',
 			borderColor: '#FEFFFF',
 			borderRadius: '0',
 		},
-		cardMedidaHeight: {
-			height: '20rem',
-		},
 		heading: {
 			color: '#042D3C',
+		},
+		footer: {
+			border: 'none',
 		},
 	};
 	return (
@@ -79,10 +79,8 @@ const VideoCard = ({
 								</Col>
 							</Row>
 						</Card.Title>
-						<Card.Body style={Styles.cardMedidaHeight} className='p-0'>
-							<ReactPlayer url={url} width='100%' height='100%' controls />
-						</Card.Body>
-						<Card.Footer>
+						<ReactPlayer url={url} width='100%' height='100%' controls />
+						<Card.Footer style={Styles.footer}>
 							<p>
 								<small className='text-muted p-2'>{`${user}${
 									caption ? `: ${caption}` : ''

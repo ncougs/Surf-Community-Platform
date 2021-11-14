@@ -45,7 +45,7 @@ const PhotoCard = ({
 
 	const Styles = {
 		card: {
-			width: '18rem',
+			width: '25rem',
 			borderColor: '#FEFFFF',
 			borderRadius: '0',
 		},
