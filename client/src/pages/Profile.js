@@ -20,7 +20,7 @@ const Profile = () => {
 	//return all media for the current user
 	const { data, loading, error } = useQuery(USER_MEDIA, {
 		variables: { userId: currentUser?.data._id },
-		pollInterval: 5000,
+		pollInterval: 500,
 	});
 
 	const Styles = {

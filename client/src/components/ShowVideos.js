@@ -10,7 +10,7 @@ const ShowVideos = ({ location }) => {
 
 	const { data, loading, error } = useQuery(LOCATION_TODAY_VIDEOS, {
 		variables: { location },
-		pollInterval: 5000,
+		pollInterval: 500,
 	});
 
 	const handleClick = (e) => {

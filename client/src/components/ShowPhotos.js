@@ -14,7 +14,7 @@ const ShowPhotos = ({ location }) => {
 
 	const { data, loading, error } = useQuery(LOCATION_TODAY_PHOTOS, {
 		variables: { location },
-		pollInterval: 5000,
+		pollInterval: 500,
 	});
 
 	const Styles = {

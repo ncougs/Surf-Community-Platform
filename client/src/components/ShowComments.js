@@ -6,7 +6,7 @@ import CommentCard from './commentCard';
 const ShowComments = ({ location }) => {
 	const { data, loading, error } = useQuery(LOCATION_TODAY_COMMENTS, {
 		variables: { location },
-		pollInterval: 5000,
+		pollInterval: 500,
 	});
 
 	const Styles = {
