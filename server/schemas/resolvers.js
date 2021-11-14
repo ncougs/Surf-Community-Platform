@@ -448,6 +448,8 @@ const resolvers = {
 				const uploadStream = cloudinary.uploader.upload_stream(
 					{
 						fetch_format: 'auto',
+						height: 1280,
+						width: 720,
 					},
 					(err, file) => (err ? reject(err) : resolve(file))
 				);
