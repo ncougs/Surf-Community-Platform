@@ -94,6 +94,30 @@ const resolvers = {
 			return todaysPhotos;
 		},
 
+		//find all photos for historical days
+		locationHistoricalPhotos: async (parent, { location, date }) => {
+			const currentPhotos = await Photo.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const locationPhotos = currentPhotos.filter((photo) => {
+				if (photo.locationID.name === location) {
+					return photo;
+				}
+			});
+
+			const historicalPhotos = locationPhotos.filter((photo) => {
+				if (
+					moment(photo.date, 'x').format('DD/MMM/YYYY') ===
+					moment(date, 'x').format('DD/MMM/YYYY')
+				) {
+					return photo;
+				}
+			});
+
+			return historicalPhotos;
+		},
+
 		//find all videos
 		videos: async () => {
 			return Video.find({}).populate('user_id').populate('locationID');

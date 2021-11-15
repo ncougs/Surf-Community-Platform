@@ -89,6 +89,7 @@ const typeDefs = gql`
 		photos: [Photo]
 		currentDayPhotos: [Photo]
 		locationCurrentDayPhotos(location: String!): [Photo]
+		locationHistoricalPhotos(location: String!, date: String!): [Photo]
 		userPhotos(user_id: ID!): [Photo]
 		videos: [Video]
 		currentDayVideos: [Video]
