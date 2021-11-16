@@ -157,9 +157,9 @@ export const TODAY_VIDEOS = gql`
 `;
 
 //Get all videos for the current day at a particular location
-export const LOCATION_TODAY_VIDEOS = gql`
-	query ($location: String!) {
-		locationCurrentDayVideos(location: $location) {
+export const LOCATION_VIDEOS = gql`
+	query ($location: String!, $date: String!) {
+		locationVideos(location: $location, date: $date) {
 			_id
 			date
 			url
