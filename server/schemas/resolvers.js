@@ -70,32 +70,8 @@ const resolvers = {
 			return usersPhotos;
 		},
 
-		//find all photos for the current day at a location
-		locationCurrentDayPhotos: async (parent, { location }) => {
-			const currentPhotos = await Photo.find({})
-				.populate('user_id')
-				.populate('locationID');
-
-			const locationPhotos = currentPhotos.filter((photo) => {
-				if (photo.locationID.name === location) {
-					return photo;
-				}
-			});
-
-			const todaysPhotos = locationPhotos.filter((photo) => {
-				if (
-					moment(photo.date, 'x').format('DD/MMM/YYYY') ===
-					moment().format('DD/MMM/YYYY')
-				) {
-					return photo;
-				}
-			});
-
-			return todaysPhotos;
-		},
-
-		//find all photos for historical days
-		locationHistoricalPhotos: async (parent, { location, date }) => {
+		//find all photos for the location based on a date
+		locationPhotos: async (parent, { location, date }) => {
 			const currentPhotos = await Photo.find({})
 				.populate('user_id')
 				.populate('locationID');
@@ -107,12 +83,16 @@ const resolvers = {
 			});
 
 			const historicalPhotos = locationPhotos.filter((photo) => {
-				if (
-					moment(photo.date, 'x').format('DD/MMM/YYYY') ===
-					moment(date, 'x').format('DD/MMM/YYYY')
-				) {
+				if (moment(photo.date, 'x') > moment(date, 'x')) {
 					return photo;
 				}
+			});
+
+			//sort by newest to oldest
+			historicalPhotos.sort((a, b) => {
+				var dateA = moment(a.date);
+				var dateB = moment(b.date);
+				return dateB - dateA;
 			});
 
 			return historicalPhotos;
