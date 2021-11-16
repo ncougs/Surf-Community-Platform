@@ -64,9 +64,9 @@ export const TODAY_PHOTOS = gql`
 `;
 
 //Get all photos for the current day at a particular location
-export const LOCATION_TODAY_PHOTOS = gql`
-	query ($location: String!) {
-		locationCurrentDayPhotos(location: $location) {
+export const LOCATION_PHOTOS = gql`
+	query ($location: String!, $date: String!) {
+		locationPhotos(location: $location, date: $date) {
 			_id
 			date
 			url
