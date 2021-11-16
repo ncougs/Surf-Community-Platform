@@ -98,6 +98,34 @@ const resolvers = {
 			return historicalPhotos;
 		},
 
+		//find all videos for the current day at a location
+		locationVideos: async (parent, { location, date }) => {
+			const currentVideos = await Video.find({})
+				.populate('user_id')
+				.populate('locationID');
+
+			const locationVideos = currentVideos.filter((video) => {
+				if (video.locationID.name === location) {
+					return video;
+				}
+			});
+
+			const videos = locationVideos.filter((video) => {
+				if (moment(video.date, 'x') > moment(date, 'x')) {
+					return video;
+				}
+			});
+
+			//sort by newest to oldest
+			videos.sort((a, b) => {
+				var dateA = moment(a.date);
+				var dateB = moment(b.date);
+				return dateB - dateA;
+			});
+
+			return videos;
+		},
+
 		//find all videos
 		videos: async () => {
 			return Video.find({}).populate('user_id').populate('locationID');
@@ -233,30 +261,6 @@ const resolvers = {
 			});
 
 			return todaysComments;
-		},
-
-		//find all videos for the current day at a location
-		locationCurrentDayVideos: async (parent, { location }) => {
-			const currentVideos = await Video.find({})
-				.populate('user_id')
-				.populate('locationID');
-
-			const locationVideos = currentVideos.filter((video) => {
-				if (video.locationID.name === location) {
-					return video;
-				}
-			});
-
-			const todaysVideos = locationVideos.filter((video) => {
-				if (
-					moment(video.date, 'x').format('DD/MMM/YYYY') ===
-					moment().format('DD/MMM/YYYY')
-				) {
-					return video;
-				}
-			});
-
-			return todaysVideos;
 		},
 
 		//get all locations

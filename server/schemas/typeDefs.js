@@ -92,7 +92,7 @@ const typeDefs = gql`
 		userPhotos(user_id: ID!): [Photo]
 		videos: [Video]
 		currentDayVideos: [Video]
-		locationCurrentDayVideos(location: String!): [Video]
+		locationVideos(location: String!, date: String!): [Video]
 		userVideos(user_id: ID!): [Video]
 		media: [Media]
 		currentDayMedia: [Media]
