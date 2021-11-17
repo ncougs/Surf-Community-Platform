@@ -61,19 +61,20 @@ const LocationPage = () => {
 
 	const Styles = {
 		mainHeading: {
-			fontSize: '3vw',
+			fontSize: '3rem',
 			color: '#F5F6F9',
 		},
 		dateHeading: {
-			fontSize: '2vw',
+			fontSize: '2rem',
 			color: '#F5F6F9',
 		},
 		secondaryBackground: {
 			backgroundColor: '#F5F6F9',
 		},
 		secondaryHeading: {
-			fontSize: '2vw',
+			fontSize: '2rem',
 			color: '#042D3C',
+			cursor: 'pointer',
 		},
 		loadingWheel: {
 			color: '#0A9D7B',
@@ -132,47 +133,41 @@ const LocationPage = () => {
 				className='flex-grow-1 p-0'
 			>
 				<Container>
-					<Nav className='justify-content-center' activeKey='/home'>
-						<Nav.Item>
-							<Nav.Link eventKey='link-2'>
-								<Col
-									className='text-center fw-bold p-5'
-									onClick={handleShowField}
-									style={Styles.secondaryHeading}
-								>
-									Photos
-								</Col>
-							</Nav.Link>
-						</Nav.Item>
-						<Nav.Item>
-							<Nav.Link eventKey='link-2'>
-								<Col
-									className='text-center fw-bold p-5'
-									onClick={handleShowField}
-									style={Styles.secondaryHeading}
-								>
-									Comments
-								</Col>
-							</Nav.Link>
-						</Nav.Item>
-						<Nav.Item>
-							<Nav.Link eventKey='link-3'>
-								<Col
-									className='text-center fw-bold p-5'
-									onClick={handleShowField}
-									style={Styles.secondaryHeading}
-								>
-									Videos
-								</Col>
-							</Nav.Link>
-						</Nav.Item>
-					</Nav>
+					<Row className='justify-content-center'>
+						<Col
+							className='text-center fw-bold p-5'
+							onClick={handleShowField}
+							style={Styles.secondaryHeading}
+							xs='6'
+							sm='4'
+						>
+							Photos
+						</Col>
+
+						<Col
+							className='text-center fw-bold p-5'
+							onClick={handleShowField}
+							style={Styles.secondaryHeading}
+							xs='6'
+							sm='4'
+						>
+							Comments
+						</Col>
+
+						<Col
+							className='text-center fw-bold p-5'
+							onClick={handleShowField}
+							style={Styles.secondaryHeading}
+							xs='6'
+							sm='4'
+						>
+							Videos
+						</Col>
+					</Row>
 					<Container>
-						<Row>
-							{showComments && <ShowComments location={location} />}
-							{showPhotos && <ShowPhotos location={location} />}
-							{showVideos && <ShowVideos location={location} />}
-						</Row>
+						{showComments && <ShowComments location={location} />}
+						{showPhotos && <ShowPhotos location={location} />}
+						{showVideos && <ShowVideos location={location} />}
 					</Container>
 				</Container>
 			</Container>

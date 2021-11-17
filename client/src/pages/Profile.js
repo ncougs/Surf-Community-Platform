@@ -25,11 +25,11 @@ const Profile = () => {
 
 	const Styles = {
 		mainHeading: {
-			fontSize: '5vw',
+			fontSize: '5rem',
 			color: '#F5F6F9',
 		},
 		mainHeadingText: {
-			fontSize: '2vw',
+			fontSize: '2rem',
 			color: '#F5F6F9',
 		},
 		mainSection: {
@@ -39,8 +39,10 @@ const Profile = () => {
 			backgroundColor: '#F5F6F9',
 		},
 		secondaryHeading: {
-			fontSize: '5vw',
+			fontSize: '4rem',
 			color: '#042D3C',
+			position: 'relative',
+			bottom: '50px',
 		},
 		secondarySection: {
 			position: 'relative',

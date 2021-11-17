@@ -6,11 +6,11 @@ import Map from '../features/GoogleMap';
 const Locations = () => {
 	const Styles = {
 		mainHeading: {
-			fontSize: '3vw',
+			fontSize: '3rem',
 			color: '#F5F6F9',
 		},
 		text: {
-			fontSize: '1vw',
+			fontSize: '1rem',
 			color: '#F5F6F9',
 		},
 		mainButton: {
@@ -23,7 +23,7 @@ const Locations = () => {
 
 	return (
 		<>
-			<Container className='p-0'>
+			<Container>
 				<h2 style={Styles.mainHeading}>Location</h2>
 				<p style={Styles.text}>
 					Seach for a location or use the interactive map to select your local
@@ -42,7 +42,7 @@ const Locations = () => {
 					</Col>
 				</LocationSearchBar>
 			</Container>
-			<Container className='p-0 py-4 flex-grow-1 d-flex'>
+			<Container className=' py-4 flex-grow-1 d-flex'>
 				<Map />
 			</Container>
 		</>

@@ -17,7 +17,7 @@ const DisplayFavLocations = ({ id }) => {
 			backgroundColor: '#F5F6F9',
 		},
 		favLocationsHeading: {
-			fontSize: '3vw',
+			fontSize: '2rem',
 			color: '#042D3C',
 		},
 		text: {

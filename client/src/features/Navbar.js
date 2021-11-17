@@ -39,13 +39,13 @@ const NavigationBar = () => {
 			fontSize: '20px',
 		},
 		searchBar: {
-			backgroundColor: '#F5F6F9',
+			minWidth: '300px',
 		},
 	};
 
 	return (
 		<>
-			<Navbar expand='lg'>
+			<Navbar expand='sm'>
 				<Container fluid>
 					<Navbar.Brand>
 						<Link className='fs-1' to='/' style={Styles.link}>

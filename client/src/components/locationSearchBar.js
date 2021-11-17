@@ -15,9 +15,19 @@ const LocationSearchBar = ({ children }) => {
 		history.push(`/location/${search}`);
 	};
 
+	const Styles = {
+		searchBar: {
+			minWidth: '300px',
+		},
+	};
+
 	return (
 		<>
-			<Form onSubmit={handleSubmit} className='flex-grow-1'>
+			<Form
+				onSubmit={handleSubmit}
+				className='flex-grow-1'
+				style={Styles.searchBar}
+			>
 				<Row>
 					<Col>
 						<FloatingLabel controlId='floatingInput' label='Enter a Location'>

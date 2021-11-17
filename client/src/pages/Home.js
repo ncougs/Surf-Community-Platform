@@ -20,14 +20,14 @@ const Home = () => {
 
 	const Styles = {
 		mainHeading: {
-			fontSize: '5vw',
+			fontSize: '5rem',
 			color: '#F5F6F9',
 		},
 		section: {
-			minHeight: '80vh',
+			minHeight: '81vh',
 		},
 		secondaryHeading: {
-			fontSize: '5vw',
+			fontSize: '5rem',
 			color: '#042D3C',
 			textAlign: 'center',
 		},

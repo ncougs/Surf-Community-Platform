@@ -46,7 +46,7 @@ const VideoCard = ({
 
 	const Styles = {
 		card: {
-			width: '25rem',
+			maxWidth: '25rem',
 			height: 'max-content',
 			borderColor: '#FEFFFF',
 			borderRadius: '0',

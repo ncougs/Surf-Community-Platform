@@ -39,7 +39,6 @@ const ShowVideos = ({ location }) => {
 			color: '#042D3C',
 		},
 		button: {
-			width: '10vw',
 			backgroundColor: '#0A9D7B',
 			borderColor: '#0A9D7B',
 			color: '#F5F6F9',
