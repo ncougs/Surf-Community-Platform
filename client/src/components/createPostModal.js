@@ -44,7 +44,9 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	});
 
 	useEffect(() => {
-		const foundLocation = location.pathname.split('/').at(-1);
+		const splitLocation = location.pathname.split('/');
+
+		const foundLocation = splitLocation[splitLocation.length - 1];
 
 		const filteredLocations = locations.filter((i) => i.name === foundLocation);
 
