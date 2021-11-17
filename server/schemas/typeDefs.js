@@ -122,6 +122,7 @@ const typeDefs = gql`
 			public_id: String
 		): Photo!
 		deletePhoto(id: ID!, public_id: String!): Boolean!
+		updatePhotoCaption(id: ID!, caption: String!): Photo!
 		postVideo(
 			file: Upload!
 			user_id: ID!

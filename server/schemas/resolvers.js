@@ -501,6 +501,13 @@ const resolvers = {
 			return true;
 		},
 
+		//Update caption on photo
+		updatePhotoCaption: async (parent, { id, caption }) => {
+			const updatedPhoto = await Photo.findByIdAndUpdate(id, { caption });
+
+			return updatedPhoto;
+		},
+
 		//add a new photo to our database
 		postVideo: async (parent, { file, user_id, locationID, caption }) => {
 			//get read stream out of uploaded file
