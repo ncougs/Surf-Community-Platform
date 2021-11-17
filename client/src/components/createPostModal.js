@@ -85,11 +85,11 @@ const CreatePostModal = ({ openModal, closeModal }) => {
 	};
 
 	const handleUpload = async () => {
-		file.name
-			.split('.')
-			.at(-1)
-			.toLowerCase()
-			.match(/^(mp4|mov)$/)
+		const fileSplit = file.name.split('.');
+
+		const fileOut = fileSplit[fileSplit.length - 1];
+
+		fileOut.toLowerCase().match(/^(mp4|mov)$/)
 			? await uploadVideo()
 			: await uploadImage();
 	};
