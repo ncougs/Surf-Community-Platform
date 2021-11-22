@@ -57,6 +57,15 @@ export const DELETE_PHOTO = gql`
 	}
 `;
 
+export const UPDATE_PHOTO_CAPTION = gql`
+	mutation ($updatePhotoCaptionId: ID!, $caption: String!) {
+		updatePhotoCaption(id: $updatePhotoCaptionId, caption: $caption) {
+			_id
+			caption
+		}
+	}
+`;
+
 export const POST_VIDEO = gql`
 	mutation ($file: Upload!, $user_id: ID!, $locationID: ID!, $caption: String) {
 		postVideo(
