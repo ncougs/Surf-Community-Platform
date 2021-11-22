@@ -129,6 +129,7 @@ const typeDefs = gql`
 			locationID: ID!
 			caption: String
 		): Video!
+		updateVideoCaption(id: ID!, caption: String!): Video!
 		deleteVideo(id: ID!, public_id: String!): Boolean!
 		postComment(body: String!, user_id: ID!, locationID: ID!): Comment!
 		deleteComment(id: ID!): Boolean!

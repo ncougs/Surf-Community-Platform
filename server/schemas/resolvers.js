@@ -544,6 +544,13 @@ const resolvers = {
 			return video;
 		},
 
+		//Update caption on photo
+		updateVideoCaption: async (parent, { id, caption }) => {
+			const updatedVideo = await Video.findByIdAndUpdate(id, { caption });
+
+			return updatedVideo;
+		},
+
 		//Delete users video
 		deleteVideo: async (parent, { id, public_id }) => {
 			//get video by id and delete
