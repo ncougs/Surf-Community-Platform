@@ -80,6 +80,15 @@ export const POST_VIDEO = gql`
 	}
 `;
 
+export const UPDATE_VIDEO_CAPTION = gql`
+	mutation ($updateVideoCaptionId: ID!, $caption: String!) {
+		updateVideoCaption(id: $updateVideoCaptionId, caption: $caption) {
+			_id
+			caption
+		}
+	}
+`;
+
 export const DELETE_VIDEO = gql`
 	mutation ($deleteVideoId: ID!, $publicId: String!) {
 		deleteVideo(id: $deleteVideoId, public_id: $publicId)
