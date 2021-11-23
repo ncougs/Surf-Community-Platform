@@ -107,7 +107,7 @@ const LocationPage = () => {
 						surfData.surfData.data.map((data, i) => (
 							<SurfDataCard
 								key={i}
-								time={moment(data.dateTime, 'x').utc().format('hh:mm a')}
+								time={moment(data.dateTime, 'x').format('hh:mm a')}
 								height={data.waveHeight}
 								direction={data.windDirection}
 								degrees={data.airTemperature}

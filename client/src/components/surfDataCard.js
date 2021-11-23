@@ -10,7 +10,6 @@ import {
 	ArrowDownRight,
 	Thermometer,
 	Wind,
-	Speedometer,
 	Tsunami,
 } from 'react-bootstrap-icons';
 
