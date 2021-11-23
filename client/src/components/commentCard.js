@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_COMMENT, DELETE_COMMENT } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const CommentCard = ({ id, username, body, userID }) => {
+const CommentCard = ({ id, username, body, userID, date }) => {
 	const [showEdit, setShowEdit] = useState(false);
 	const [showUpdate, setShowUpdate] = useState(false);
 	const [isUser, setIsUser] = useState(false);
@@ -77,7 +77,7 @@ const CommentCard = ({ id, username, body, userID }) => {
 				<Row>
 					<Col>
 						<h5>
-							{username}{' '}
+							{username}
 							{isUser ? (
 								<>
 									<ThreeDots
@@ -114,7 +114,10 @@ const CommentCard = ({ id, username, body, userID }) => {
 				</Row>
 
 				{!showUpdate ? (
-					<p>{body}</p>
+					<>
+						<p className='text-muted fs-6 m-0'>{date}</p>
+						<p>{body}</p>
+					</>
 				) : (
 					<Form onSubmit={(e) => handleUpdateComment(e)} className='mt-3'>
 						<Form.Control

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { Col, Spinner } from 'react-bootstrap';
+import moment from 'moment';
 import { LOCATION_TODAY_COMMENTS } from '../utils/queries';
 import CommentCard from './commentCard';
 
@@ -38,6 +39,7 @@ const ShowComments = ({ location }) => {
 							username={comment.user_id.username}
 							userID={comment.user_id._id}
 							id={comment._id}
+							date={moment(comment.date, 'x').format('hh:mm a, DD/MM/YYYY')}
 						/>
 					);
 				})
