@@ -65,7 +65,7 @@ const App = () => {
 								exact
 								component={LocationPage}
 							/>
-							<Route path='*' component={Error} />
+							<Route component={Error} />
 						</Switch>
 					</Container>
 				</div>
