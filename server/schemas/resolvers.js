@@ -276,8 +276,9 @@ const resolvers = {
 		//get surf data for a location
 		surfData: async (parent, { name }) => {
 			//prepare paramateres
-			const end = moment().utc().endOf('day').unix();
-			const start = moment().utc().startOf('day');
+			const end = moment().endOf('day').unix();
+			const startUnix = moment().startOf('day').unix();
+			const start = moment().startOf('day');
 
 			const params =
 				'swellHeight,waveHeight,airTemperature,gust,swellDirection,windDirection,windSpeed';
@@ -311,7 +312,7 @@ const resolvers = {
 
 				//stormglass api
 				const request = await axios(
-					`https://api.stormglass.io/v2/weather/point?lat=${location.lat}&lng=${location.lng}&params=${params}&source=noaa&end=${end}`,
+					`https://api.stormglass.io/v2/weather/point?lat=${location.lat}&lng=${location.lng}&params=${params}&source=noaa&start=${startUnix}&end=${end}`,
 					{
 						headers: {
 							Authorization: process.env.stormglass_api_key,
@@ -323,7 +324,7 @@ const resolvers = {
 				if (request.status === 200) {
 					//find data at exactly 6am, 12pm and 4pm for the current day
 					const filteredData = request.data.hours.filter((hour) => {
-						const timeStamp = moment(hour.time).utc().format('hh:mm a');
+						const timeStamp = moment(hour.time).format('hh:mm a');
 
 						if (timeStamp.match(/^(06:00 am|12:00 pm|04:00 pm)$/)) {
 							return hour;
@@ -332,7 +333,7 @@ const resolvers = {
 
 					//create new data model
 					const newSurfData = await SurfData.create({
-						date: moment().utc().startOf('day'),
+						date: moment().startOf('day'),
 						data: [],
 					});
 
