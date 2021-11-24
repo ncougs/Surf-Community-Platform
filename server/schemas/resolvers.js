@@ -260,6 +260,13 @@ const resolvers = {
 				}
 			});
 
+			//sort by newest to oldest
+			todaysComments.sort((a, b) => {
+				var dateA = moment(a.date);
+				var dateB = moment(b.date);
+				return dateB - dateA;
+			});
+
 			return todaysComments;
 		},
 
