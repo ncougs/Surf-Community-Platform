@@ -27,20 +27,18 @@ const server = new ApolloServer({
 	resolvers,
 });
 
-server.start().then(() => {
-	app.use(graphqlUploadExpress());
+app.use(graphqlUploadExpress());
 
-	server.applyMiddleware({ app });
+server.applyMiddleware({ app });
 
-	app.use(session(sess));
+app.use(session(sess));
 
-	app.use(express.json());
-	app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-	if (process.env.NODE_ENV === 'production') {
-		app.use(express.static(path.join(__dirname, '../client/build')));
-	}
-});
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../client/build/index.html'));
